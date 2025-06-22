@@ -1,0 +1,4 @@
+module Ui.Screens
+Home 1.0 Home/Home.qml
+Auth 1.0 Auth/Auth.qml
+MovieScreen 1.0 Movie/MovieScreen.qml

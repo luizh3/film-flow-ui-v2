@@ -1,0 +1,9 @@
+module Ui.Components
+SideBar 1.0 SideBar/SideBar.qml
+ImageGradient 1.0 ImageGradient/ImageGradient.qml
+Header 1.0 Header/Header.qml
+MovieSlider 1.0 MovieSlider/MovieSlider.qml
+CardMovie 1.0 CardMovie/CardMovie.qml
+Login 1.0 Login/Login.qml
+Register 1.0 Register/Register.qml
+CardMovieList 1.0 CardMovieList/CardMovieList.qml

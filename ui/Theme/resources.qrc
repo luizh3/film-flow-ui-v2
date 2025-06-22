@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="check">resources/icons/check.svg</file>
+        <file alias="close">resources/icons/close.svg</file>
+        <file alias="edit">resources/icons/edit.svg</file>
+        <file alias="error">resources/icons/error.svg</file>
+        <file alias="exit">resources/icons/exit.svg</file>
+        <file alias="favorite">resources/icons/favorite.svg</file>
+        <file alias="filter">resources/icons/filter.svg</file>
+        <file alias="home">resources/icons/home.svg</file>
+        <file alias="house">resources/icons/house.svg</file>
+        <file alias="left-arrow">resources/icons/left-arrow.svg</file>
+        <file alias="more">resources/icons/more.svg</file>
+        <file alias="movie">resources/icons/movie.svg</file>
+        <file alias="new">resources/icons/news.svg</file>
+        <file alias="notification">resources/icons/notification.svg</file>
+        <file alias="play">resources/icons/play.svg</file>
+        <file alias="replay">resources/icons/replay.svg</file>
+        <file alias="right-arrow">resources/icons/right-arrow.svg</file>
+        <file alias="search">resources/icons/search.svg</file>
+        <file alias="settings">resources/icons/settings.svg</file>
+        <file alias="trash">resources/icons/trash.svg</file>
+        <file alias="warning">resources/icons/warning.svg</file>
+        <file alias="eye">resources/icons/eye.svg</file>
+        <file alias="eye-off">resources/icons/eye-off.svg</file>
+        <file alias="minus">resources/icons/minus.svg</file>
+        <file alias="square">resources/icons/square.svg</file>
+    </qresource>
+</RCC>
