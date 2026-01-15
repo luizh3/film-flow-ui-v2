@@ -1,9 +1,10 @@
 #ifndef MOVIESLISTMODEL_H
 #define MOVIESLISTMODEL_H
 
-#include <QObject>
-#include <QMap>
 #include <QAbstractListModel>
+#include <QFutureWatcher>
+#include <QMap>
+#include <QObject>
 #include <QQmlEngine>
 
 #include <models_global.h>
@@ -13,7 +14,7 @@
 class SectionRequest;
 class MovieInformation;
 class SectionController;
-
+class SearchMovies;
 class MODELS_EXPORT MoviesListModel : public QAbstractListModel {
     Q_OBJECT
     QML_ELEMENT
@@ -23,50 +24,48 @@ public:
     ~MoviesListModel();
      MoviesListModel();
 
-    enum Roles {
-        Title = Qt::UserRole,
-        PosterUrl,
-        Average,
-        IsLoading
-    };
+     enum Roles { Title = Qt::UserRole, PosterUrl, Average, IsLoading, Id, TpProgram };
 
-    int rowCount(const QModelIndex& parent) const override;
+     int rowCount(const QModelIndex& parent) const override;
 
-    QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const override;
+     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-    virtual void fetchMore(const QModelIndex &parent) override;
+     virtual void fetchMore(const QModelIndex& parent) override;
 
-    virtual bool canFetchMore(const QModelIndex &parent) const override;
+     virtual bool canFetchMore(const QModelIndex& parent) const override;
 
-    QHash<int, QByteArray> roleNames() const override;
+     QHash<int, QByteArray> roleNames() const override;
 
-    struct CardMovie {
+     struct CardMovie
+     {
+         CardMovie();
 
-        CardMovie();
+         QString title;
+         QString posterUrl;
+         double average;
+         bool isLoading;
+         QString id;
+         TypeProgramEnum tpProgram;
+     };
 
-        QString title;
-        QString posterUrl;
-        double average;
-        bool isLoading;
-    };
+     void setTpProgram(TypeProgramEnum newTpProgram);
+     void setKey(const QString& newKey);
 
-    void ajustFechingCardsMovie( const int nrCards );
-    void updateCardsMovie( const QList<CardMovie*>& cardsMovie, const QList<MovieInformation*>& moviesInformation ) const;
-    void updateCardMovie( CardMovie* movieCard, const MovieInformation* movieInformation ) const;
+ private:
+     void onFetchEnded(QFutureWatcher<SearchMovies*>* future);
 
-    void setTpProgram(TypeProgramEnum newTpProgram);
-    void setKey(const QString &newKey);
+     void updateCardsMovie(const QList<CardMovie*>& cardsMovie,
+                           const QList<MovieInformation*>& moviesInformation);
 
-private:
-    SectionRequest* _sectionRequest;
-    SectionController* _sectionController;
+     static void updateCardMovie(CardMovie* movieCard, const MovieInformation* movieInformation);
 
-    bool _isFetching;
+     SectionRequest* _sectionRequest;
+     SectionController* _sectionController;
 
-    QList<CardMovie*> _fechingMoviesCard;
-    QList<CardMovie*> _moviesCard;
+     bool _isFetching;
 
-
+     QList<CardMovie*> _fechingMoviesCard;
+     QList<CardMovie*> _moviesCard;
 };
 
 #endif // MOVIESLISTMODEL_H

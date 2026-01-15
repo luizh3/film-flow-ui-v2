@@ -6,6 +6,8 @@
 #include <core/controller/sectioncontroller.h>
 #include <core/network/request/sectionrequest.h>
 
+#include "helper/cardsfetchhelper.h"
+
 namespace {
 constexpr int NR_MOVIES_BY_PAGE = 20;
 }
@@ -14,15 +16,17 @@ MoviesListModel::~MoviesListModel()
 {
     delete _sectionRequest;
     delete _sectionController;
+
+    qDeleteAll(_moviesCard);
 }
 
-MoviesListModel::MoviesListModel() :
-    _sectionRequest{ new SectionRequest()},
-    _sectionController{ new SectionController() },
-    _isFetching{false},
-    _fechingMoviesCard({}),
-    _moviesCard({}){
-}
+MoviesListModel::MoviesListModel()
+    : _sectionRequest{new SectionRequest()}
+    , _sectionController{new SectionController()}
+    , _isFetching{false}
+    , _fechingMoviesCard{}
+    , _moviesCard{}
+{}
 
 int MoviesListModel::rowCount( const QModelIndex &parent ) const {
     return _moviesCard.count();
@@ -49,6 +53,12 @@ QVariant MoviesListModel::data( const QModelIndex &index, int role ) const {
     case IsLoading: {
         return _moviesCard.at( row )->isLoading;
     }
+    case Id: {
+        return _moviesCard.at(row)->id;
+    }
+    case TpProgram: {
+        return QVariant::fromValue(_moviesCard.at(row)->tpProgram);
+    }
     default:
         return QVariant();
     }
@@ -65,32 +75,25 @@ void MoviesListModel::fetchMore( const QModelIndex &parent ) {
 
     _sectionRequest->setPage( _sectionRequest->page() + 1 );
 
-    beginInsertRows(QModelIndex(), _moviesCard.length(), _moviesCard.length() + NR_MOVIES_BY_PAGE - 1);
+    CardFetchHelper::appendFetchingCards<CardMovie>(
+        _moviesCard,
+        _fechingMoviesCard,
+        NR_MOVIES_BY_PAGE,
 
-    ajustFechingCardsMovie( NR_MOVIES_BY_PAGE );
+        [this](int first, int last) { beginInsertRows(QModelIndex(), first, last); },
 
-    endInsertRows();
+        [this]() { endInsertRows(); },
+
+        []() { return new CardMovie(); });
 
     QFutureWatcher<SearchMovies*>* future = TaskRunHelper::async<SearchMovies*>(
     [&]() {
         return _sectionController->find( *_sectionRequest );
     });
 
-    QObject::connect( future, &QFutureWatcher<SearchMovies*>::finished, this, [this, future]() {
-
-        if ( future->isFinished() && !future->isCanceled() ) {
-
-            std::unique_ptr<SearchMovies> searchMovies( future->result() );
-
-            updateCardsMovie( _fechingMoviesCard, searchMovies->movies() );
-
-            emit dataChanged(index(_moviesCard.length() - NR_MOVIES_BY_PAGE), index(_moviesCard.length() - 1));
-
-            _isFetching = false;
-        }
-
-        future->deleteLater();
-    } );
+    QObject::connect(future, &QFutureWatcher<SearchMovies *>::finished, this, [this, future]() {
+        onFetchEnded(future);
+    });
 }
 
 bool MoviesListModel::canFetchMore( const QModelIndex& parent) const {
@@ -103,47 +106,45 @@ bool MoviesListModel::canFetchMore( const QModelIndex& parent) const {
 }
 
 QHash<int, QByteArray> MoviesListModel::roleNames() const {
-
-    static QHash<int, QByteArray> mapping {
-        { Title, "title" },
-        { PosterUrl, "posterUrl"},
-        { Average, "average"},
-        { IsLoading, "isLoading"}
-    };
+    static QHash<int, QByteArray> mapping{{Title, "title"},
+                                          {PosterUrl, "posterUrl"},
+                                          {Average, "average"},
+                                          {IsLoading, "isLoading"},
+                                          {Id, "id"},
+                                          {TpProgram, "tpProgram"}};
 
     return mapping;
 
 }
 
-void MoviesListModel::ajustFechingCardsMovie( const int nrCards ) {
-
-    _fechingMoviesCard.clear();
-
-    std::generate_n(std::back_inserter(_fechingMoviesCard), NR_MOVIES_BY_PAGE, []() {
-        return new CardMovie();
-    });
-
-    _moviesCard.append( _fechingMoviesCard );
-
-}
-
-void MoviesListModel::updateCardsMovie( const QList<CardMovie*>& cardsMovie, const QList<MovieInformation*>& moviesInformation) const
+void MoviesListModel::updateCardsMovie(const QList<CardMovie *> &cardsMovie,
+                                       const QList<MovieInformation *> &moviesInformation)
 {
-    for( int index = 0; index < cardsMovie.length(); index++ ) {
-        updateCardMovie( cardsMovie[index], moviesInformation[index] );
-    }
+    CardFetchHelper::updateCards<CardMovie, MovieInformation>(
+        _moviesCard,
+        _fechingMoviesCard,
+        moviesInformation,
+
+        [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
+
+        [this]() { endRemoveRows(); },
+
+        [this](int first, int last) { emit dataChanged(index(first), index(last)); },
+
+        &MoviesListModel::updateCardMovie);
 }
 
-void MoviesListModel::updateCardMovie(CardMovie *movieCard, const MovieInformation *movieInformation) const
+void MoviesListModel::updateCardMovie(CardMovie *movieCard, const MovieInformation *movieInformation)
 {
     movieCard->average = movieInformation->average();
     movieCard->posterUrl = movieInformation->posterUrl();
     movieCard->title = movieInformation->title();
+    movieCard->id = movieInformation->id();
     movieCard->isLoading = false;
+    movieCard->tpProgram = movieInformation->tpProgram();
 }
 
-
-void MoviesListModel::setTpProgram( TypeProgramEnum newTpProgram )
+void MoviesListModel::setTpProgram(TypeProgramEnum newTpProgram)
 {
 
     if( !_sectionRequest ){
@@ -165,8 +166,23 @@ void MoviesListModel::setKey(const QString &newKey)
 
 }
 
-MoviesListModel::CardMovie::CardMovie() :
-    title{QStringLiteral("")},
-    posterUrl{QStringLiteral("")},
-    average{0.00},
-    isLoading{true}{}
+void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
+{
+    if (future->isFinished() && !future->isCanceled()) {
+        std::unique_ptr<SearchMovies> searchMovies(future->result());
+
+        updateCardsMovie(_fechingMoviesCard, searchMovies->movies());
+
+        _isFetching = false;
+    }
+
+    future->deleteLater();
+}
+
+MoviesListModel::CardMovie::CardMovie()
+    : title{QStringLiteral("")}
+    , posterUrl{QStringLiteral("")}
+    , average{0.00}
+    , isLoading{true}
+    , tpProgram{TypeProgramEnum::UNKNOW}
+{}

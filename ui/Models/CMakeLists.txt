@@ -8,11 +8,19 @@ endif()
 
 set( SOURCES
     movieslistmodel.cpp
+    searchprogramlistmodel.cpp
+    reviewslistmodel.cpp
+    helper/cardsfetchhelper.cpp
+    notificationslistmodel.cpp
 )
 
 set( HEADERS
     movieslistmodel.h
+    searchprogramlistmodel.h
     models_global.h
+    reviewslistmodel.h
+    helper/cardsfetchhelper.h
+    notificationslistmodel.h
 )
 
 qt_add_qml_module(${LIBRARY_NAME}
