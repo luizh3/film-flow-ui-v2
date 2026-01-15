@@ -1,5 +1,9 @@
 import QtQuick
 
-Item {
+FFButtonNavigationForm {
+    id: root
 
+    signal clicked
+
+    buttonIcon.onClicked: root.clicked()
 }

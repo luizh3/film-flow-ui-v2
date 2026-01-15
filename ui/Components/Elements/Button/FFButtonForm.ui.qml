@@ -25,7 +25,7 @@ Button {
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 150
+                duration: Durations.normal
                 easing.type: Easing.InOutQuad
             }
         }
@@ -39,5 +39,4 @@ Button {
         size: 30
         lineWidth: 3
     }
-
 }

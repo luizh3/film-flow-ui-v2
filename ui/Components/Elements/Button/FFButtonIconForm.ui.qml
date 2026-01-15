@@ -18,6 +18,7 @@ Button {
 
     required property string vIcon
     property bool vHasNotification: false
+    property int vNotificationCount
 
     property int _radius: Radius.sm
 
@@ -26,6 +27,8 @@ Button {
     property string _hoverColor: Colors.grey300
     property string _colorIconHover: root._colorIcon
 
+    property alias notificationCountLabel: notificationCountLabel
+
     background: Rectangle {
         opacity: root.hovered && root.enabled ? 0.8 : 1
         radius: root._radius
@@ -33,41 +36,47 @@ Button {
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 150
+                duration: Durations.normal
                 easing.type: Easing.InOutQuad
             }
         }
-
     }
 
     FFIcon {
         id: icon
-        vColor: root.hovered && root.enabled ? root._colorIconHover : root._colorIcon
+        vColor: root.hovered
+                && root.enabled ? root._colorIconHover : root._colorIcon
         source: root.vIcon
-        sourceSize: Qt.size( 18, 18 )
+        sourceSize: Qt.size(18, 18)
         anchors.centerIn: parent
     }
 
     Rectangle {
-        width: 8
-        height: 8
+        width: 18
+        height: 18
         radius: 360
         color: Colors.error
-        x: icon.x + ( icon.width / 2 )
-        y: icon.y + 2
+        x: icon.x + (icon.width / 2)
+        y: icon.y - (height / 2)
         visible: root.vHasNotification
+
+        Label {
+            id: notificationCountLabel
+            anchors.centerIn: parent
+            font.pixelSize: 10
+            color: Colors.grey50
+        }
     }
 
     // TODO change this code, reimplement tooltip of button
     ToolTip {
-         visible: root.hovered && root.ToolTip.text !== ""
-         text: root.ToolTip.text
-         palette.toolTipText: Colors.grey50
-         font: Fonts.label170
-         background: Rectangle {
-             color: Colors.grey700
-             radius: Radius.xl
-         }
-     }
-
+        visible: root.hovered && root.ToolTip.text !== ""
+        text: root.ToolTip.text
+        palette.toolTipText: Colors.grey50
+        font: Fonts.label170
+        background: Rectangle {
+            color: Colors.grey700
+            radius: Radius.xl
+        }
+    }
 }

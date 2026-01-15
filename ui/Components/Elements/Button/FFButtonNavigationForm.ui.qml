@@ -4,23 +4,25 @@ import QtQuick.Controls
 import Ui.Theme
 
 Row {
-    id: headerRow
+    id: root
     width: parent.width
-    anchors.top: parent.top
-    anchors.left: parent.left
-    anchors.topMargin: 32
-    anchors.leftMargin: 32
     spacing: Spacings.sm2
 
+    property string vText: "Default"
+    property string vIcon: Icons.outlined.leftArrow
+    property string vHoverText: "Default"
+
+    property alias buttonIcon: buttonIcon
+
     FFButtonIcon {
-        id: backButton
-        vIcon: "qrc:/icons/left-arrow"
-        ToolTip.text: qsTr("Go back to login")
+        id: buttonIcon
+        vIcon: root.vIcon
+        ToolTip.text: root.vHoverText
     }
 
     Label {
         font: Fonts.body270
-        text: qsTr("/ Sign Up")
+        text: "/ " + root.vText
         color: Colors.grey50
         anchors.verticalCenter: parent.verticalCenter
     }

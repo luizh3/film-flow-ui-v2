@@ -22,44 +22,43 @@ FFButtonForm {
     property int vType: FFButton.Type.Primary
     property int vState: FFButton.State.Active
 
-    property string vIcon : "qrc:/icons/check"
-    property string vIconError: "qrc:/icons/replay"
+    property string vIcon: Icons.outlined.check
+    property string vIconError: Icons.outlined.replay
 
-    function _changeIcon( icon ) {
-        root.icon.source = icon;
+    function _changeIcon(icon) {
+        root.icon.source = icon
     }
 
-    function _changeType( color, icon ) {
-        root.background.color = color;
-        root._changeIcon( icon );
+    function _changeType(color, icon) {
+        root.background.color = color
+        root._changeIcon(icon)
     }
 
     function _toPrimaryType() {
-        root._changeType( Colors.primary, root.vIcon );
+        root._changeType(Colors.primary, root.vIcon)
     }
 
-    function _toSecundaryType(){
-        root._changeType( Colors.secundary, root.vIcon );
+    function _toSecundaryType() {
+        root._changeType(Colors.secundary, root.vIcon)
     }
 
     function _toErrorType() {
-        root._changeType( Colors.error, root.vIconError )
+        root._changeType(Colors.error, root.vIconError)
     }
 
     function _setType() {
 
-        switch( root.vType ) {
+        switch (root.vType) {
         case FFButton.Type.Primary:
-            root._toPrimaryType();
+            root._toPrimaryType()
             break
         case FFButton.Type.Secundary:
-            root._toSecundaryType();
-            break;
+            root._toSecundaryType()
+            break
         case FFButton.Type.Error:
-            root._toErrorType();
-            break;
+            root._toErrorType()
+            break
         }
-
     }
 
     states: [
@@ -78,9 +77,8 @@ FFButtonForm {
                         visible: false
                     }
 
-                    enabled: true;
+                    enabled: true
                     opacity: 1
-
                 }
             }
         },
@@ -98,9 +96,8 @@ FFButtonForm {
                         visible: true
                     }
 
-                    enabled: false;
+                    enabled: false
                     opacity: 1
-
                 }
             }
         },
@@ -118,31 +115,28 @@ FFButtonForm {
                         visible: false
                     }
 
-                    enabled: false;
+                    enabled: false
                     opacity: 0.5
-
                 }
             }
         }
     ]
 
     function _onInit() {
-        root._changeIcon( root.vIcon )
+        root._changeIcon(root.vIcon)
         root._setType()
     }
 
     function _setStateByEnabled() {
 
-        if( root.enabled ){
+        if (root.enabled) {
             root.vState = FFButton.State.Active
-            return;
+            return
         }
 
         root.vState = FFButton.State.Disabled
-
     }
 
-    Component.onCompleted: root._onInit();
-    onEnabledChanged: root._setStateByEnabled();
-
+    Component.onCompleted: root._onInit()
+    onEnabledChanged: root._setStateByEnabled()
 }
