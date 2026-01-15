@@ -1,27 +1,29 @@
 import QtQuick
 import QtQuick.Controls
 
+import Ui.Screens
 import Ui.Components
 
-AuthForm {
+AuthScreenForm {
     id: root
 
-    signal success;
+    signal success
 
     stackView.initialItem: loginComponent
 
     function _onLoading() {
-       const screen = root.stackView.push( loginComponent, StackView.Immediate );
-       screen.signUp.connect(root._onRegister)
-       screen.success.connect(root.success)
+        const screen = root.stackView.push(loginComponent, StackView.Immediate)
+        screen.signUp.connect(root._onRegister)
+        screen.success.connect(root.success)
     }
 
     function _onRegister() {
-        const screen = root.stackView.push( registerComponent, StackView.Immediate )
-        screen.success.connect(function(){
+        const screen = root.stackView.push(registerComponent,
+                                           StackView.Immediate)
+        screen.success.connect(function () {
             root.stackView.pop(StackView.Immediate)
         })
-        screen.goBack.connect(function() {
+        screen.goBack.connect(function () {
             root.stackView.pop(StackView.Immediate)
         })
     }
@@ -29,15 +31,14 @@ AuthForm {
     Component {
         id: loginComponent
 
-        Login {}
+        LoginScreen {}
     }
 
     Component {
         id: registerComponent
 
-        Register {}
+        RegisterScreen {}
     }
 
     Component.onCompleted: root._onLoading()
-
 }

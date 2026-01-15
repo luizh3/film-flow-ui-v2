@@ -5,51 +5,62 @@ import Ui.Theme
 import Ui.Components
 import Ui.Components.Elements
 
-// import QtQuick.Particles
+import QtQuick.Particles
+
 Item {
     id: root
     implicitWidth: 1024
     implicitHeight: 768
 
     property var vSections: []
+    property alias repeaterSections: repeaterSections
+    property alias header: header
 
     ImageGradient {
+        id: imageGradient
         anchors.fill: parent
         vSource: movieSlider.vBackdropUrl
 
         FFSkeletonLoading {
             anchors.fill: parent
             color: Colors.grey500
-            visible: movieSlider.vIsLoading
+            opacity: movieSlider.vIsLoading
+                     || imageGradient.sourceItem.status !== Image.Ready ? 1 : 0
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: Durations.normal
+                }
+            }
         }
 
-        // ParticleSystem {
-        //     id: particleSystem
-        //     running: true
-        // }
+        ParticleSystem {
+            id: particleSystem
+            running: false
+        }
 
-        // Emitter {
-        //     id: snowEmitter
-        //     system: particleSystem
-        //     width: parent.width
-        //     height: 2
-        //     anchors.top: parent.top
-        //     emitRate: 20
-        //     lifeSpan: 6000
-        //     size: 10
-        //     velocity: AngleDirection {
-        //         angle: 90
-        //         magnitude: 50
-        //         magnitudeVariation: 20
-        //     }
-        // }
+        Emitter {
+            id: snowEmitter
+            system: particleSystem
+            width: parent.width
+            height: 2
+            anchors.top: parent.top
+            emitRate: 20
+            lifeSpan: 6000
+            size: 10
+            velocity: AngleDirection {
+                angle: 90
+                magnitude: 50
+                magnitudeVariation: 20
+            }
+        }
 
-        // ImageParticle {
-        //     system: particleSystem
-        //     source: "qrc:/icons/ligth"
-        //     colorVariation: 0.2
-        //     entryEffect: ImageParticle.Fade
-        // }
+        ImageParticle {
+            system: particleSystem
+            source: "qrc:/icons/light"
+            colorVariation: 0.2
+            entryEffect: ImageParticle.Fade
+        }
         Column {
             anchors.fill: parent
 
@@ -96,19 +107,8 @@ Item {
                         anchors.topMargin: Spacings.md
 
                         Repeater {
+                            id: repeaterSections
                             model: root.vSections
-
-                            CardMovieList {
-                                required property string name
-                                required property string key
-                                required property int tpProgram
-
-                                width: parent.width
-                                height: 350
-                                vTitle: name
-                                vKey: key
-                                vTypeProgram: tpProgram
-                            }
                         }
                     }
                 }

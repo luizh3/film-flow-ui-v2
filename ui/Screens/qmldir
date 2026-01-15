@@ -1,4 +1,10 @@
 module Ui.Screens
-Home 1.0 Home/Home.qml
-Auth 1.0 Auth/Auth.qml
+HomeScreen 1.0 Home/HomeScreen.qml
+AuthScreen 1.0 Auth/AuthScreen.qml
 MovieScreen 1.0 Movie/MovieScreen.qml
+ProfileScreen 1.0 Profile/ProfileScreen.qml
+ReviewScreen 1.0 Review/ReviewScreen.qml
+ProgramsScreen 1.0 Program/ProgramsScreen.qml
+SettingsScreen 1.0 Settings/SettingsScreen.qml
+RegisterScreen 1.0 Register/RegisterScreen.qml
+LoginScreen 1.0 Login/LoginScreen.qml
