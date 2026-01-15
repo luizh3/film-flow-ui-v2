@@ -12,7 +12,7 @@ public:
     void configs();
 signals:
     void success();
-    void error( const QString& message );
+    void error(const QString& message);
 };
 
 #endif // APPLICATIONCONTROLLER_H
