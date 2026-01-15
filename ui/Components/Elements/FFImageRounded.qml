@@ -7,14 +7,14 @@ Item {
     required property string vSource
     required property int vRadius
     property int vMargin: 0
+    property alias image: sourceItem
 
     Image {
         id: sourceItem
-        height: parent.height
-        width: parent.width
         anchors.fill: parent
         visible: false
         source: root.vSource
+        asynchronous: true
     }
 
     MultiEffect {

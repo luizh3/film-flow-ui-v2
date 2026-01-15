@@ -7,9 +7,25 @@ Rectangle {
     implicitWidth: 32
     implicitHeight: 32
     radius: width / 2
-    color: Colors.grey100
+    color: mouseArea.containsMouse
+           && root.vHasHover ? Colors.primary : Colors.grey100
 
+    property bool vHasHover: true
     required property string vIcon
+
+    signal selected
+
+    FFToolTip {
+        visible: mouseArea.containsMouse && root.vHasHover
+        text: qsTr("Profile")
+    }
+
+    MouseArea {
+        id: mouseArea
+        hoverEnabled: true
+        anchors.fill: parent
+        onClicked: root.selected()
+    }
 
     FFImageRounded {
         width: parent.width

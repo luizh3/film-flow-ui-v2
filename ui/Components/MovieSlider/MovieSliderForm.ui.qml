@@ -1,9 +1,8 @@
 import QtQuick 2.15
-import QtQuick.Layouts
 import QtQuick.Controls
-
-import Ui.Theme
+import QtQuick.Layouts
 import Ui.Components.Elements
+import Ui.Theme
 
 Item {
     id: root
@@ -65,7 +64,7 @@ Item {
             spacing: Spacings.xl
 
             FFButton {
-                vIcon: "qrc:/icons/play"
+                vIcon: Icons.outlined.play
                 text: qsTr("Play")
             }
 
@@ -75,12 +74,12 @@ Item {
 
                 FFButtonIcon {
                     id: buttonPrevius
-                    vIcon: "qrc:/icons/left-arrow"
+                    vIcon: Icons.outlined.leftArrow
                 }
 
                 FFButtonIcon {
                     id: buttonNext
-                    vIcon: "qrc:/icons/right-arrow"
+                    vIcon: Icons.outlined.rightArrow
                 }
             }
         }

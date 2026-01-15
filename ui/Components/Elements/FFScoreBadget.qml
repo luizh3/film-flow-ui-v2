@@ -23,7 +23,7 @@ Item {
 
     FFIcon {
         id: icon
-        source: "qrc:/icons/favorite"
+        source: Icons.outlined.star
         anchors.verticalCenter: parent.verticalCenter
         sourceSize: Qt.size(root.vSize === FFScoreBadget.Size.Medium ? 20 : 16,
                             root.vSize === FFScoreBadget.Size.Medium ? 20 : 16)
@@ -37,6 +37,6 @@ Item {
         color: Colors.orange300
         anchors.left: icon.right
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: 8
+        anchors.leftMargin: Spacings.sm
     }
 }

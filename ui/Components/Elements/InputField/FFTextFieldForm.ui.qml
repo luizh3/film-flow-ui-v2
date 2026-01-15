@@ -6,13 +6,13 @@ import Ui.Theme
 
 import "../Button"
 
-Item  {
+Item {
     id: root
 
     implicitWidth: 424
-    implicitHeight: background.height +
-                    ( label.visible ? label.height + background.anchors.topMargin : 0 ) +
-                    ( labelError.visible ? labelError.height + labelError.anchors.topMargin : 0 );
+    implicitHeight: background.height
+                    + (label.visible ? label.height + background.anchors.topMargin : 0)
+                    + (labelError.visible ? labelError.height + labelError.anchors.topMargin : 0)
 
     property string vIconRight: ""
     property string vIconLeft: ""
@@ -35,10 +35,11 @@ Item  {
     property alias textField: textField
     property alias labelError: labelError
 
-    property alias vIsAcceptable: textField.acceptableInput;
+    property alias vIsAcceptable: textField.acceptableInput
 
-    property bool _isInicialized: false;
-    property bool vIsValid: !root._isInicialized || root.textField.acceptableInput
+    property bool _isInicialized: false
+    property bool vIsValid: !root._isInicialized
+                            || root.textField.acceptableInput
 
     Label {
         id: label
@@ -70,13 +71,13 @@ Item  {
                 Layout.leftMargin: Spacings.sm2
             }
 
-            TextField  {
+            TextField {
                 id: textField
 
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                placeholderText: qsTr( "Placeholder..." )
+                placeholderText: qsTr("Placeholder...")
 
                 font: Fonts.caption250
                 color: Colors.neutral100

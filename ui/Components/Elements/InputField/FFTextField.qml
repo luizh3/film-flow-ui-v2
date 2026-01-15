@@ -13,26 +13,36 @@ FFTextFieldForm {
     textField.onTextChanged: root._onTextChanged()
 
     label.text: root.vLabel
-    label.visible: root.vLabel !== "";
+    label.visible: root.vLabel !== ""
 
-    buttonIconLeft.visible: root.vIconLeft !== "";
-    buttonIconRight.visible: root.vIconRight !== "";
-    labelError.visible: root.labelError.text !== "" && !root.vIsValid;
+    buttonIconLeft.visible: root.vIconLeft !== ""
+    buttonIconRight.visible: root.vIconRight !== ""
+    labelError.visible: root.labelError.text !== "" && !root.vIsValid
 
     buttonIconLeft.vIcon: root.vIconLeft
     buttonIconRight.vIcon: root.vIconRight
 
     onVValidatorChanged: root._setValidator()
 
+    signal confirmed
+
+    textField.onAccepted: function () {
+        root.confirmed()
+    }
+
+    function clear() {
+        root.vText = ""
+    }
+
     function _onTextChanged() {
-        root._setIsInicialized();
-        root._setTextError();
+        root._setIsInicialized()
+        root._setTextError()
     }
 
     function _setTextError() {
 
-        if( !root.vValidator ){
-            return;
+        if (!root.vValidator) {
+            return
         }
 
         root._textError = root.vValidator.vError
@@ -40,15 +50,15 @@ FFTextFieldForm {
 
     function _setValidator() {
 
-        if( !root.vValidator ){
-            return;
+        if (!root.vValidator) {
+            return
         }
 
         root.textField.validator = root.vValidator
     }
 
     function _setIsInicialized() {
-        root._isInicialized = true;
+        root._isInicialized = true
     }
 
     function _toPrimaryType() {
@@ -60,13 +70,13 @@ FFTextFieldForm {
     }
 
     function _changeType() {
-        switch( root.vType ) {
+        switch (root.vType) {
         case FFTextField.Type.Primary:
             root._toPrimaryType()
-            break;
+            break
         case FFTextField.Type.Secundary:
-            root._toSecundaryType();
-            break;
+            root._toSecundaryType()
+            break
         }
     }
 
@@ -86,7 +96,6 @@ FFTextFieldForm {
                         opacity: 1
                     }
                 }
-
             }
         },
         State {
@@ -105,9 +114,7 @@ FFTextFieldForm {
                     label {
                         opacity: 0.5
                     }
-
                 }
-
             }
         },
         State {
@@ -124,9 +131,7 @@ FFTextFieldForm {
                     label {
                         opacity: 1
                     }
-
                 }
-
             }
         },
         State {
@@ -143,9 +148,7 @@ FFTextFieldForm {
                     label {
                         opacity: 1
                     }
-
                 }
-
             }
         }
     ]

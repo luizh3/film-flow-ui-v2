@@ -1,8 +1,7 @@
 import QtQuick
 import QtQuick.Controls
-
-import Ui.Theme
 import Ui.Components.Elements
+import Ui.Theme
 
 Button {
     id: root
@@ -11,13 +10,13 @@ Button {
     height: 60
     spacing: Spacings.lg
 
-    property bool vSelected: true;
+    property bool vSelected: true
 
     objectName: "SideBarItem"
 
     required property string vIcon
     required property string vText
-    required property int vType;
+    required property int vType
 
     background: Rectangle {
         color: root.vSelected || root.hovered ? Colors.grey500 : Colors.grey600
@@ -27,14 +26,14 @@ Button {
             width: 4
             height: parent.height
             color: Colors.primary
-            topLeftRadius: Spacings.sm;
-            bottomLeftRadius: Spacings.sm;
+            topLeftRadius: Spacings.sm
+            bottomLeftRadius: Spacings.sm
             visible: root.vSelected
         }
 
         Behavior on color {
             ColorAnimation {
-                duration: 150
+                duration: Durations.normal
             }
         }
     }
@@ -48,7 +47,7 @@ Button {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: Spacings.xl3
-            sourceSize: Qt.size( 18, 18 )
+            sourceSize: Qt.size(18, 18)
         }
 
         Label {
@@ -59,7 +58,5 @@ Button {
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: Spacings.lg
         }
-
     }
-
 }

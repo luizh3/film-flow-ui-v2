@@ -9,7 +9,7 @@ FFLoadingCircleForm {
 
     property int size: 75
 
-    canvas.onPaint: {
+    canvas.onPaint: function (mouse) {
         var ctx = canvas.getContext("2d")
 
         var x = root.width / 2
@@ -17,7 +17,7 @@ FFLoadingCircleForm {
 
         var radius = root.size / 2 - root.lineWidth
         var startAngle = (Math.PI / 180) * 270
-        var fullAngle = startAngle + ( Math.PI * 1.5 )
+        var fullAngle = startAngle + (Math.PI * 1.5)
 
         ctx.reset()
 
@@ -25,7 +25,7 @@ FFLoadingCircleForm {
         ctx.lineWidth = root.lineWidth
 
         ctx.beginPath()
-        ctx.arc(x, y, radius, startAngle, fullAngle )
+        ctx.arc(x, y, radius, startAngle, fullAngle)
         ctx.strokeStyle = Colors.neutral100
         ctx.stroke()
     }

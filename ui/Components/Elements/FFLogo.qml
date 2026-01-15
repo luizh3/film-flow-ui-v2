@@ -1,5 +1,5 @@
-import QtQuick
 import QtQuick.Controls
+import QtQuick
 
 import Ui.Theme
 
@@ -12,7 +12,6 @@ Row {
         text: "Film"
         font: root.vFont
         color: Colors.orange600
-
     }
 
     Label {
