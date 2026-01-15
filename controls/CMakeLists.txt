@@ -12,6 +12,14 @@ set( SOURCES
     applicationcontrol.cpp
     homecontrol.cpp
     movieslidercontrol.cpp
+    chainbasehandlercalls.cpp
+    control.cpp
+    chainmanager.cpp
+    settingscontrol.cpp
+    sidebarcontrol.cpp
+    maincontrol.cpp
+    reviewprogrammodalcontrol.cpp
+    notificationscontrol.cpp
 )
 
 set( HEADERS
@@ -20,7 +28,16 @@ set( HEADERS
     applicationcontrol.h
     homecontrol.h
     movieslidercontrol.h
+    control.h
+    chainhandlercalls.h
+    chainbasehandlercalls.h
+    chainmanager.h
+    settingscontrol.h
+    sidebarcontrol.h
     controls_global.h
+    maincontrol.h
+    reviewprogrammodalcontrol.h
+    notificationscontrol.h
 )
 
 add_library(
@@ -30,9 +47,10 @@ add_library(
 qt_add_qml_module( ${LIBRARY_NAME}
   URI ${LIBRARY_NAME}
   VERSION 1.0
+  SOURCES
 )
 
-find_package( Qt6 REQUIRED COMPONENTS Core Qml Concurrent )
+find_package( Qt6 REQUIRED COMPONENTS Core Qml Concurrent WebSockets )
 
 target_sources( ${LIBRARY_NAME}
     PRIVATE ${SOURCES}
@@ -46,6 +64,8 @@ target_link_libraries( ${LIBRARY_NAME}
     PRIVATE Qt6::Qml
     PUBLIC core
     PRIVATE Qt6::Concurrent
+    PRIVATE Qt6::WebSockets
+
 )
 
 target_include_directories(${LIBRARY_NAME}

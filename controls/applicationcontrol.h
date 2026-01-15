@@ -4,11 +4,19 @@
 #include <QObject>
 #include <QQmlEngine>
 
-class ApplicationControl : public QObject {
+#include "control.h"
+
+#include <entities/notification.h>
+
+class ApplicationControl : public Control
+{
     Q_OBJECT
     QML_ELEMENT
 public:
-signals:
+    Q_INVOKABLE void doStart();
+
+private:
+    void notificationsWsConnect();
 };
 
 #endif // APPLICATIONCONTROL_H
