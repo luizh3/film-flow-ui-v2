@@ -8,9 +8,10 @@ ApplicationManager::~ApplicationManager() {
     delete _configs;
 }
 
-ApplicationManager::ApplicationManager() :
-    _session{nullptr},
-    _configs{nullptr}
+ApplicationManager::ApplicationManager()
+    : _session{nullptr}
+    , _configs{nullptr}
+    , _languageManager{}
 {}
 
 ApplicationManager& ApplicationManager::instance() {
@@ -36,4 +37,9 @@ Configs *ApplicationManager::configs() const
 void ApplicationManager::setConfigs(Configs *newConfigs)
 {
     _configs = newConfigs;
+}
+
+LanguageManager &ApplicationManager::languageManager()
+{
+    return _languageManager;
 }
