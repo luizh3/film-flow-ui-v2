@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="Poppins-Bold">fonts/Poppins/Poppins-Bold.ttf</file>
+        <file alias="Poppins-Medium">fonts/Poppins/Poppins-Medium.ttf</file>
+        <file alias="Poppins-Regular">fonts/Poppins/Poppins-Regular.ttf</file>
+        <file alias="Poppins-SemiBold">fonts/Poppins/Poppins-SemiBold.ttf</file>
+    </qresource>
+</RCC>
