@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/i18n">
+        <file>film_flow_pt_BR.qm</file>
+        <file>film_flow_es_ES.qm</file>
+        <file>film_flow_en_US.qm</file>
+    </qresource>
+</RCC>

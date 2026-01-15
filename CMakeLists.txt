@@ -17,13 +17,22 @@ set( CORE_INCLUDE_DIR ${CMAKE_SOURCE_DIR} )
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick QuickControls2 Qml)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick QuickControls2 Qml LinguistTools)
 
 set( APP_NAME main )
 
 LIST( APPEND QML_SOURCE_PATHS "${CMAKE_SOURCE_DIR}")
 
-set( QML_IMPORT_PATH ${QML_SOURCE_PATHS} CACHE STRING "" FORCE)
+# set( QML_IMPORT_PATH ${QML_SOURCE_PATHS} CACHE STRING "" FORCE)
+
+set(QML_IMPORT_PATH
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/ui
+    ${CMAKE_SOURCE_DIR}/ui/Components
+    ${CMAKE_SOURCE_DIR}/ui/Screens
+    ${CMAKE_SOURCE_DIR}/ui/Theme
+    CACHE STRING "" FORCE
+)
 
 qt_standard_project_setup(REQUIRES 6.5)
 qt_policy(SET QTP0001 NEW)
@@ -34,6 +43,8 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 qt_add_executable( ${APP_NAME}
     main.cpp
     ${CORE_INCLUDE_DIR}
+    translations.qrc
+    fonts.qrc
 )
 qt_add_qml_module( ${APP_NAME}
     URI film-flow-ui
@@ -53,13 +64,23 @@ qt_add_qml_module( ${APP_NAME}
 # explicit, fixed bundle identifier manually though.
 set_target_properties( ${APP_NAME} PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appfilm-flow-ui
-    QMLLS_BUILD_DIRS ${CMAKE_BINARY_DIR}
+    # QMLLS_BUILD_DIRS ${CMAKE_BINARY_DIR}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
     SKIP_AUTOMOC ON
 )
+
+# qt_add_resources(${APP_NAME} translations
+#     FILES
+#         translations.qrc
+# )
+
+# qt_add_resources(${APP_NAME} resources
+#     FILES
+#         ui/Theme/resources.qrc
+# )
 
 target_include_directories( ${APP_NAME}
     PUBLIC

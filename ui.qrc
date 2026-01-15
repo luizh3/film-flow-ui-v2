@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- Removendo referências a arquivos inexistentes -->
+    </qresource>
+</RCC>

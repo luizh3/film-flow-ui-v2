@@ -67,7 +67,7 @@ Item {
             root._windowPreviusX = ApplicationWindow.window.x
         }
 
-        onPositionChanged: function (mouse) {
+        onPositionChanged: {
 
             const sumSize = (mouse.x - root._previousX) * -1
 

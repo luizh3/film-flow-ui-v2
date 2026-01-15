@@ -1,5 +1,7 @@
 set( LIBRARY_NAME core )
 
+set(CMAKE_AUTOMOC ON)
+
 set( SOURCES
     controller/moviecontroller.cpp
     controller/applicationcontroller.cpp
@@ -31,6 +33,23 @@ set( SOURCES
     entities/genre.cpp
     entities/pagination.cpp
     helper/taskrunhelper.cpp
+    network/endpoint/filmflowmultiendpoint.cpp
+    network/request/multirequest.cpp
+    controller/multicontroller.cpp
+    network/request/multidetailsrequest.cpp
+    manager/languagemanager.cpp
+    network/endpoint/filmflowreviewendpoint.cpp
+    controller/reviewcontroller.cpp
+    entities/review.cpp
+    entities/reviewsresult.cpp
+    network/request/paginationrequest.cpp
+    websocket/notificationws.cpp
+    entities/notification.cpp
+    entities/notificationreviewlike.cpp
+    manager/notificationmanager.cpp
+    controller/notificationcontroller.cpp
+    network/endpoint/filmflownotificationendpoint.cpp
+    entities/notificationsresult.cpp
 )
 
 set( HEADERS
@@ -67,6 +86,24 @@ set( HEADERS
     entities/movieinformation.h
     entities/searchmovies.h
     helper/taskrunhelper.h
+    network/endpoint/filmflowmultiendpoint.h
+    network/request/multirequest.h
+    controller/multicontroller.h
+    network/request/multidetailsrequest.h
+    manager/languagemanager.h
+    entities/review.h
+    network/endpoint/filmflowreviewendpoint.h
+    controller/reviewcontroller.h
+    network/request/paginationrequest.h
+    entities/reviewsresult.h
+    websocket/notificationws.h
+    entities/notification.h
+    entities/notificationreviewlike.h
+    entities/typenotificationenum.h
+    manager/notificationmanager.h
+    controller/notificationcontroller.h
+    network/endpoint/filmflownotificationendpoint.h
+    entities/notificationsresult.h
     core_global.h
 )
 
@@ -84,7 +121,7 @@ target_sources( ${LIBRARY_NAME}
     PUBLIC FILE_SET HEADERS FILES ${HEADERS}
 )
 
-find_package( Qt6 REQUIRED COMPONENTS Core Network Qml Gui Concurrent )
+find_package( Qt6 REQUIRED COMPONENTS Core Network Qml Gui Concurrent WebSockets)
 
 target_link_libraries( ${LIBRARY_NAME} PUBLIC
     PRIVATE Qt6::Core
@@ -92,6 +129,7 @@ target_link_libraries( ${LIBRARY_NAME} PUBLIC
     PRIVATE Qt6::Qml
     PRIVATE Qt6::Gui
     PRIVATE Qt6::Concurrent
+    PRIVATE Qt6::WebSockets
 )
 
 target_include_directories(${LIBRARY_NAME} PUBLIC

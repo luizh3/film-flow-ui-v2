@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import Ui.Theme
 import Ui.Screens
@@ -13,9 +14,7 @@ Item {
     implicitHeight: 768
 
     function _handleChangeItem(vType) {
-
-        console.log(vType)
-
+        screenManager.clear()
         switch (vType) {
         case SideBar.TypeMenuItem.Home:
             loaderMainScreen.sourceComponent = homeComponent
@@ -27,6 +26,10 @@ Item {
             loaderMainScreen.sourceComponent = reviewsComponent
             break
         case SideBar.TypeMenuItem.Movies:
+            loaderMainScreen.sourceComponent = programsComponent
+            break
+        case SideBar.TypeMenuItem.Settings:
+            loaderMainScreen.sourceComponent = settingsComponent
             break
         }
     }
@@ -52,18 +55,34 @@ Item {
             color: Colors.grey500
         }
 
-        Loader {
-            id: loaderMainScreen
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            sourceComponent: movieScreenComponente
+
+            Loader {
+                id: loaderMainScreen
+                anchors.fill: parent
+                sourceComponent: homeComponent
+                visible: true
+            }
+
+            ScreenManager {
+                id: screenManager
+                anchors.fill: parent
+            }
         }
     }
 
     Component {
         id: homeComponent
 
-        Home {}
+        HomeScreen {}
+    }
+
+    Component {
+        id: settingsComponent
+
+        SettingsScreen {}
     }
 
     Component {
@@ -73,20 +92,28 @@ Item {
     }
 
     Component {
-        id: movieScreenComponente
+        id: programsComponent
 
-        MovieScreen {}
+        ProgramsScreen {}
     }
 
     Component {
         id: reviewsComponent
 
-        Item {}
+        ReviewScreen {}
+    }
+
+    Component {
+        id: profileComponent
+
+        ProfileScreen {}
     }
 
     ApplicationControl {
         id: control
     }
 
-    // Component.onCompleted: control.configs();
+    Component.onCompleted: function () {
+        control.doStart()
+    }
 }

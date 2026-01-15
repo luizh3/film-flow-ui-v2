@@ -2,19 +2,24 @@
 #include <QQmlApplicationEngine>
 
 #include <QDebug>
-#include <QFontDatabase>
 #include <QDirIterator>
+#include <QFontDatabase>
 #include <QQuickStyle>
+#include <QTranslator>
 
 #include <core/entities/movieinformation.h>
-
 #include <core/entities/typeprogramenum.h>
+#include <core/manager/applicationmanager.h>
+
+#include <QPixmapCache>
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     engine.addImportPath("ui");
+
+    ApplicationManager::instance().languageManager().intialize(&app, &engine);
 
     QQuickStyle::setStyle("Basic");
 
@@ -35,17 +40,12 @@ int main(int argc, char *argv[]) {
         Qt::QueuedConnection);
     engine.loadFromModule("film-flow-ui", "Main");
 
-    // TODO this is for test, move to .qrc
-    QStringList fonts = {"C:\\Users\\Luiz\\Downloads\\Poppins\\Poppins-Medium.ttf",
-                         "C:\\Users\\Luiz\\Downloads\\Poppins\\Poppins-Regular.ttf",
-                         "C:\\Users\\Luiz\\Downloads\\Poppins\\Poppins-Bold.ttf",
-                         "C:\\Users\\Luiz\\Downloads\\Poppins\\Poppins-SemiBold.ttf"};
-
-    for( QString name : fonts ) {
-        QFontDatabase::addApplicationFont( name );
+    QDir dir(":/fonts");
+    for (const QString &file : dir.entryList(QDir::Files)) {
+        QFontDatabase::addApplicationFont(":/fonts/" + file);
     }
 
-    qInfo() << engine.importPathList();
+    // qInfo() << engine.importPathList();
 
     // MovieController().login();
 

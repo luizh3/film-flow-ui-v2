@@ -5,6 +5,9 @@ import QtQuick.Window
 import QtQuick.Controls.Basic
 
 import Ui.Screens
+import Ui.Components
+
+import controls 1.0
 
 ApplicationWindow {
     id: application
@@ -21,10 +24,6 @@ ApplicationWindow {
 
     objectName: "Main"
 
-    Component.onCompleted: {
-        console.log("Pixel: " + Screen.pixelDensity)
-    }
-
     property bool vIsFullscreen: application.visibility === Window.FullScreen
 
     ResizeManager {
@@ -36,13 +35,13 @@ ApplicationWindow {
     }
 
     function _setScreen(screenComponent) {
-        application.mainLoader.sourceComponent = screenComponent
+        mainLoader.sourceComponent = screenComponent
     }
 
     Component {
         id: authComponent
 
-        Auth {
+        AuthScreen {
             onSuccess: function () {
                 application._setScreen(applicationScreenComponent)
             }
@@ -59,5 +58,22 @@ ApplicationWindow {
         id: mainLoader
         anchors.fill: parent
         sourceComponent: applicationScreenComponent
+    }
+
+    PopupManager {
+        id: popupManager
+        width: parent.width
+        height: parent.height
+        anchors.bottom: parent.bottom
+    }
+
+    ToastManager {
+        id: toastManager
+    }
+
+    MainControl {
+        onNotifierToastWarning: message => toastManager.warning(message)
+        onNotifierToastSuccess: message => toastManager.success(message)
+        onNotifierToastError: message => toastManager.error(message)
     }
 }
