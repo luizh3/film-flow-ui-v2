@@ -14,12 +14,26 @@ set( QML_FILES
     MovieSlider/MovieSlider.qml
     CardMovie/CardMovieForm.ui.qml
     CardMovie/CardMovie.qml
-    Login/LoginForm.ui.qml
-    Login/Login.qml
-    Register/RegisterForm.ui.qml
-    Register/Register.qml
     CardMovieList/CardMovieList.qml
     CardMovieList/CardMovieListForm.ui.qml
+    SearchResultCard.qml
+    SearchResultCardForm.ui.qml
+    SearchProgramResultPopup.qml
+    SearchProgramResultPopupForm.ui.qml
+    ReviewProgramModal.qml
+    ReviewProgramModalForm.ui.qml
+    ProgramReview.qml
+    ProgramReviewForm.ui.qml
+    PopupManager.qml
+    GenericModal.qml
+    ToastManager.qml
+    ScreenManager.qml
+    GenericScreen.qml
+    NotificationsPopup.qml
+    NotificationsPopupForm.ui.qml
+    GenericPopup.qml
+    NotificationCard.qml
+    NotificationCardForm.ui.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}
