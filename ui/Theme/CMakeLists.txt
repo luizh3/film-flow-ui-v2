@@ -12,6 +12,7 @@ set( QML_SINGLETONS
     Radius.qml
     Fonts.qml
     Icons.qml
+    Durations.qml
 )
 
 set_source_files_properties(
