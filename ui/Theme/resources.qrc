@@ -25,5 +25,18 @@
         <file alias="eye-off">resources/icons/eye-off.svg</file>
         <file alias="minus">resources/icons/minus.svg</file>
         <file alias="square">resources/icons/square.svg</file>
+        <file alias="light">resources/icons/light.png</file>
+        <file alias="not-found">resources/icons/not-found.png</file>
+        <file alias="star">resources/icons/star.png</file>
+        <file alias="star-unfilled">resources/icons/star.svg</file>
+        <file alias="tmdb">resources/icons/tmdb.png</file>
+        <file alias="favorite-filled">resources/icons/favorite-filled.svg</file>
+        <file alias="up-arrow">resources/icons/up-arrow.svg</file>
     </qresource>
+    <qresource prefix="/imagens">
+        <file alias="brasil-flag">resources/imagens/brasil-flag.png</file>
+        <file alias="espanha-flag">resources/imagens/espanha-flag.png</file>
+        <file alias="estados-unidos-flag">resources/imagens/estados-unidos-flag.png</file>
+    </qresource>
+    <qresource prefix="/"/>
 </RCC>
