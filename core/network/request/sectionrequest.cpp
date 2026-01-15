@@ -56,7 +56,7 @@ QUrlQuery SectionRequest::toQuerys() const {
     query.addQueryItem(QStringLiteral("page"), QString::number( _page ) );
     query.addQueryItem(QStringLiteral("language"), _language );
     query.addQueryItem(QStringLiteral("key"), _key );
-    query.addQueryItem(QStringLiteral("type"), TypeProgram::toString( _tpProgram ) );
+    query.addQueryItem(QStringLiteral("mediaType"), TypeProgram::toString(_tpProgram));
 
     return std::move( query );
 
