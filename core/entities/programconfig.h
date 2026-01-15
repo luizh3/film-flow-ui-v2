@@ -1,7 +1,7 @@
 #ifndef PROGRAMCONFIG_H
 #define PROGRAMCONFIG_H
 
-#include <QList>
+#include <QMap>
 #include <QString>
 
 #include <core_global.h>
@@ -15,19 +15,19 @@ public:
     ~ProgramConfig();
 
     ProgramConfig();
-    explicit ProgramConfig( const TypeProgramEnum tpProgram, const QList<Genre*>& genres );
+    explicit ProgramConfig(const TypeProgramEnum tpProgram, const QMap<int, Genre *> &genresById);
 
     TypeProgramEnum tpProgram() const;
     void setTpProgram( TypeProgramEnum newTpProgram);
 
-    QList<Genre*> genres() const;
-    void setGenres(const QList<Genre*> &newGenres);
-
     static ProgramConfig* fromJson( const QJsonObject& jsonDocument );
+
+    QMap<int, Genre *> genresById() const;
+    void setGenresById(const QMap<int, Genre *> &newGenresById);
 
 private:
     TypeProgramEnum _tpProgram;
-    QList<Genre*> _genres;
+    QMap<int, Genre *> _genresById;
 };
 
 #endif // PROGRAMCONFIG_H

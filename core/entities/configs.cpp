@@ -9,18 +9,18 @@
 
 Configs::~Configs()
 {
-    qDeleteAll(_programsConfig);
+    qDeleteAll(_programsConfigByType);
     qDeleteAll(_sectionsConfig);
 }
 
-Configs::Configs() :
-    _programsConfig{{}},
-    _sectionsConfig{{}}
+Configs::Configs()
+    : _programsConfigByType{{}}
+    , _sectionsConfig{{}}
 {}
 
-Configs::Configs(const QList<ProgramConfig*>& programsConfig,
+Configs::Configs(const QMap<TypeProgramEnum, ProgramConfig*>& programsConfigByType,
                  const QList<SectionsConfig*>& sectionsConfig)
-    : _programsConfig{programsConfig}
+    : _programsConfigByType{programsConfigByType}
     , _sectionsConfig{sectionsConfig}
 {}
 
@@ -34,16 +34,6 @@ void Configs::setSectionsConfig(const QList<SectionsConfig*>& newSectionsConfig)
     _sectionsConfig = newSectionsConfig;
 }
 
-QList<ProgramConfig*> Configs::programsConfig() const
-{
-    return _programsConfig;
-}
-
-void Configs::setProgramsConfig(const QList<ProgramConfig*>& newProgramsConfig)
-{
-    _programsConfig = newProgramsConfig;
-}
-
 Configs* Configs::fromJson(const QJsonDocument& jsonDocument)
 {
 
@@ -55,20 +45,25 @@ Configs* Configs::fromJson(const QJsonDocument& jsonDocument)
         sectionsConfig.append( SectionsConfig::fromJson( programValue.toObject() ) );
     }
 
-    QList<ProgramConfig*> programsConfig = {};
+    QMap<TypeProgramEnum, ProgramConfig*> programsConfigByType = {};
 
     // TODO Alterar a maneira como vem da API
     if( !jsonDocument["movie"].isNull() ) {
         ProgramConfig* program = ProgramConfig::fromJson( jsonDocument["movie"].toObject() );
         program->setTpProgram( TypeProgramEnum::MOVIE );
-        programsConfig.append( program );
+        programsConfigByType.insert(TypeProgramEnum::MOVIE, program);
     }
 
     if( !jsonDocument["tv"].isNull() ) {
         ProgramConfig* program = ProgramConfig::fromJson( jsonDocument["tv"].toObject() );
         program->setTpProgram( TypeProgramEnum::TV );
-        programsConfig.append( program );
+        programsConfigByType.insert(TypeProgramEnum::TV, program);
     }
 
-    return new Configs( programsConfig, sectionsConfig );
+    return new Configs(programsConfigByType, sectionsConfig);
+}
+
+ProgramConfig* Configs::programConfigByType(const TypeProgramEnum tpProgram) const
+{
+    return _programsConfigByType.value(tpProgram);
 }

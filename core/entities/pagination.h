@@ -1,8 +1,10 @@
 #ifndef PAGINATION_H
 #define PAGINATION_H
 
+#include "core_global.h"
+
 class QJsonObject;
-class Pagination
+class CORE_EXPORT Pagination
 {
 public:
     Pagination();

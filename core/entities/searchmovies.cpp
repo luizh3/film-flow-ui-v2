@@ -54,8 +54,5 @@ SearchMovies *SearchMovies::fromJson(const QJsonDocument &jsonDocument)
         movies.append( MovieInformation::fromJson( movieValue.toObject() ) );
     }
 
-    return new SearchMovies(
-        Pagination::fromJson( jsonDocument["pagination"].toObject() ),
-        movies
-    );
+    return new SearchMovies(Pagination::fromJson(jsonDocument.object()), movies);
 }

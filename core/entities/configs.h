@@ -5,6 +5,8 @@
 
 #include <core_global.h>
 
+#include "typeprogramenum.h"
+
 class QJsonDocument;
 class ProgramConfig;
 class SectionsConfig;
@@ -14,19 +16,18 @@ public:
     ~Configs();
 
     Configs();
-    explicit Configs(const QList<ProgramConfig*>& programsConfig,
+    explicit Configs(const QMap<TypeProgramEnum, ProgramConfig*>& programsConfigByType,
                      const QList<SectionsConfig*>& sectionsConfig);
 
     QList<SectionsConfig*> sectionsConfig() const;
     void setSectionsConfig(const QList<SectionsConfig*>& newSectionsConfig);
 
-    QList<ProgramConfig*> programsConfig() const;
-    void setProgramsConfig(const QList<ProgramConfig*>& newProgramsConfig);
-
     static Configs* fromJson(const QJsonDocument& jsonDocument);
 
+    ProgramConfig* programConfigByType(const TypeProgramEnum tpProgram) const;
+
 private:
-    QList<ProgramConfig*> _programsConfig;
+    QMap<TypeProgramEnum, ProgramConfig*> _programsConfigByType;
     QList<SectionsConfig*> _sectionsConfig;
 };
 
