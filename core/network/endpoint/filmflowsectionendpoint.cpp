@@ -15,5 +15,5 @@ Response* FilmFlowSectionEndpoint::find( const SectionRequest& request ) {
 
     baseUrl.setQuery( request.toQuerys() );
 
-    return HttpClient::get( baseUrl, _headers );
+    return HttpClient().get(baseUrl, _headers);
 }

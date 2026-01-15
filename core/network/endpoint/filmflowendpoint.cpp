@@ -11,8 +11,8 @@
 FilmFlowEndpoint::FilmFlowEndpoint()
     : _host{qEnvironmentVariable("FILM_FLOW_API_HOST")}
     , _token{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
-             "eyJpZCI6IjMyZmJhYWU5LTQ2YjQtNDBlMi1hOTUyLTkwOGMxOGI2MDc5MiIsImlhdCI6MTc0MjE0OTI2OX0."
-             "h9XNxtGone3ea38ecnv1jqfHHQJZcL-8aif1m-UhI88"}
+             "eyJpZCI6IjMyZmJhYWU5LTQ2YjQtNDBlMi1hOTUyLTkwOGMxOGI2MDc5MiIsImlhdCI6MTc2Njk2NDg0OH0."
+             "t8muPDXWbmnbc1E8LmOcXXWvEVkJgOY1aDb1OYj2YJw"}
     , _headers{{{"Authorization", _token}}}
 {}
 
