@@ -3,12 +3,16 @@
 #include <entities/review.h>
 #include <entities/reviewsresult.h>
 
-#include <network/endpoint/filmflowreviewendpoint.h>
+#include <manager/applicationmanager.h>
 #include <network/response/response.h>
+
+ReviewController::ReviewController()
+    : _filmFlowReviewEndpoint{ApplicationManager::instance().session()}
+{}
 
 void ReviewController::create(const Review *review)
 {
-    std::unique_ptr<Response> response(FilmFlowReviewEndpoint().create(review));
+    std::unique_ptr<Response> response(_filmFlowReviewEndpoint.create(review));
 
     if (!response || !response->isStatusValid()) {
         emit error(tr("Fail on create review!"));
@@ -20,7 +24,7 @@ void ReviewController::create(const Review *review)
 
 void ReviewController::update(const Review *review)
 {
-    std::unique_ptr<Response> response(FilmFlowReviewEndpoint().update(review));
+    std::unique_ptr<Response> response(_filmFlowReviewEndpoint.update(review));
 
     if (!response || !response->isStatusValid()) {
         emit error(tr("Fail on update review!"));
@@ -32,7 +36,7 @@ void ReviewController::update(const Review *review)
 
 ReviewsResult *ReviewController::findAll(const PaginationRequest *paginationRequest)
 {
-    std::unique_ptr<Response> response(FilmFlowReviewEndpoint().findAll(paginationRequest));
+    std::unique_ptr<Response> response(_filmFlowReviewEndpoint.findAll(paginationRequest));
 
     return ReviewsResult::fromJson(response->data());
 }

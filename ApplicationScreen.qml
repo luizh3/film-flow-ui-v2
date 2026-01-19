@@ -13,6 +13,10 @@ Item {
     implicitWidth: 1280
     implicitHeight: 768
 
+    ApplicationControl {
+        id: control
+    }
+
     function _handleChangeItem(vType) {
         screenManager.clear()
         switch (vType) {
@@ -62,7 +66,6 @@ Item {
             Loader {
                 id: loaderMainScreen
                 anchors.fill: parent
-                sourceComponent: homeComponent
                 visible: true
             }
 
@@ -109,11 +112,8 @@ Item {
         ProfileScreen {}
     }
 
-    ApplicationControl {
-        id: control
-    }
-
     Component.onCompleted: function () {
         control.doStart()
+        root._handleChangeItem(SideBar.TypeMenuItem.Home)
     }
 }

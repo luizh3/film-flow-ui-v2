@@ -2,12 +2,17 @@
 
 #include <entities/searchmovies.h>
 
-#include <network/response/response.h>
-#include <network/endpoint/filmflowsectionendpoint.h>
+#include <manager/applicationmanager.h>
 
-SearchMovies* SectionController::find(const SectionRequest &request) const
+#include <network/response/response.h>
+
+SectionController::SectionController()
+    : _filmFlowSectionEndpoint{ApplicationManager::instance().session()}
+{}
+
+SearchMovies *SectionController::find(const SectionRequest &request)
 {
-    std::unique_ptr<Response> response( FilmFlowSectionEndpoint().find( request ) );
+    std::unique_ptr<Response> response(_filmFlowSectionEndpoint.find(request));
 
     return SearchMovies::fromJson( response->data() );
 }

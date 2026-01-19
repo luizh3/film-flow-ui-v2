@@ -9,11 +9,9 @@
 #include <entities/session.h>
 
 // TODO this token is fake, is a token of the middleware, not dangerous commit this. The private variables, they are in the .env file.
-FilmFlowEndpoint::FilmFlowEndpoint()
+FilmFlowEndpoint::FilmFlowEndpoint(const Session* session)
     : _host{qEnvironmentVariable("FILM_FLOW_API_HOST")}
-    , _token{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
-             "eyJpZCI6IjMyZmJhYWU5LTQ2YjQtNDBlMi1hOTUyLTkwOGMxOGI2MDc5MiIsImlhdCI6MTc2Njk2NDg0OH0."
-             "t8muPDXWbmnbc1E8LmOcXXWvEVkJgOY1aDb1OYj2YJw"}
+    , _token{session->token()}
     , _headers{{{"Authorization", _token}}}
 {}
 

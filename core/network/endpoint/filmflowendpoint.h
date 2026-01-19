@@ -5,9 +5,10 @@
 #include <QString>
 
 class QUrl;
+class Session;
 class FilmFlowEndpoint {
 public:
-    FilmFlowEndpoint();
+    FilmFlowEndpoint(const Session* session);
 
 protected:
     QString _host;

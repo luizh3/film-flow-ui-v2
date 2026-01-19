@@ -9,7 +9,11 @@ namespace {
 constexpr const char *NOTIFICATION_ENDPOINT = "/notification";
 }
 
-Response *filmflownotificationendpoint::findAll(const PaginationRequest *request)
+FilmFlowNotificationEndpoint::FilmFlowNotificationEndpoint(const Session *session)
+    : FilmFlowEndpoint(session)
+{}
+
+Response *FilmFlowNotificationEndpoint::findAll(const PaginationRequest *request)
 {
     QUrl baseUrl(toEndpoint(NOTIFICATION_ENDPOINT));
 

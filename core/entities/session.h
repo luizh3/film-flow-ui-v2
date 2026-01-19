@@ -1,12 +1,15 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include <QString>
 #include <QJsonDocument>
+#include <QString>
+
+#include <core_global.h>
 
 #include "user.h"
 
-class Session {
+class CORE_EXPORT Session
+{
 public:
     Session();
 

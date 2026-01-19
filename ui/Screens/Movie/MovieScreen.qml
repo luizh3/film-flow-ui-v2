@@ -59,6 +59,7 @@ MovieScreenForm {
         required property bool isLikedByMe
         required property int likesCount
 
+        vReviewId: programReview.id
         vProgramTitle: programReview.programTitle
         vIsShowAboutMovie: false
         vLoadingColor: Colors.grey500

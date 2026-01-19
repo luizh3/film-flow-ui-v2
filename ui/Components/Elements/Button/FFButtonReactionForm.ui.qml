@@ -23,7 +23,7 @@ Rectangle {
     required property string vIconSelected
     required property string vIconColor
 
-    required property string vText
+    required property int vLikesCount
 
     property bool vIsSelected: false
 
@@ -50,7 +50,7 @@ Rectangle {
 
         Label {
             font: Fonts.label140
-            text: root.vText
+            text: root.vLikesCount
             color: Colors.grey50
             anchors.verticalCenter: parent.verticalCenter
         }

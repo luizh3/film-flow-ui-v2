@@ -13,7 +13,6 @@ class CONTROLS_EXPORT AuthControl : public QObject {
 public:
     Q_INVOKABLE void signIn( const QString& password, const QString& email ) const;
     Q_INVOKABLE void signUp( const SignUp* signUp ) const;
-    Q_INVOKABLE void configs() const;
 signals:
     void success();
     void error( const QString& message );

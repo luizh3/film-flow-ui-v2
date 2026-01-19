@@ -3,11 +3,18 @@
 
 #include <core_global.h>
 
+#include <network/endpoint/filmflowsectionendpoint.h>
+
 class SearchMovies;
 class SectionRequest;
 class CORE_EXPORT SectionController {
 public:
-    SearchMovies* find( const SectionRequest& request ) const;
+    SectionController();
+
+    SearchMovies* find(const SectionRequest& request);
+
+private:
+    FilmFlowSectionEndpoint _filmFlowSectionEndpoint;
 };
 
 #endif // SECTIONCONTROLLER_H

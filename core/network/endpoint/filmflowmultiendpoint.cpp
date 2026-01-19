@@ -12,7 +12,9 @@ constexpr const char *MULTI_FIND_BY_ID = "/multi/%0";
 constexpr const char *MULTI_FIND_REVIEWS_BY_ID = "/multi/%0/reviews";
 }
 
-FilmFlowMultiEndpoint::FilmFlowMultiEndpoint() {}
+FilmFlowMultiEndpoint::FilmFlowMultiEndpoint(const Session *session)
+    : FilmFlowEndpoint(session)
+{}
 
 Response *FilmFlowMultiEndpoint::find(const MultiRequest &request)
 {

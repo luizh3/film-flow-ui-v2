@@ -17,12 +17,7 @@ HomeScreenForm {
         onSectionsChanged: sections => root._handleSectionsChanged(sections)
     }
 
-    AuthControl {
-        id: authControl
-    }
-
     function _doStart() {
-        authControl.configs()
         control.doStart()
     }
 

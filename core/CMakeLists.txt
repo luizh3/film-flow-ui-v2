@@ -50,6 +50,7 @@ set( SOURCES
     controller/notificationcontroller.cpp
     network/endpoint/filmflownotificationendpoint.cpp
     entities/notificationsresult.cpp
+    controller/reviewlikecontroller.cpp
 )
 
 set( HEADERS
@@ -104,6 +105,7 @@ set( HEADERS
     controller/notificationcontroller.h
     network/endpoint/filmflownotificationendpoint.h
     entities/notificationsresult.h
+    controller/reviewlikecontroller.h
     core_global.h
 )
 

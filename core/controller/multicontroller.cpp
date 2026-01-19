@@ -4,12 +4,13 @@
 #include <entities/searchmovies.h>
 
 #include <entities/reviewsresult.h>
+#include <manager/applicationmanager.h>
 
 #include <network/request/paginationrequest.h>
 #include <network/response/response.h>
 
 MultiController::MultiController()
-    : _filmFlowMultiEndpoint{}
+    : _filmFlowMultiEndpoint{ApplicationManager::instance().session()}
 {}
 
 SearchMovies *MultiController::find(const MultiRequest &request)

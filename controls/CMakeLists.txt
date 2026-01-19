@@ -20,6 +20,7 @@ set( SOURCES
     maincontrol.cpp
     reviewprogrammodalcontrol.cpp
     notificationscontrol.cpp
+    programreviewcontrol.cpp
 )
 
 set( HEADERS
@@ -38,6 +39,7 @@ set( HEADERS
     maincontrol.h
     reviewprogrammodalcontrol.h
     notificationscontrol.h
+    programreviewcontrol.h
 )
 
 add_library(
@@ -65,7 +67,6 @@ target_link_libraries( ${LIBRARY_NAME}
     PUBLIC core
     PRIVATE Qt6::Concurrent
     PRIVATE Qt6::WebSockets
-
 )
 
 target_include_directories(${LIBRARY_NAME}

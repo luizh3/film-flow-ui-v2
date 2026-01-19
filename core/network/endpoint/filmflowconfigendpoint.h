@@ -6,6 +6,8 @@
 class Response;
 class FilmFlowConfigEndpoint : public FilmFlowEndpoint {
 public:
+    FilmFlowConfigEndpoint(const Session* session);
+
     Response* configs() const;
 };
 

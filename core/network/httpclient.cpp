@@ -27,7 +27,10 @@ Response* HttpClient::post(const QUrl& dsUrl,
 {
     QNetworkRequest request = QNetworkRequest(dsUrl);
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    if (!data.isEmpty()) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    }
 
     setRawHeaders(&request, headers);
 
@@ -56,7 +59,6 @@ Response* HttpClient::deleteResource(const QUrl& dsUrl, const HeaderMap& headers
 {
     QNetworkRequest request = QNetworkRequest(dsUrl);
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     setRawHeaders(&request, headers);
 

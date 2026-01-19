@@ -57,7 +57,7 @@ ApplicationWindow {
     Loader {
         id: mainLoader
         anchors.fill: parent
-        sourceComponent: applicationScreenComponent
+        sourceComponent: authComponent
     }
 
     PopupManager {

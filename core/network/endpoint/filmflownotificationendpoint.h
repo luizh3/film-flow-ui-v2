@@ -6,9 +6,11 @@
 class Response;
 class Notification;
 class PaginationRequest;
-class filmflownotificationendpoint : public FilmFlowEndpoint
+class FilmFlowNotificationEndpoint : public FilmFlowEndpoint
 {
 public:
+    FilmFlowNotificationEndpoint(const Session* session);
+
     Response* findAll(const PaginationRequest* request);
 };
 

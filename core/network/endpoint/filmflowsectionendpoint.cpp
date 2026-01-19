@@ -9,9 +9,13 @@ namespace {
 constexpr const char* SECTION_ENDPOINT = "/section";
 }
 
-Response* FilmFlowSectionEndpoint::find( const SectionRequest& request ) {
+FilmFlowSectionEndpoint::FilmFlowSectionEndpoint(const Session* session)
+    : FilmFlowEndpoint(session)
+{}
 
-    QUrl baseUrl( toEndpoint( SECTION_ENDPOINT ) );
+Response* FilmFlowSectionEndpoint::find(const SectionRequest& request)
+{
+    QUrl baseUrl(toEndpoint(SECTION_ENDPOINT));
 
     baseUrl.setQuery( request.toQuerys() );
 

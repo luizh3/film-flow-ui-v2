@@ -14,6 +14,7 @@ Rectangle {
 
     implicitHeight: loader.implicitHeight + Spacings.xl
 
+    required property string vReviewId
     required property string vUserImage
     required property string vUserName
     required property string vDateCreated
@@ -226,8 +227,7 @@ Rectangle {
                     vIcon: Icons.outlined.favorite
                     vIconSelected: Icons.filled.favorite
                     vIconColor: likedButton.vIsSelected ? Colors.red400 : Colors.grey50
-
-                    vText: root.vLikesCount
+                    vLikesCount: root.vLikesCount
                 }
             }
         }

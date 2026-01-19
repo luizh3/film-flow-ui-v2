@@ -6,6 +6,11 @@ namespace {
 constexpr const char* CONFIG_ENDPOINT = "/config";
 }
 
-Response* FilmFlowConfigEndpoint::configs() const {
+FilmFlowConfigEndpoint::FilmFlowConfigEndpoint(const Session* session)
+    : FilmFlowEndpoint(session)
+{}
+
+Response* FilmFlowConfigEndpoint::configs() const
+{
     return HttpClient().get(toEndpoint(CONFIG_ENDPOINT), _headers);
 }

@@ -10,11 +10,15 @@
 
 #include <QDebug>
 
+ApplicationController::ApplicationController()
+    : _filmFlowConfigEndpoint{ApplicationManager::instance().session()}
+{}
+
 void ApplicationController::configs()
 {
     qInfo() << "ApplicationController::configs";
 
-    std::unique_ptr<Response> response(FilmFlowConfigEndpoint().configs());
+    std::unique_ptr<Response> response(_filmFlowConfigEndpoint.configs());
 
     if (!response || !response->isStatusValid()) {
         emit error("Fail on get configurations");

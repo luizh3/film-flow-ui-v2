@@ -14,9 +14,13 @@ class ApplicationControl : public Control
     QML_ELEMENT
 public:
     Q_INVOKABLE void doStart();
+signals:
+    void success();
+    void error(const QString& message);
 
 private:
     void notificationsWsConnect();
+    void configs() const;
 };
 
 #endif // APPLICATIONCONTROL_H

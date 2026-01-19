@@ -12,7 +12,7 @@ class PaginationRequest;
 class FilmFlowMultiEndpoint : public FilmFlowEndpoint
 {
 public:
-    FilmFlowMultiEndpoint();
+    FilmFlowMultiEndpoint(const Session* session);
 
     Response* find(const MultiRequest& request);
     Response* findById(const int id, const MultiDetailsRequest& request);
