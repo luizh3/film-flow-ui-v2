@@ -1,20 +1,24 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
-#include <core_global.h>
+#include <QObject>
 
-#include <network/endpoint/filmflowsectionendpoint.h>
+#include <core_global.h>
 
 class SearchMovies;
 class SectionRequest;
-class CORE_EXPORT SectionController {
+class FilmFlowSectionEndpoint;
+class CORE_EXPORT SectionController : public QObject
+{
+    Q_OBJECT
 public:
     SectionController();
+    ~SectionController();
 
     SearchMovies* find(const SectionRequest& request);
 
 private:
-    FilmFlowSectionEndpoint _filmFlowSectionEndpoint;
+    std::unique_ptr<FilmFlowSectionEndpoint> _filmFlowSectionEndpoint;
 };
 
 #endif // SECTIONCONTROLLER_H

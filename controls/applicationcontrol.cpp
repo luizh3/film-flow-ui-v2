@@ -10,7 +10,6 @@
 
 void ApplicationControl::doStart()
 {
-    configs();
     notificationsWsConnect();
 }
 
@@ -26,19 +25,3 @@ void ApplicationControl::notificationsWsConnect()
     notificationManager->attach(notificationWs);
 }
 
-void ApplicationControl::configs() const
-{
-    qInfo() << "ApplicationControl::configs";
-
-    ApplicationController controller;
-
-    QObject::connect(&controller, &ApplicationController::error, this, &ApplicationControl::error);
-    QObject::connect(&controller,
-                     &ApplicationController::success,
-                     this,
-                     &ApplicationControl::success);
-
-    controller.configs();
-
-    qInfo() << "ApplicationControl::configs";
-}

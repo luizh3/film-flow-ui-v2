@@ -22,7 +22,7 @@ Response *FilmFlowMultiEndpoint::find(const MultiRequest &request)
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient.get(baseUrl, _headers);
+    return _httpClient->get(baseUrl, _headers);
 }
 
 Response *FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsRequest &request)
@@ -31,7 +31,7 @@ Response *FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsReques
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient.get(baseUrl, _headers);
+    return _httpClient->get(baseUrl, _headers);
 }
 
 Response *FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
@@ -41,10 +41,5 @@ Response *FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient.get(baseUrl, _headers);
-}
-
-void FilmFlowMultiEndpoint::cancel()
-{
-    _httpClient.cancel();
+    return _httpClient->get(baseUrl, _headers);
 }

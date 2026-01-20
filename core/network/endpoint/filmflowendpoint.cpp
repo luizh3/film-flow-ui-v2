@@ -4,6 +4,8 @@
 
 #include <QUrl>
 
+#include <network/httpclient.h>
+
 #include <manager/applicationmanager.h>
 
 #include <entities/session.h>
@@ -13,7 +15,15 @@ FilmFlowEndpoint::FilmFlowEndpoint(const Session* session)
     : _host{qEnvironmentVariable("FILM_FLOW_API_HOST")}
     , _token{session->token()}
     , _headers{{{"Authorization", _token}}}
+    , _httpClient{new HttpClient()}
 {}
+
+void FilmFlowEndpoint::cancel() const
+{
+    _httpClient->cancel();
+}
+
+FilmFlowEndpoint::~FilmFlowEndpoint() = default;
 
 QUrl FilmFlowEndpoint::toEndpoint( const QString& path ) const {
     return QUrl( _host + path );

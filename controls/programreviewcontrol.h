@@ -13,6 +13,7 @@ class ProgramReviewControl : public Control
     Q_OBJECT
     QML_ELEMENT
 public:
+    ~ProgramReviewControl();
     ProgramReviewControl();
 
     Q_INVOKABLE void like(const QString &reviewId);

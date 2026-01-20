@@ -3,8 +3,6 @@
 
 #include "filmflowendpoint.h"
 
-#include <network/httpclient.h>
-
 class Response;
 class Review;
 class PaginationRequest;
@@ -18,11 +16,6 @@ public:
     Response* findAll(const PaginationRequest* request);
     Response* like(const QString& reviewId);
     Response* unlike(const QString& reviewId);
-
-    void cancel();
-
-private:
-    HttpClient _httpClient;
 };
 
 #endif // FILMFLOWREVIEWENDPOINT_H

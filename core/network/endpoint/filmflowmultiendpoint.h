@@ -17,11 +17,6 @@ public:
     Response* find(const MultiRequest& request);
     Response* findById(const int id, const MultiDetailsRequest& request);
     Response* findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
-
-    void cancel();
-
-private:
-    HttpClient _httpClient;
 };
 
 #endif // FILMFLOWMULTIENDPOINT_H

@@ -1,5 +1,6 @@
 #include "reviewlikecontroller.h"
 
+#include <network/endpoint/filmflowreviewendpoint.h>
 #include <network/response/response.h>
 
 #include <manager/applicationmanager.h>
@@ -7,12 +8,12 @@
 ReviewLikeController::~ReviewLikeController() = default;
 
 ReviewLikeController::ReviewLikeController()
-    : _filmFlowReviewEndpoint{ApplicationManager::instance().session()}
+    : _filmFlowReviewEndpoint{new FilmFlowReviewEndpoint(ApplicationManager::instance().session())}
 {}
 
 void ReviewLikeController::like(const QString &reviewId)
 {
-    std::unique_ptr<Response> response(_filmFlowReviewEndpoint.like(reviewId));
+    std::unique_ptr<Response> response(_filmFlowReviewEndpoint->like(reviewId));
 
     if (!response || !response->isStatusValid()) {
         emit errorLiked(tr("Fail on like review!"));
@@ -24,7 +25,7 @@ void ReviewLikeController::like(const QString &reviewId)
 
 void ReviewLikeController::unlike(const QString &reviewId)
 {
-    std::unique_ptr<Response> response(_filmFlowReviewEndpoint.unlike(reviewId));
+    std::unique_ptr<Response> response(_filmFlowReviewEndpoint->unlike(reviewId));
 
     if (!response || !response->isStatusValid()) {
         emit errorUnliked(tr("Fail on unlike review!"));
@@ -36,5 +37,5 @@ void ReviewLikeController::unlike(const QString &reviewId)
 
 void ReviewLikeController::cancel()
 {
-    _filmFlowReviewEndpoint.cancel();
+    _filmFlowReviewEndpoint->cancel();
 }

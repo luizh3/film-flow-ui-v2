@@ -3,6 +3,21 @@
 #include <core/helper/taskrunhelper.h>
 #include <core/network/endpoint/filmflowreviewendpoint.h>
 
+ProgramReviewControl::~ProgramReviewControl()
+{
+    QObject::disconnect(&_reviewLikeController,
+                        &ReviewLikeController::errorLiked,
+                        this,
+                        &ProgramReviewControl::rollbackLike);
+
+    QObject::disconnect(&_reviewLikeController,
+                        &ReviewLikeController::errorUnliked,
+                        this,
+                        &ProgramReviewControl::rollbackUnlike);
+
+    _reviewLikeController.cancel();
+}
+
 ProgramReviewControl::ProgramReviewControl()
 {
     QObject::connect(&_reviewLikeController,

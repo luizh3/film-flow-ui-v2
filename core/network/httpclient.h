@@ -1,9 +1,9 @@
 #ifndef HTTPCLIENT_H
 #define HTTPCLIENT_H
 
-#include <QByteArray>
 #include <QJsonDocument>
 #include <QMap>
+#include <QObject>
 
 #include "response/response.h"
 
@@ -12,8 +12,9 @@ using HeaderMap = QMap<QString, QString>;
 class QNetworkReply;
 class QNetworkRequest;
 class QNetworkAccessManager;
-class HttpClient
+class HttpClient : public QObject
 {
+    Q_OBJECT
 public:
     Response* get(const QUrl& dsUrl, const HeaderMap& headers = {}, const int timeout = 15000);
 
@@ -38,9 +39,8 @@ public:
                           std::function<QNetworkReply*(QNetworkAccessManager& network)> method);
 
     void cancel();
-
-private:
-    QNetworkReply* _reply = nullptr;
+signals:
+    void cancelRequested();
 };
 
 #endif // HTTPCLIENT_H

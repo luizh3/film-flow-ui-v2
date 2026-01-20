@@ -5,20 +5,20 @@
 
 #include <core_global.h>
 
-#include <network/endpoint/filmflownotificationendpoint.h>
-
 class PaginationRequest;
 class NotificationsResult;
+class FilmFlowNotificationEndpoint;
 class CORE_EXPORT NotificationController : public QObject
 {
     Q_OBJECT
 public:
     NotificationController();
+    ~NotificationController();
 
     NotificationsResult* findAll(const PaginationRequest* paginationRequest);
 
 private:
-    FilmFlowNotificationEndpoint _filmFlowNotificationEndpoint;
+    std::unique_ptr<FilmFlowNotificationEndpoint> _filmFlowNotificationEndpoint;
 };
 
 #endif // NOTIFICATIONCONTROLLER_H

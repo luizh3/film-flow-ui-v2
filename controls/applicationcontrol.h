@@ -20,7 +20,6 @@ signals:
 
 private:
     void notificationsWsConnect();
-    void configs() const;
 };
 
 #endif // APPLICATIONCONTROL_H

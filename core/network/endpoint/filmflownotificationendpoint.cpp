@@ -19,5 +19,5 @@ Response *FilmFlowNotificationEndpoint::findAll(const PaginationRequest *request
 
     baseUrl.setQuery(request->toQuerys());
 
-    return HttpClient().get(baseUrl, _headers);
+    return _httpClient->get(baseUrl, _headers);
 }

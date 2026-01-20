@@ -5,8 +5,7 @@
 
 #include <core_global.h>
 
-#include <network/endpoint/filmflowreviewendpoint.h>
-
+class FilmFlowReviewEndpoint;
 class CORE_EXPORT ReviewLikeController : public QObject
 {
     Q_OBJECT
@@ -18,6 +17,7 @@ public:
     void unlike(const QString& reviewId);
 
     void cancel();
+
 signals:
     void errorLiked(const QString& message);
     void successLiked();
@@ -26,7 +26,7 @@ signals:
     void successUnliked();
 
 private:
-    FilmFlowReviewEndpoint _filmFlowReviewEndpoint;
+    std::unique_ptr<FilmFlowReviewEndpoint> _filmFlowReviewEndpoint;
 };
 
 #endif // REVIEWLIKECONTROLLER_H

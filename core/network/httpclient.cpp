@@ -8,7 +8,8 @@
 
 #include "httpstatuscode.h"
 
-Response* HttpClient::get( const QUrl& dsUrl, const HeaderMap& headers, const int timeout ) {
+Response* HttpClient::get(const QUrl& dsUrl, const HeaderMap& headers, const int timeout)
+{
     QNetworkRequest request = QNetworkRequest(dsUrl);
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -78,48 +79,47 @@ Response* HttpClient::makeRequest(const QUrl& dsUrl,
                                   std::function<QNetworkReply*(QNetworkAccessManager&)> method)
 {
     QNetworkAccessManager networkManager;
-    _reply = method(networkManager);
+    QNetworkReply* reply = method(networkManager);
 
     QTimer timer;
     QEventLoop loop;
 
-    QObject::connect( &timer, &QTimer::timeout, &loop, &QEventLoop::quit );
-    QObject::connect(_reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
-    timer.start( timeout );
+    QObject::connect(this,
+                     &HttpClient::cancelRequested,
+                     reply,
+                     &QNetworkReply::abort,
+                     Qt::QueuedConnection);
+
+    timer.start(timeout);
     loop.exec();
 
-    if( !timer.isActive() ) {
-        QObject::disconnect(_reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QObject::disconnect(this, nullptr, reply, nullptr);
 
-        _reply->abort();
-
-        _reply = nullptr;
-
-        return new Response( HttpStatusCode::TIMEOUT, {} );
+    if (!timer.isActive()) {
+        reply->abort();
+        delete reply;
+        return new Response(HttpStatusCode::TIMEOUT, {});
     }
 
-    timer.stop();
+    if (reply->error() == QNetworkReply::OperationCanceledError) {
+        delete reply;
+        return nullptr;
+    }
 
-    const QByteArray result = _reply->readAll();
+    const QByteArray result = reply->readAll();
 
-    const HttpStatusCode status = HttpStatusCode(
-        _reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
+    const auto status = HttpStatusCode(
+        reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
 
-    _reply = nullptr;
+    delete reply;
 
-    return new Response( status, QJsonDocument::fromJson( result ) );
+    return new Response(status, QJsonDocument::fromJson(result));
 }
 
 void HttpClient::cancel()
 {
-    if (!_reply) {
-        return;
-    }
-
-    if (!_reply->isRunning()) {
-        return;
-    }
-
-    _reply->abort();
+    emit cancelRequested();
 }

@@ -20,14 +20,14 @@ Response *FilmFlowReviewEndpoint::create(const Review *review)
 {
     QUrl baseUrl(toEndpoint(REVIEW_ENDPOINT));
 
-    return _httpClient.post(baseUrl, review->toJson(), _headers);
+    return _httpClient->post(baseUrl, review->toJson(), _headers);
 }
 
 Response *FilmFlowReviewEndpoint::update(const Review *review)
 {
     QUrl baseUrl(toEndpoint(REVIEW_ENDPOINT));
 
-    return _httpClient.put(baseUrl, review->toJson(), _headers);
+    return _httpClient->put(baseUrl, review->toJson(), _headers);
 }
 
 Response *FilmFlowReviewEndpoint::findAll(const PaginationRequest *request)
@@ -36,24 +36,20 @@ Response *FilmFlowReviewEndpoint::findAll(const PaginationRequest *request)
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient.get(baseUrl, _headers);
+    return _httpClient->get(baseUrl, _headers);
 }
 
 Response *FilmFlowReviewEndpoint::like(const QString &reviewId)
 {
     QUrl baseUrl(toEndpoint(QString(REVIEW_LIKE).arg(reviewId)));
 
-    return _httpClient.post(baseUrl, {}, _headers);
+    return _httpClient->post(baseUrl, {}, _headers);
 }
 
 Response *FilmFlowReviewEndpoint::unlike(const QString &reviewId)
 {
     QUrl baseUrl(toEndpoint(QString(REVIEW_LIKE).arg(reviewId)));
 
-    return _httpClient.deleteResource(baseUrl, _headers);
+    return _httpClient->deleteResource(baseUrl, _headers);
 }
 
-void FilmFlowReviewEndpoint::cancel()
-{
-    _httpClient.cancel();
-}

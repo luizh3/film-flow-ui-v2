@@ -19,9 +19,13 @@ constexpr int NR_REVIEWS_BY_PAGE = 5;
 
 ReviewsListModel::~ReviewsListModel()
 {
+    _reviewController->cancel();
+    _multiController->cancel();
+
+    _reviewController->deleteLater();
+    _multiController->deleteLater();
+
     delete _paginationRequest;
-    delete _reviewController;
-    delete _multiController;
 
     qDeleteAll(_reviewsCard);
 }
@@ -135,6 +139,12 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 {
     if (future->isFinished() && !future->isCanceled()) {
         std::unique_ptr<ReviewsResult> reviewsResult(future->result());
+
+        if (!reviewsResult) {
+            _isFetching = false;
+            future->deleteLater();
+            return;
+        }
 
         const bool isFirstPage = _paginationRequest->page() == 1;
 

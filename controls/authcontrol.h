@@ -16,6 +16,8 @@ public:
 signals:
     void success();
     void error( const QString& message );
+private slots:
+    void configs() const;
 };
 
 #endif // AUTHCONTROL_H

@@ -56,6 +56,7 @@ ReviewScreenForm {
         required property int likesCount
 
         ProgramReview {
+            vReviewId: id
             vProgramTitle: currentDelegate.programTitle
             vIsShowAboutMovie: true
             vLoadingColor: Colors.grey600
