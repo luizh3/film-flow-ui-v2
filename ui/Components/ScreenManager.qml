@@ -67,6 +67,16 @@ Item {
         visible: stack.depth > 0
         anchors.fill: parent
 
+        background: Rectangle {
+            color: "#000000"
+
+            MouseArea {
+                anchors.fill: parent
+                enabled: stack.depth > 0
+                hoverEnabled: false
+            }
+        }
+
         pushEnter: Transition {
             PropertyAnimation {
                 property: "opacity"

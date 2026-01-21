@@ -14,6 +14,8 @@ GenericScreen {
     implicitWidth: 1024
     implicitHeight: 768
 
+    property var vUser
+
     property alias backButtonNavigation: backButtonNavigation
     property alias goBackButton: goBackButton
 
@@ -46,8 +48,9 @@ GenericScreen {
                 id: nameField
                 Layout.fillWidth: true
                 vLabel: qsTr("Name")
-                vPlaceHolderText: ""
+                vText: vUser?.name ?? ""
                 vType: FFTextField.Type.Primary
+                enabled: false
                 vValidator: RangeValidator {
                     vMin: 3
                     vMax: 30
@@ -58,7 +61,8 @@ GenericScreen {
                 id: emailField
                 Layout.fillWidth: true
                 vLabel: qsTr("E-mail")
-                vPlaceHolderText: ""
+                vText: vUser?.email ?? ""
+                enabled: false
                 vValidator: EmailValidator {}
             }
 

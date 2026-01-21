@@ -17,6 +17,8 @@ public:
 
     SearchMovies* find(const SectionRequest& request);
 
+    void cancel();
+
 private:
     std::unique_ptr<FilmFlowSectionEndpoint> _filmFlowSectionEndpoint;
 };

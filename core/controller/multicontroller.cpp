@@ -20,12 +20,20 @@ SearchMovies *MultiController::find(const MultiRequest &request)
 {
     std::unique_ptr<Response> response(_filmFlowMultiEndpoint->find(request));
 
+    if (!response) {
+        return nullptr;
+    }
+
     return SearchMovies::fromJson(response->data());
 }
 
 MovieInformation *MultiController::findById(const int id, const MultiDetailsRequest &request)
 {
     std::unique_ptr<Response> response(_filmFlowMultiEndpoint->findById(id, request));
+
+    if (!response) {
+        return nullptr;
+    }
 
     return MovieInformation::fromJson(response->data());
 }
@@ -34,6 +42,10 @@ ReviewsResult *MultiController::findAllReviewsByIdMovie(const int id,
                                                         const PaginationRequest *request)
 {
     std::unique_ptr<Response> response(_filmFlowMultiEndpoint->findAllReviewsByIdMovie(id, request));
+
+    if (!response) {
+        return nullptr;
+    }
 
     return ReviewsResult::fromJson(response->data());
 }

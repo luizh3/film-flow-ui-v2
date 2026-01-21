@@ -17,7 +17,7 @@ void AuthController::signIn(const QString& password, const QString& email)
     std::unique_ptr<Response> response( AuthEndpoint().signIn( signIn ) );
 
     if( !response || !response->isStatusValid() ) {
-        emit error( "Fail on loggin" );
+        emit error("Fail on loggin!");
         return;
     }
 
@@ -31,7 +31,7 @@ void AuthController::signUp(const SignUp* signUp)
     std::unique_ptr<Response> response( AuthEndpoint().signUp( signUp ) );
 
     if( !response || !response->isStatusValid() ) {
-        emit error( "Fail on register" );
+        emit error("Fail on register!");
         return;
     }
 

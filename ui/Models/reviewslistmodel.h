@@ -28,7 +28,7 @@ public:
     ~ReviewsListModel();
     ReviewsListModel();
 
-    enum class ReviewFetchModeType { ByUser, ByProgram };
+    enum class ReviewFetchModeType : short { ByUser, ByProgram };
 
     Q_ENUM(ReviewFetchModeType)
 
@@ -98,8 +98,8 @@ private:
     ReviewController* _reviewController;
     MultiController* _multiController;
 
-    ReviewFetchModeType _fetchModeType;
     int _movieId;
+    ReviewFetchModeType _fetchModeType;
     bool _isReviewsEnded;
     bool _isFetching;
 

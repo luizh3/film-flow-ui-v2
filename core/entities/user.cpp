@@ -2,6 +2,12 @@
 
 User::User() {}
 
+User::User(const User* user)
+    : _email{user->email()}
+    , _avatarUrl{user->avatarUrl()}
+    , _name{user->name()}
+{}
+
 QString User::email() const {
     return _email;
 }

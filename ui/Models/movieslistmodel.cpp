@@ -14,8 +14,11 @@ constexpr int NR_MOVIES_BY_PAGE = 20;
 
 MoviesListModel::~MoviesListModel()
 {
+    _sectionController->cancel();
+
+    _sectionController->deleteLater();
+
     delete _sectionRequest;
-    delete _sectionController;
 
     qDeleteAll(_moviesCard);
 }
@@ -168,13 +171,23 @@ void MoviesListModel::setKey(const QString &newKey)
 
 void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
 {
-    if (future->isFinished() && !future->isCanceled()) {
-        std::unique_ptr<SearchMovies> searchMovies(future->result());
-
-        updateCardsMovie(_fechingMoviesCard, searchMovies->movies());
-
+    if (future->isCanceled()) {
+        future->deleteLater();
         _isFetching = false;
+        return;
     }
+
+    std::unique_ptr<SearchMovies> searchMovies(future->result());
+
+    if (!searchMovies) {
+        future->deleteLater();
+        _isFetching = false;
+        return;
+    }
+
+    updateCardsMovie(_fechingMoviesCard, searchMovies->movies());
+
+    _isFetching = false;
 
     future->deleteLater();
 }

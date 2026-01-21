@@ -12,6 +12,11 @@ QValidator::State PasswordValidator::validDefault( QString &value, int& position
 {
     _error = "";
 
+    if (value.isEmpty()) {
+        _error = tr("Empty is not allowed");
+        return QValidator::State::Intermediate;
+    }
+
     QValidator::State state = RangeValidator::validate( value, position );
 
     if( state != QValidator::State::Acceptable ) {
@@ -20,16 +25,12 @@ QValidator::State PasswordValidator::validDefault( QString &value, int& position
 
     const bool isValid = RegexHelper::isPasswordValid( value );
 
-    if( value.isEmpty() ) {
-        _error = "Empty is not allowed";
-        return QValidator::State::Intermediate;
-    }
-
     if( isValid ) {
         return QValidator::State::Acceptable;
     }
 
-    _error = "A senha deve ter no mínimo 8 caracteres. \nIncluir uma letra maiúscula e minúscula. \nDeve incluir um símbolo especial (ex: !@#$%^&*).";
+    _error = tr("The password must be at least 8 characters long. \nInclude an uppercase and "
+                "lowercase letter. \nIt must include a special symbol (e.g., !@#$%^&*).");
 
     return QValidator::State::Intermediate;
 }
@@ -39,13 +40,18 @@ QValidator::State PasswordValidator::validRepeat( const QString &value ) const
 
     _error = "";
 
+    if (value.isEmpty()) {
+        _error = tr("Empty is not allowed");
+        return QValidator::State::Intermediate;
+    }
+
     const bool isValid = value == _repeatPassword;
 
     if( isValid ) {
         return QValidator::State::Acceptable;
     }
 
-    _error = "Password don't match";
+    _error = tr("Password don't match");
 
     return QValidator::State::Intermediate;
 

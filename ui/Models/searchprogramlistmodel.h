@@ -83,7 +83,6 @@ private:
 
     QList<SearchProgramCard *> _fechingSearchProgramCards;
     QList<SearchProgramCard *> _programCards;
-    QFutureWatcher<SearchMovies *> *_future = nullptr;
 };
 
 #endif // SEARCHPROGRAMLISTMODEL_H

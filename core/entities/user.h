@@ -4,7 +4,10 @@
 #include <QObject>
 #include <QQmlEngine>
 
-class User : public QObject {
+#include <core_global.h>
+
+class CORE_EXPORT User : public QObject
+{
     Q_OBJECT
     QML_ELEMENT
     Q_PROPERTY( QString email READ email WRITE setEmail NOTIFY emailChanged FINAL )
@@ -12,6 +15,7 @@ class User : public QObject {
     Q_PROPERTY( QString avatarUrl READ avatarUrl WRITE setAvatarUrl NOTIFY avatarUrlChanged FINAL )
 public:
     User();
+    User(const User *user);
 
     QString email() const;
 

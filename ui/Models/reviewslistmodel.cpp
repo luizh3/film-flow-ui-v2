@@ -137,28 +137,31 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
 
 void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 {
-    if (future->isFinished() && !future->isCanceled()) {
-        std::unique_ptr<ReviewsResult> reviewsResult(future->result());
-
-        if (!reviewsResult) {
-            _isFetching = false;
-            future->deleteLater();
-            return;
-        }
-
-        const bool isFirstPage = _paginationRequest->page() == 1;
-
-        if (isFirstPage) {
-            emit totalReviewsFound(reviewsResult->pagination()->totalResult());
-        }
-
-        _isReviewsEnded = reviewsResult->pagination()->totalPage() == _paginationRequest->page();
-
-        updateCardsReview(_fetchingReviewsCard, reviewsResult->reviews());
-
+    if (future->isCanceled()) {
         _isFetching = false;
+        future->deleteLater();
+        return;
     }
 
+    std::unique_ptr<ReviewsResult> reviewsResult(future->result());
+
+    if (!reviewsResult) {
+        _isFetching = false;
+        future->deleteLater();
+        return;
+    }
+
+    const bool isFirstPage = _paginationRequest->page() == 1;
+
+    if (isFirstPage) {
+        emit totalReviewsFound(reviewsResult->pagination()->totalResult());
+    }
+
+    _isReviewsEnded = reviewsResult->pagination()->totalPage() == _paginationRequest->page();
+
+    updateCardsReview(_fetchingReviewsCard, reviewsResult->reviews());
+
+    _isFetching = false;
     future->deleteLater();
 }
 
@@ -213,6 +216,8 @@ ReviewsResult *ReviewsListModel::onFetchStarted()
         return _reviewController->findAll(_paginationRequest);
     case ReviewsListModel::ReviewFetchModeType::ByProgram:
         return _multiController->findAllReviewsByIdMovie(_movieId, _paginationRequest);
+    default:
+        return nullptr;
     }
 }
 

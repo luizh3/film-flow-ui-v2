@@ -17,8 +17,11 @@ constexpr int NR_REVIEWS_BY_PAGE = 10;
 
 NotificationsListModel::~NotificationsListModel()
 {
+    _notificationController->cancel();
+
+    _notificationController->deleteLater();
+
     delete _paginationRequest;
-    delete _notificationController;
 
     qDeleteAll(_notificationsCard);
 }
@@ -112,16 +115,25 @@ NotificationsResult *NotificationsListModel::onFetchStarted()
 
 void NotificationsListModel::onFetchEnded(QFutureWatcher<NotificationsResult *> *future)
 {
-    if (future->isFinished() && !future->isCanceled()) {
-        std::unique_ptr<NotificationsResult> notificationsResult(future->result());
-
-        _isReviewsEnded = notificationsResult->pagination()->totalPage()
-                          == _paginationRequest->page();
-
-        updateCardsNotification(_fetchingNotificatiosCard, notificationsResult->notifications());
-
+    if (future->isCanceled()) {
         _isFetching = false;
+        future->deleteLater();
+        return;
     }
+
+    std::unique_ptr<NotificationsResult> notificationsResult(future->result());
+
+    if (!notificationsResult) {
+        future->deleteLater();
+        _isFetching = false;
+        return;
+    }
+
+    _isReviewsEnded = notificationsResult->pagination()->totalPage() == _paginationRequest->page();
+
+    updateCardsNotification(_fetchingNotificatiosCard, notificationsResult->notifications());
+
+    _isFetching = false;
 
     future->deleteLater();
 }

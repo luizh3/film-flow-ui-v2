@@ -57,11 +57,11 @@ SideBarForm {
                     vIcon: "qrc:/icons/house"
                     vType: SideBar.TypeMenuItem.Home
                 },
-                ListElement {
-                    vText: qsTr("Favorites")
-                    vIcon: "qrc:/icons/favorite"
-                    vType: SideBar.TypeMenuItem.Favorites
-                },
+                // ListElement {
+                //     vText: qsTr("Favorites")
+                //     vIcon: "qrc:/icons/favorite"
+                //     vType: SideBar.TypeMenuItem.Favorites
+                // },
                 ListElement {
                     vText: qsTr("Reviews")
                     vIcon: "qrc:/icons/new"

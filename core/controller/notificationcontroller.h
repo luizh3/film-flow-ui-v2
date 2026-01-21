@@ -17,6 +17,8 @@ public:
 
     NotificationsResult* findAll(const PaginationRequest* paginationRequest);
 
+    void cancel();
+
 private:
     std::unique_ptr<FilmFlowNotificationEndpoint> _filmFlowNotificationEndpoint;
 };

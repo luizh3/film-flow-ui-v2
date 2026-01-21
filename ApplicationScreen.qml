@@ -106,12 +106,6 @@ Item {
         ReviewScreen {}
     }
 
-    Component {
-        id: profileComponent
-
-        ProfileScreen {}
-    }
-
     Component.onCompleted: function () {
         control.doStart()
         root._handleChangeItem(SideBar.TypeMenuItem.Home)

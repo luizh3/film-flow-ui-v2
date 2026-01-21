@@ -13,6 +13,12 @@ LoginScreenForm {
         id: inputStateValidator
 
         inputs: [root.emailField, root.passwordField]
+        onIsValidChanged: root._handleFieldsValid()
+    }
+
+    function _handleFieldsValid() {
+        root.loginButton.vState
+                = inputStateValidator.isValid ? FFButton.State.Active : FFButton.State.Disabled
     }
 
     function _handleLogin() {

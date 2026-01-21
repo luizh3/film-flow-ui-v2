@@ -21,6 +21,7 @@ set( SOURCES
     reviewprogrammodalcontrol.cpp
     notificationscontrol.cpp
     programreviewcontrol.cpp
+    profilescreencontrol.cpp
 )
 
 set( HEADERS
@@ -40,6 +41,7 @@ set( HEADERS
     reviewprogrammodalcontrol.h
     notificationscontrol.h
     programreviewcontrol.h
+    profilescreencontrol.h
 )
 
 add_library(

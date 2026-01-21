@@ -4,9 +4,6 @@ QtObject {
 
     property list<FFTextField> inputs: []
 
-    function isValid() {
-        return inputs.every(current => {
-                                return current.enabled && current.vIsValid
-                            })
-    }
+    property bool isValid: inputs.length > 0 && inputs.every(
+                               input => input.enabled && input.vIsAcceptable)
 }

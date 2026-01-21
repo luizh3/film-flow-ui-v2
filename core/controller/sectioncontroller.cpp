@@ -17,5 +17,14 @@ SearchMovies *SectionController::find(const SectionRequest &request)
 {
     std::unique_ptr<Response> response(_filmFlowSectionEndpoint->find(request));
 
+    if (!response) {
+        return nullptr;
+    }
+
     return SearchMovies::fromJson( response->data() );
+}
+
+void SectionController::cancel()
+{
+    _filmFlowSectionEndpoint->cancel();
 }

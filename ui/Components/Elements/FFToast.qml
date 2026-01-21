@@ -12,7 +12,7 @@ FFToastForm {
     anchors {
         right: parent.right
         top: parent.top
-        topMargin: Spacings.sm
+        topMargin: Spacings.xl4
         rightMargin: Spacings.sm
     }
 

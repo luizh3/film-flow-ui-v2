@@ -11,6 +11,18 @@ RegisterScreenForm {
     backButton.onClicked: root.goBack()
     signUpButton.onClicked: root._handleSignUp()
 
+    FFInputStateValidator {
+        id: inputStateValidator
+
+        inputs: [root.emailField, root.passwordRepeatField, root.passwordField, root.nameField]
+        onIsValidChanged: root._handleFieldsValid()
+    }
+
+    function _handleFieldsValid() {
+        root.signUpButton.vState
+                = inputStateValidator.isValid ? FFButton.State.Active : FFButton.State.Disabled
+    }
+
     property SignUp signUp: SignUp {
         name: root.nameField.vText
         email: root.emailField.vText

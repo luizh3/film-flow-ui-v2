@@ -25,8 +25,11 @@ SearchProgramListModel::SearchProgramListModel()
 
 SearchProgramListModel::~SearchProgramListModel()
 {
+    _multiController->cancel();
+
+    _multiController->deleteLater();
+
     delete _multiRequest;
-    delete _multiController;
 
     qDeleteAll(_programCards);
 }
@@ -95,11 +98,11 @@ void SearchProgramListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new SearchProgramCard(); });
 
-    _future = TaskRunHelper::async<SearchMovies *>(
+    QFutureWatcher<SearchMovies *> *future = TaskRunHelper::async<SearchMovies *>(
         [&]() { return _multiController->find(*_multiRequest); });
 
-    QObject::connect(_future, &QFutureWatcher<SearchMovies *>::finished, this, [this]() {
-        onFetchEnded(_future);
+    QObject::connect(future, &QFutureWatcher<SearchMovies *>::finished, this, [this, future]() {
+        onFetchEnded(future);
     });
 }
 
@@ -170,52 +173,42 @@ void SearchProgramListModel::setVDsQuery(const QString &newVDsQuery)
 
     _multiController->cancel();
 
-    if (_future) {
-        _future->cancel();
-    } else {
-        beginResetModel();
-        qDeleteAll(_programCards);
-        _programCards.clear();
-        _fechingSearchProgramCards.clear();
-        _multiRequest->setPage(0);
-        endResetModel();
-    }
+    beginResetModel();
+
+    qDeleteAll(_programCards);
+
+    _programCards.clear();
+
+    _fechingSearchProgramCards.clear();
+
+    _multiRequest->setPage(0);
+
+    endResetModel();
 
     emit vDsQueryChanged();
 }
 
 void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
 {
-    if (_future->isFinished() && !_future->isCanceled()) {
-        std::unique_ptr<SearchMovies> searchMovies(_future->result());
-
-        updateCardsMovie(_fechingSearchProgramCards, searchMovies->movies());
-    }
-
-    if (_future->isCanceled()) {
-        beginResetModel();
-
-        qDeleteAll(_programCards);
-        _programCards.clear();
-        _fechingSearchProgramCards.clear();
-
-        _future->deleteLater();
-        _multiRequest->setPage(0);
-
-        _future = nullptr;
-
+    if (future->isCanceled()) {
         _isFetching = false;
-
-        endResetModel();
-
+        future->deleteLater();
         return;
     }
 
+    std::unique_ptr<SearchMovies> searchMovies(future->result());
+
+    if (!searchMovies) {
+        _isFetching = false;
+        future->deleteLater();
+        return;
+    }
+
+    updateCardsMovie(_fechingSearchProgramCards, searchMovies->movies());
+
     _isFetching = false;
 
-    _future->deleteLater();
-
-    _future = nullptr;
+    future->deleteLater();
 }
 
 SearchProgramListModel::SearchProgramCard::SearchProgramCard()

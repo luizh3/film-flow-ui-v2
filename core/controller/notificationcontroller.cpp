@@ -18,5 +18,14 @@ NotificationsResult *NotificationController::findAll(const PaginationRequest *pa
 {
     std::unique_ptr<Response> response(_filmFlowNotificationEndpoint->findAll(paginationRequest));
 
+    if (!response) {
+        return nullptr;
+    }
+
     return NotificationsResult::fromJson(response->data());
+}
+
+void NotificationController::cancel()
+{
+    _filmFlowNotificationEndpoint->cancel();
 }
