@@ -11,7 +11,7 @@ Row {
     Label {
         text: "Film"
         font: root.vFont
-        color: Colors.orange600
+        color: Colors.primary600
     }
 
     Label {

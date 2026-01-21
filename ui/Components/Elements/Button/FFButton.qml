@@ -35,7 +35,7 @@ FFButtonForm {
     }
 
     function _toPrimaryType() {
-        root._changeType(Colors.primary, root.vIcon)
+        root._changeType(Colors.primary500, root.vIcon)
     }
 
     function _toSecundaryType() {

@@ -25,7 +25,7 @@ Button {
         Rectangle {
             width: 4
             height: parent.height
-            color: Colors.primary
+            color: Colors.primary500
             topLeftRadius: Spacings.sm
             bottomLeftRadius: Spacings.sm
             visible: root.vSelected
@@ -43,7 +43,7 @@ Button {
         FFIcon {
             id: icon
             source: root.vIcon
-            vColor: root.vSelected ? Colors.primary : Colors.grey200
+            vColor: root.vSelected ? Colors.primary500 : Colors.grey200
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: Spacings.xl3

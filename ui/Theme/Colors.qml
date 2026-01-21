@@ -2,9 +2,10 @@ pragma Singleton
 
 import QtQuick
 
+import ThemeColorManager 1.0
+
 QtObject {
 
-    readonly property string primary: orange500
     readonly property string secundary: grey800
     readonly property string error: red400
 
@@ -13,13 +14,13 @@ QtObject {
 
     readonly property string neutral100: "#FFFFFF"
 
-    readonly property string orange50: "#fef2e6"
-    readonly property string orange100: "#fcd6b0"
-    readonly property string orange200: "#fac38a"
-    readonly property string orange300: "#f8a754"
-    readonly property string orange400: "#f79633"
-    readonly property string orange500: "#f57c00"
-    readonly property string orange600: "#df7100"
+    readonly property string primary50: ThemeColorManager.primary50
+    readonly property string primary100: ThemeColorManager.primary100
+    readonly property string primary200: ThemeColorManager.primary200
+    readonly property string primary300: ThemeColorManager.primary300
+    readonly property string primary400: ThemeColorManager.primary400
+    readonly property string primary500: ThemeColorManager.primary500
+    readonly property string primary600: ThemeColorManager.primary600
 
     readonly property string grey50: "#ebebeb"
     readonly property string grey100: "#c0c0c0"

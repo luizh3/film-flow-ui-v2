@@ -5,7 +5,7 @@ import Ui.Theme
 
 Rectangle {
     id: root
-    color: Colors.primary
+    color: Colors.primary500
     implicitHeight: 33
     width: labelText.width + _nrSideMargin * 2
     radius: Radius.md

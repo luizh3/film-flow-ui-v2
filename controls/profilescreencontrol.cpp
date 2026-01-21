@@ -10,6 +10,8 @@ ProfileScreenControl::ProfileScreenControl()
 
 void ProfileScreenControl::doStart()
 {
+    // TODO make a request to get data for this screen
+
     _user.reset(new User(ApplicationManager::instance().session()->user()));
 
     emit userChanged(QVariant::fromValue(_user.get()));

@@ -8,7 +8,7 @@ Rectangle {
     implicitHeight: 32
     radius: width / 2
     color: mouseArea.containsMouse
-           && root.vHasHover ? Colors.primary : Colors.grey100
+           && root.vHasHover ? Colors.primary500 : Colors.grey100
 
     property bool vHasHover: true
     required property string vIcon

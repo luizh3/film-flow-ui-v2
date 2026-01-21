@@ -13,6 +13,9 @@
 
 #include <QPixmapCache>
 
+#include <theme/themecolorfactory.h>
+#include <theme/themecolormanager.h>
+
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
@@ -30,7 +33,20 @@ int main(int argc, char *argv[]) {
         "MovieInformation não pode ser criado no QML"
         );
 
-    qmlRegisterUncreatableMetaObject( TypeProgram::staticMetaObject, "TypeProgramEnum", 1, 0, "TypeProgramEnum", "Access to enums & flags only");
+    qmlRegisterSingletonInstance("ThemeColorManager",
+                                 1,
+                                 0,
+                                 "ThemeColorManager",
+                                 ThemeColorManager::instance());
+
+    qmlRegisterUncreatableMetaObject(TypeProgram::staticMetaObject,
+                                     "TypeProgramEnum",
+                                     1,
+                                     0,
+                                     "TypeProgramEnum",
+                                     "Access to enums & flags only");
+
+    ThemeColorManager::instance()->setTheme(ThemeColorFactory::getOrange());
 
     QObject::connect(
         &engine,

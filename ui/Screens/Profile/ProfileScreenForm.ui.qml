@@ -74,7 +74,7 @@ GenericScreen {
                     vIcon: Icons.outlined.star
                     vText: qsTr("Reviews")
                     vBagdetText: "23"
-                    vIconColor: Colors.orange300
+                    vIconColor: Colors.primary300
                 }
 
                 FFActionPill {

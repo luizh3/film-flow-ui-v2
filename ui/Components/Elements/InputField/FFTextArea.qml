@@ -83,7 +83,7 @@ FFTextAreaForm {
 
                 root {
                     background {
-                        border.color: Colors.primary
+                        border.color: Colors.primary500
                     }
 
                     label {

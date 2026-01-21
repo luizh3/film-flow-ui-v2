@@ -137,7 +137,7 @@ Rectangle {
                                              && moviesGrid.count === 0
 
                 vIcon: _hasNoResults ? Icons.outlined.close : Icons.outlined.search
-                vIconColor: _hasNoResults ? Colors.primary : Colors.grey100
+                vIconColor: _hasNoResults ? Colors.primary500 : Colors.grey100
                 vTitle: _hasNoResults ? qsTr("No results founded") : qsTr(
                                             "Search for a program")
                 vDescription: qsTr("Type a title, genre or actor to start searching")

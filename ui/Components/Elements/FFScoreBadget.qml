@@ -27,14 +27,14 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         sourceSize: Qt.size(root.vSize === FFScoreBadget.Size.Medium ? 20 : 16,
                             root.vSize === FFScoreBadget.Size.Medium ? 20 : 16)
-        vColor: Colors.orange300
+        vColor: Colors.primary300
     }
 
     Label {
         id: label
         font: root.vSize === FFScoreBadget.Size.Medium ? Fonts.body270 : Fonts.caption270
         text: root.vScore.toFixed(1)
-        color: Colors.orange300
+        color: Colors.primary300
         anchors.left: icon.right
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: Spacings.sm

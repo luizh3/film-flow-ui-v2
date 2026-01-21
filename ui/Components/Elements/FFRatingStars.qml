@@ -21,7 +21,7 @@ FFRatingStarsForm {
             return Colors.green400
         }
 
-        return Colors.orange400
+        return Colors.primary400
     }
 
     badgetScore.color: root._badgetColorByScore()
@@ -34,7 +34,7 @@ FFRatingStarsForm {
         required property int index
 
         source: Icons.filled.star
-        vColor: ListView.view.currentIndex < index ? Colors.grey400 : Colors.primary
+        vColor: ListView.view.currentIndex < index ? Colors.grey400 : Colors.primary500
 
         function _onSelected(index) {
 

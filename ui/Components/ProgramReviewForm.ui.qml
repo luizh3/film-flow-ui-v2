@@ -141,7 +141,7 @@ Rectangle {
                             Label {
                                 font: Fonts.caption250
                                 text: root.vProgramTitle
-                                color: aboutMovieMouse.containsMouse ? Colors.orange300 : Colors.grey50
+                                color: aboutMovieMouse.containsMouse ? Colors.primary300 : Colors.grey50
 
                                 Behavior on color {
                                     ColorAnimation {
@@ -153,7 +153,7 @@ Rectangle {
                             FFIcon {
                                 source: Icons.outlined.rightArrow
                                 sourceSize: Qt.size(14, 14)
-                                vColor: aboutMovieMouse.containsMouse ? Colors.orange300 : Colors.grey50
+                                vColor: aboutMovieMouse.containsMouse ? Colors.primary300 : Colors.grey50
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                         }

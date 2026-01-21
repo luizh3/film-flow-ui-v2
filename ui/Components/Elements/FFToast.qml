@@ -54,7 +54,7 @@ FFToastForm {
             name: FFToast.Types.WARNING
             PropertyChanges {
                 root {
-                    color: Colors.orange400
+                    color: Colors.primary400
                 }
             }
             PropertyChanges {

@@ -77,7 +77,7 @@ Rectangle {
 
                 Label {
                     font: Fonts.caption170
-                    color: Colors.primary
+                    color: Colors.primary500
                     opacity: !enabled ? 0.5 : mouseAreaSignUp.containsMouse ? 0.8 : 1
                     text: qsTr("Sign Up")
 

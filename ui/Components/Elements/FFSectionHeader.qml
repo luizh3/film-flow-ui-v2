@@ -11,7 +11,7 @@ Row {
     Rectangle {
         width: 5
         height: 32
-        color: Colors.orange300
+        color: Colors.primary300
         radius: Radius.md
         anchors.verticalCenter: parent.verticalCenter
     }

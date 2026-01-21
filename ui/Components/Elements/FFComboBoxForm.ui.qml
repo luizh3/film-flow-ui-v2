@@ -55,7 +55,7 @@ Item {
         Layout.preferredHeight: 18
         Layout.preferredWidth: 18
         color: Colors.neutral100
-        border.color: radioOption.vIsSelected ? Colors.primary : Colors.grey400
+        border.color: radioOption.vIsSelected ? Colors.primary500 : Colors.grey400
         border.width: 1
 
         required property bool vIsSelected
@@ -64,7 +64,7 @@ Item {
             radius: 360
             height: 12
             width: 12
-            color: radioOption.vIsSelected ? Colors.primary : Colors.neutral100
+            color: radioOption.vIsSelected ? Colors.primary500 : Colors.neutral100
             anchors.centerIn: parent
         }
     }

@@ -216,7 +216,7 @@ GenericScreen {
                                     Label {
                                         font: Fonts.caption170
                                         text: "( 155 )"
-                                        color: Colors.orange300
+                                        color: Colors.primary300
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
                                 }

@@ -57,6 +57,9 @@ qt_add_qml_module( ${APP_NAME}
         ResizeManager.qml
     RESOURCES
         ui/Theme/resources.qrc
+        SOURCES theme/themecolormanager.h theme/themecolormanager.cpp
+        SOURCES theme/themecolor.h
+        SOURCES theme/themecolorfactory.h theme/themecolorfactory.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
