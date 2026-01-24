@@ -22,6 +22,10 @@ QtObject {
     readonly property string primary500: ThemeColorManager.primary500
     readonly property string primary600: ThemeColorManager.primary600
 
+    readonly property string orange300: "#f8a754"
+    readonly property string orange400: "#f79633"
+    readonly property string orange500: "#f57c00"
+
     readonly property string grey50: "#ebebeb"
     readonly property string grey100: "#c0c0c0"
     readonly property string grey200: "#a2a2a2"

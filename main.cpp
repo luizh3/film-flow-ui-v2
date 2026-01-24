@@ -13,8 +13,8 @@
 
 #include <QPixmapCache>
 
-#include <theme/themecolorfactory.h>
-#include <theme/themecolormanager.h>
+#include <ui/theme/factory/themecolorfactory.h>
+#include <ui/theme/manager/themecolormanager.h>
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
                                      "TypeProgramEnum",
                                      "Access to enums & flags only");
 
+    ThemeColorManager::instance()->setRoleType(ColorRole::ORANGE);
     ThemeColorManager::instance()->setTheme(ThemeColorFactory::getOrange());
 
     QObject::connect(

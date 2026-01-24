@@ -35,15 +35,21 @@ FFButtonForm {
     }
 
     function _toPrimaryType() {
-        root._changeType(Colors.primary500, root.vIcon)
+        root._changeType(Qt.binding(function () {
+            return Colors.primary500
+        }), root.vIcon)
     }
 
     function _toSecundaryType() {
-        root._changeType(Colors.secundary, root.vIcon)
+        root._changeType(Qt.binding(function () {
+            return Colors.secundary
+        }), root.vIcon)
     }
 
     function _toErrorType() {
-        root._changeType(Colors.error, root.vIconError)
+        root._changeType(Qt.binding(function () {
+            return Colors.error
+        }), root.vIconError)
     }
 
     function _setType() {

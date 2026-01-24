@@ -34,33 +34,33 @@ Item {
             }
         }
 
-        ParticleSystem {
-            id: particleSystem
-            running: false
-        }
+        // ParticleSystem {
+        //     id: particleSystem
+        //     running: true
+        // }
 
-        Emitter {
-            id: snowEmitter
-            system: particleSystem
-            width: parent.width
-            height: 2
-            anchors.top: parent.top
-            emitRate: 20
-            lifeSpan: 6000
-            size: 10
-            velocity: AngleDirection {
-                angle: 90
-                magnitude: 50
-                magnitudeVariation: 20
-            }
-        }
+        // Emitter {
+        //     id: snowEmitter
+        //     system: particleSystem
+        //     width: parent.width
+        //     height: 2
+        //     anchors.top: parent.top
+        //     emitRate: 20
+        //     lifeSpan: 6000
+        //     size: 10
+        //     velocity: AngleDirection {
+        //         angle: 90
+        //         magnitude: 50
+        //         magnitudeVariation: 20
+        //     }
+        // }
 
-        ImageParticle {
-            system: particleSystem
-            source: "qrc:/icons/light"
-            colorVariation: 0.2
-            entryEffect: ImageParticle.Fade
-        }
+        // ImageParticle {
+        //     system: particleSystem
+        //     source: "qrc:/icons/light"
+        //     colorVariation: 0.2
+        //     entryEffect: ImageParticle.Fade
+        // }
         Column {
             anchors.fill: parent
 

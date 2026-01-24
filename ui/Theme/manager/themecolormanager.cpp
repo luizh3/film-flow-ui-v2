@@ -10,43 +10,53 @@ ThemeColorManager *ThemeColorManager::instance()
     return &themeColorManager;
 }
 
-void ThemeColorManager::setTheme(const ThemeColor &theme)
+void ThemeColorManager::setTheme(const ThemeColorModel &theme)
 {
     _themeColor = theme;
     emit themeChanged();
 }
 
-QColor ThemeColorManager::primary50() const
+QString ThemeColorManager::primary50() const
 {
     return _themeColor.primary50;
 }
 
-QColor ThemeColorManager::primary100() const
+QString ThemeColorManager::primary100() const
 {
     return _themeColor.primary100;
 }
 
-QColor ThemeColorManager::primary200() const
+QString ThemeColorManager::primary200() const
 {
     return _themeColor.primary200;
 }
 
-QColor ThemeColorManager::primary300() const
+QString ThemeColorManager::primary300() const
 {
     return _themeColor.primary300;
 }
 
-QColor ThemeColorManager::primary400() const
+QString ThemeColorManager::primary400() const
 {
     return _themeColor.primary400;
 }
 
-QColor ThemeColorManager::primary500() const
+QString ThemeColorManager::primary500() const
 {
     return _themeColor.primary500;
 }
 
-QColor ThemeColorManager::primary600() const
+QString ThemeColorManager::primary600() const
 {
     return _themeColor.primary600;
+}
+
+ColorRole ThemeColorManager::roleType() const
+{
+    return _roleType;
+}
+
+void ThemeColorManager::setRoleType(ColorRole newRoleType)
+{
+    _roleType = newRoleType;
 }

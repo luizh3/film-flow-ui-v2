@@ -34,6 +34,8 @@ set( QML_FILES
     GenericPopup.qml
     NotificationCard.qml
     NotificationCardForm.ui.qml
+    ThemePickerForm.ui.qml
+    ThemePicker.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}

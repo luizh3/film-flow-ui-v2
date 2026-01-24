@@ -145,4 +145,8 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
 )
 
 set_target_properties( ${LIBRARY_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON )
+
 target_compile_definitions( ${LIBRARY_NAME} PRIVATE CORE_LIBRARY )
+
+add_library(FF::Core ALIAS ${LIBRARY_NAME})
+

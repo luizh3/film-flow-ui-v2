@@ -38,6 +38,8 @@ set( QML_FILES
     FFActionPillForm.ui.qml
     FFComboBox.qml
     FFComboBoxForm.ui.qml
+    FFColorItem.qml
+    FFColorItemForm.ui.qml
 )
 
 set( RESOURCES

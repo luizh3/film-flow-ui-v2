@@ -21,3 +21,4 @@ FFActionPill 1.0 FFActionPill.qml
 FFComboBox 1.0 FFComboBox.qml
 FFButtonReaction 1.0 Button/FFButtonReaction.qml
 FFButtonScroll 1.0 Button/FFButtonScroll.qml
+FFColorItem 1.0 FFColorItem.qml

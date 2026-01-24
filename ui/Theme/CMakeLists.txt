@@ -1,4 +1,5 @@
-set( MODULE_NAME Theme )
+set( MODULE_NAME theme )
+set( QT_QML_GENERATE_QMLLS_INI ON )
 
 set( MODULE_URI Ui.Theme )
 
@@ -28,4 +29,36 @@ qt_add_qml_module( ${MODULE_NAME}
     RESOURCES
         ${RESOURCES}
         resources.qrc
+    SOURCES
+        manager/themecolormanager.cpp
+        factory/themecolorfactory.cpp
+        models/coloritemmodel.cpp
+
+        manager/themecolormanager.h
+        factory/themecolorfactory.h
+        models/colorrole.h
+        models/themecolormodel.h
+        models/coloritemmodel.h
+        theme_global.h
+
 )
+
+find_package( Qt6 REQUIRED COMPONENTS Core Qml )
+
+target_link_libraries(${MODULE_NAME}
+    PUBLIC
+        Qt6::Core
+        Qt6::Qml
+)
+
+target_include_directories(${MODULE_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_compile_definitions( ${MODULE_NAME}
+    PRIVATE THEME_LIBRARY
+)
+
+add_library(FF::Theme ALIAS ${MODULE_NAME})
+

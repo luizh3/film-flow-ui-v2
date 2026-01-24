@@ -56,10 +56,7 @@ qt_add_qml_module( ${APP_NAME}
         TitleBar.qml
         ResizeManager.qml
     RESOURCES
-        ui/Theme/resources.qrc
-        SOURCES theme/themecolormanager.h theme/themecolormanager.cpp
-        SOURCES theme/themecolor.h
-        SOURCES theme/themecolorfactory.h theme/themecolorfactory.cpp
+        ui/theme/resources.qrc
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -95,9 +92,10 @@ target_link_libraries( ${APP_NAME}
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Core
     PRIVATE Qt6::QuickControls2
-    PRIVATE core
-    PRIVATE controls
-    PRIVATE Models
+    PRIVATE FF::Core
+    PRIVATE FF::Theme
+    PRIVATE FF::Controls
+    PRIVATE FF::Models
 )
 
 add_subdirectory( core )

@@ -1,6 +1,24 @@
 #include "themecolorfactory.h"
 
-ThemeColor ThemeColorFactory::getOrange()
+ThemeColorModel ThemeColorFactory::byRole(const ColorRole colorRole)
+{
+    switch (colorRole) {
+    case ColorRole::ORANGE:
+        return ThemeColorFactory::getOrange();
+    case ColorRole::PURPLE:
+        return ThemeColorFactory::getPurple();
+    case ColorRole::BLUE:
+        return ThemeColorFactory::getBlue();
+    case ColorRole::GREEN:
+        return ThemeColorFactory::getGreen();
+    case ColorRole::TEAL:
+        return ThemeColorFactory::getTeal();
+    default:
+        return ThemeColorFactory::getOrange();
+    }
+}
+
+ThemeColorModel ThemeColorFactory::getOrange()
 {
     return {QStringLiteral("#fef2e6"),  // 50
             QStringLiteral("#fcd6b0"),  // 100
@@ -11,7 +29,7 @@ ThemeColor ThemeColorFactory::getOrange()
             QStringLiteral("#df7100")}; // 600
 }
 
-ThemeColor ThemeColorFactory::getPurple()
+ThemeColorModel ThemeColorFactory::getPurple()
 {
     return {
         QStringLiteral("#f3e5f5"), // 50
@@ -24,7 +42,7 @@ ThemeColor ThemeColorFactory::getPurple()
     };
 }
 
-ThemeColor ThemeColorFactory::getBlue()
+ThemeColorModel ThemeColorFactory::getBlue()
 {
     return {
         QStringLiteral("#e3f2fd"), // 50
@@ -37,7 +55,7 @@ ThemeColor ThemeColorFactory::getBlue()
     };
 }
 
-ThemeColor ThemeColorFactory::getGreen()
+ThemeColorModel ThemeColorFactory::getGreen()
 {
     return {
         QStringLiteral("#e8f5e9"), // 50
@@ -50,7 +68,7 @@ ThemeColor ThemeColorFactory::getGreen()
     };
 }
 
-ThemeColor ThemeColorFactory::getTeal()
+ThemeColorModel ThemeColorFactory::getTeal()
 {
     return {
         QStringLiteral("#e0f2f1"), // 50

@@ -16,3 +16,4 @@ ScreenManager 1.0 ScreenManager.qml
 GenericScreen 1.0 GenericScreen.qml
 NotificationCard 1.0 NotificationCard.qml
 NotificationsPopup 1.0 NotificationsPopup.qml
+ThemePicker 1.0 ThemePicker.qml

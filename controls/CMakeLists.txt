@@ -61,14 +61,19 @@ target_sources( ${LIBRARY_NAME}
     PUBLIC FILE_SET HEADERS FILES ${HEADERS}
 )
 
-add_dependencies( ${LIBRARY_NAME} core )
+add_dependencies(
+    ${LIBRARY_NAME}
+    FF::Theme
+    FF::Core
+)
 
 target_link_libraries( ${LIBRARY_NAME}
     PRIVATE Qt6::Core
     PRIVATE Qt6::Qml
-    PUBLIC core
     PRIVATE Qt6::Concurrent
     PRIVATE Qt6::WebSockets
+    PRIVATE FF::Core
+    PRIVATE FF::Theme
 )
 
 target_include_directories(${LIBRARY_NAME}
@@ -79,3 +84,6 @@ target_include_directories(${LIBRARY_NAME}
 
 set_target_properties( ${LIBRARY_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON )
 target_compile_definitions( ${LIBRARY_NAME} PRIVATE CONTROLS_LIBRARY )
+
+add_library(FF::Controls ALIAS ${LIBRARY_NAME})
+

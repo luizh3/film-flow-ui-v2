@@ -39,14 +39,17 @@ target_sources( ${LIBRARY_NAME}
     PUBLIC FILE_SET HEADERS FILES ${HEADERS}
 )
 
-add_dependencies( ${LIBRARY_NAME} core )
+add_dependencies(
+    ${LIBRARY_NAME}
+    FF::Core
+)
 
 find_package( Qt6 REQUIRED COMPONENTS Core Concurrent )
 
 target_link_libraries( ${LIBRARY_NAME}
     PRIVATE Qt6::Core
     PRIVATE Qt6::Concurrent
-    PUBLIC core
+    PRIVATE FF::Core
 )
 
 target_include_directories( ${LIBRARY_NAME}
@@ -57,3 +60,6 @@ target_include_directories( ${LIBRARY_NAME}
 
 set_target_properties( ${LIBRARY_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON )
 target_compile_definitions( ${LIBRARY_NAME} PRIVATE MODELS_LIBRARY )
+
+add_library(FF::Models ALIAS ${LIBRARY_NAME})
+
