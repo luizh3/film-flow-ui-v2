@@ -58,6 +58,5 @@ QUrlQuery SectionRequest::toQuerys() const {
     query.addQueryItem(QStringLiteral("key"), _key );
     query.addQueryItem(QStringLiteral("mediaType"), TypeProgram::toString(_tpProgram));
 
-    return std::move( query );
-
+    return query;
 }

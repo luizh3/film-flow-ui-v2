@@ -22,5 +22,5 @@ QUrlQuery PaginationRequest::toQuerys() const
 
     query.addQueryItem(QStringLiteral("page"), QString::number(_page));
 
-    return std::move(query);
+    return query;
 }

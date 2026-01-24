@@ -46,5 +46,5 @@ QUrlQuery MultiRequest::toQuerys() const
     query.addQueryItem(QStringLiteral("query"), _dsQuery);
     query.addQueryItem(QStringLiteral("language"), _dsLanguage);
 
-    return std::move(query);
+    return query;
 }

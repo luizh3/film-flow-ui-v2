@@ -310,6 +310,7 @@ GenericScreen {
                             clip: true
                             spacing: Spacings.md
                             visible: reviewsList.count !== 0
+                            cacheBuffer: reviewsList.height / 2
                         }
 
                         FeedbackReviewsFounded {

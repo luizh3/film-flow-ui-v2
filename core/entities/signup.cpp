@@ -63,7 +63,6 @@ QJsonDocument SignUp::toJson() const {
 
     jsonDocument.setObject( jsonObject );
 
-    return std::move( jsonDocument );
-
+    return jsonDocument;
 }
 

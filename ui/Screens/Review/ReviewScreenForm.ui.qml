@@ -61,6 +61,7 @@ Rectangle {
                 clip: true
                 spacing: Spacings.md
                 visible: true
+                cacheBuffer: listView.height / 2
 
                 footer: Item {
                     height: Spacings.xl3

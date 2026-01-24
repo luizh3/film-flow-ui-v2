@@ -12,7 +12,9 @@ Item {
     Image {
         id: sourceItem
         anchors.fill: parent
+        sourceSize.width: parent.width
         visible: false
+        cache: false
         source: root.vSource
         asynchronous: true
     }

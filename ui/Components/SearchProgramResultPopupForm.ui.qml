@@ -60,6 +60,7 @@ Popup {
                 clip: true
                 spacing: 4
                 visible: listView.count !== 0
+                cacheBuffer: listView.height / 2
 
                 model: SearchProgramListModel {
                     vDsQuery: popup.vDsQuery

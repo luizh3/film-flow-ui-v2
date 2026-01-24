@@ -165,7 +165,7 @@ QJsonDocument Review::toJson() const
 
     jsonDocument.setObject(jsonObject);
 
-    return std::move(jsonDocument);
+    return jsonDocument;
 }
 
 Review *Review::fromJson(const QJsonDocument &jsonDocument)

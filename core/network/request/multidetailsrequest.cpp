@@ -14,7 +14,7 @@ QUrlQuery MultiDetailsRequest::toQuerys() const
     query.addQueryItem(QStringLiteral("mediaType"), _tpProgram);
     query.addQueryItem(QStringLiteral("language"), _dsLanguage);
 
-    return std::move(query);
+    return query;
 }
 
 QString MultiDetailsRequest::tpProgram() const

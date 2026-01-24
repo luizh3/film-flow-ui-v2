@@ -17,8 +17,10 @@ Rectangle {
         source: root.vSource
         visible: true
         anchors.fill: parent
+        sourceSize.width: parent.width
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
+        cache: false
     }
 
     MultiEffect {

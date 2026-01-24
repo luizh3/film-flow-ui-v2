@@ -70,6 +70,8 @@ ColumnLayout {
         orientation: ListView.Horizontal
         snapMode: ListView.SnapOneItem
         highlightMoveDuration: 400
+        reuseItems: true
+        cacheBuffer: listView.width / 2
 
         model: MoviesListModel {
             tpProgram: root.vTypeProgram
