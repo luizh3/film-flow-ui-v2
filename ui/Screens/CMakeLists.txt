@@ -1,4 +1,5 @@
-set( MODULE_NAME Screens )
+set( MODULE_NAME screens )
+set( MODULE_URI Ui.Screens )
 
 set( QML_FILES
     Home/HomeScreen.qml
@@ -19,10 +20,12 @@ set( QML_FILES
     Login/LoginScreenForm.ui.qml
     Register/RegisterScreenForm.ui.qml
     Register/RegisterScreen.qml
+    ScreenManager.qml
+    PopupManager.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}
-    URI Ui.Screens
+    URI ${MODULE_URI}
     VERSION 1.0
     RESOURCES qmldir
     QML_FILES

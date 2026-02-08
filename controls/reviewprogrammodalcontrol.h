@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include "control.h"
 #include "controls_global.h"
 
 #include <entities/review.h>
 
-class CONTROLS_EXPORT ReviewProgramModalControl : public QObject
+class CONTROLS_EXPORT ReviewProgramModalControl : public Control
 {
     Q_OBJECT
     QML_ELEMENT
@@ -18,6 +19,10 @@ public:
 private:
     void doCreate(const Review* review) const;
     void doUpdate(const Review* review) const;
+
+private slots:
+    void onError(const QString& message);
+    void onSuccess(Review* review);
 signals:
     void error(const QString& message);
     void success(Review* review);

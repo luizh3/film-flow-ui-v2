@@ -1,6 +1,6 @@
 import QtQuick
 
-import controls 1.0
+import Controls 1.0
 
 MovieSliderForm {
     id: root

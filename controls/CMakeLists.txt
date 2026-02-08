@@ -1,4 +1,6 @@
 set( LIBRARY_NAME controls )
+set( MODULE_URI Controls )
+
 set( QT_QML_GENERATE_QMLLS_INI ON )
 
 # Define CORE_INCLUDE_DIR if not already defined
@@ -49,7 +51,7 @@ add_library(
 )
 
 qt_add_qml_module( ${LIBRARY_NAME}
-  URI ${LIBRARY_NAME}
+  URI ${MODULE_URI}
   VERSION 1.0
   SOURCES
 )

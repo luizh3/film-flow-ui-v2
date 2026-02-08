@@ -1,4 +1,5 @@
 set( LIBRARY_NAME core )
+set( MODULE_URI Core )
 
 set(CMAKE_AUTOMOC ON)
 
@@ -114,7 +115,7 @@ add_library(
 )
 
 qt_add_qml_module( ${LIBRARY_NAME}
-  URI ${LIBRARY_NAME}
+  URI ${MODULE_URI}
   VERSION 1.0
 )
 

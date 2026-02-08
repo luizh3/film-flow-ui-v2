@@ -25,14 +25,15 @@ LIST( APPEND QML_SOURCE_PATHS "${CMAKE_SOURCE_DIR}")
 
 # set( QML_IMPORT_PATH ${QML_SOURCE_PATHS} CACHE STRING "" FORCE)
 
-set(QML_IMPORT_PATH
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/ui
-    ${CMAKE_SOURCE_DIR}/ui/Components
-    ${CMAKE_SOURCE_DIR}/ui/Screens
-    ${CMAKE_SOURCE_DIR}/ui/Theme
-    CACHE STRING "" FORCE
-)
+# set(QML_IMPORT_PATH
+#     ${CMAKE_SOURCE_DIR}
+#     ${CMAKE_SOURCE_DIR}/controls
+#     ${CMAKE_SOURCE_DIR}/ui
+#     ${CMAKE_SOURCE_DIR}/ui/Components
+#     ${CMAKE_SOURCE_DIR}/ui/Screens
+#     ${CMAKE_SOURCE_DIR}/ui/Theme
+#     CACHE STRING "" FORCE
+# )
 
 qt_standard_project_setup(REQUIRES 6.5)
 qt_policy(SET QTP0001 NEW)
@@ -55,6 +56,7 @@ qt_add_qml_module( ${APP_NAME}
         TitleBarForm.ui.qml
         TitleBar.qml
         ResizeManager.qml
+        ToastManager.qml
     RESOURCES
         ui/theme/resources.qrc
 )
@@ -69,7 +71,7 @@ set_target_properties( ${APP_NAME} PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
-    SKIP_AUTOMOC ON
+    # SKIP_AUTOMOC ON
 )
 
 # qt_add_resources(${APP_NAME} translations
@@ -87,6 +89,15 @@ target_include_directories( ${APP_NAME}
         ${CORE_INCLUDE_DIR}
 )
 
+
+add_subdirectory( core )
+add_subdirectory( controls )
+
+add_subdirectory( ui/models )
+add_subdirectory( ui/Components )
+add_subdirectory( ui/theme )
+add_subdirectory( ui/screens )
+
 target_link_libraries( ${APP_NAME}
     PRIVATE Qt6::Qml
     PRIVATE Qt6::Quick
@@ -97,14 +108,6 @@ target_link_libraries( ${APP_NAME}
     PRIVATE FF::Controls
     PRIVATE FF::Models
 )
-
-add_subdirectory( core )
-add_subdirectory( controls )
-
-add_subdirectory( ui/models )
-add_subdirectory( ui/Components )
-add_subdirectory( ui/Theme )
-add_subdirectory( ui/Screens )
 
 include(GNUInstallDirs)
 install(TARGETS ${APP_NAME}

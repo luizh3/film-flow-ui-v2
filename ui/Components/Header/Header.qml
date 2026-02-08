@@ -2,7 +2,7 @@ import QtQuick
 
 import Ui.Components
 
-import controls 1.0
+import Controls 1.0
 
 HeaderForm {
     id: root

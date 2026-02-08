@@ -22,11 +22,14 @@ void ReviewProgramModalControl::doCreate(const Review *review) const
 
     ReviewController controller;
 
-    QObject::connect(&controller, &ReviewController::error, this, &ReviewProgramModalControl::error);
+    QObject::connect(&controller,
+                     &ReviewController::error,
+                     this,
+                     &ReviewProgramModalControl::onError);
     QObject::connect(&controller,
                      &ReviewController::success,
                      this,
-                     &ReviewProgramModalControl::success);
+                     &ReviewProgramModalControl::onSuccess);
 
     controller.create(review);
 
@@ -39,13 +42,38 @@ void ReviewProgramModalControl::doUpdate(const Review *review) const
 
     ReviewController controller;
 
-    QObject::connect(&controller, &ReviewController::error, this, &ReviewProgramModalControl::error);
+    QObject::connect(&controller,
+                     &ReviewController::error,
+                     this,
+                     &ReviewProgramModalControl::onError);
     QObject::connect(&controller,
                      &ReviewController::success,
                      this,
-                     &ReviewProgramModalControl::success);
+                     &ReviewProgramModalControl::onSuccess);
 
     controller.update(review);
 
     qInfo() << "ReviewProgramModalControl::Update";
+}
+
+void ReviewProgramModalControl::onError(const QString &message)
+{
+    qInfo() << "ReviewProgramModalControl::onError [MESSAGE]" << message;
+
+    toastError(message);
+
+    emit error(message);
+
+    qInfo() << "ReviewProgramModalControl::onError";
+}
+
+void ReviewProgramModalControl::onSuccess(Review *review)
+{
+    qInfo() << "ReviewProgramModalControl::onSuccess";
+
+    toastSuccess(tr("Success on created review!"));
+
+    emit success(review);
+
+    qInfo() << "ReviewProgramModalControl::onSuccess";
 }

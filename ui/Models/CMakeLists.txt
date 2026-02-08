@@ -1,4 +1,4 @@
-set( LIBRARY_NAME Models )
+set( LIBRARY_NAME models )
 set( LIBRARY_URI Ui.Models )
 
 # Define CORE_INCLUDE_DIR if not already defined

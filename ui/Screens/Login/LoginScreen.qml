@@ -1,20 +1,11 @@
 import Ui.Components.Elements
-import controls 1.0
+import Controls 1.0
 
 LoginScreenForm {
     id: root
 
     signal signUp
     signal success
-
-    mouseAreaSignUp.onClicked: root.signUp()
-
-    FFInputStateValidator {
-        id: inputStateValidator
-
-        inputs: [root.emailField, root.passwordField]
-        onIsValidChanged: root._handleFieldsValid()
-    }
 
     function _handleFieldsValid() {
         root.loginButton.vState
@@ -41,12 +32,21 @@ LoginScreenForm {
         root.success()
     }
 
+    loginButton.onClicked: root._handleLogin()
+
+    mouseAreaSignUp.onClicked: root.signUp()
+
+    FFInputStateValidator {
+        id: inputStateValidator
+
+        inputs: [root.emailField, root.passwordField]
+        onIsValidChanged: root._handleFieldsValid()
+    }
+
     AuthControl {
         id: control
 
         onError: root._handleError()
         onSuccess: root._handleSuccess()
     }
-
-    loginButton.onClicked: root._handleLogin()
 }

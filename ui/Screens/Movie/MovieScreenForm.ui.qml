@@ -25,26 +25,6 @@ GenericScreen {
     property alias scrollFlickable: scrollFlickable
     property alias reviewsList: reviewsList
 
-    component FooterScroll: Item {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        height: 50
-
-        property alias buttonScroll: buttonScroll
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: Durations.normal
-            }
-        }
-
-        FFButtonScroll {
-            id: buttonScroll
-            anchors.centerIn: parent
-        }
-    }
-
     component FeedbackReviewsFounded: Item {
         height: childrenRect.height
 
@@ -125,13 +105,6 @@ GenericScreen {
                 contentWidth: parent.width
                 contentHeight: contentItem.implicitHeight + Spacings.md + footerScroll.height
 
-                Behavior on contentY {
-                    NumberAnimation {
-                        duration: Durations.normal
-                        easing.type: Easing.OutCubic
-                    }
-                }
-
                 Column {
                     id: contentItem
                     width: parent.width
@@ -208,7 +181,7 @@ GenericScreen {
 
                                     Label {
                                         font: Fonts.caption170
-                                        text: "Reviews"
+                                        text: qsTr("Reviews")
                                         color: Colors.grey50
                                         anchors.verticalCenter: parent.verticalCenter
                                     }

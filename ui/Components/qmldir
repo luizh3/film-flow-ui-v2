@@ -8,12 +8,10 @@ CardMovieList 1.0 CardMovieList/CardMovieList.qml
 SearchResultCard 1.0 SearchResultCard.qml
 SearchProgramResultPopup 1.0 SearchProgramResultPopup.qml
 ProgramReview 1.0 ProgramReview.qml
-PopupManager 1.0 PopupManager.qml
 GenericModal 1.0 GenericModal.qml
 ReviewProgramModal 1.0 ReviewProgramModal.qml
-ToastManager 1.0 ToastManager.qml
-ScreenManager 1.0 ScreenManager.qml
 GenericScreen 1.0 GenericScreen.qml
 NotificationCard 1.0 NotificationCard.qml
 NotificationsPopup 1.0 NotificationsPopup.qml
 ThemePicker 1.0 ThemePicker.qml
+FooterScroll 1.0 FooterScroll.qml

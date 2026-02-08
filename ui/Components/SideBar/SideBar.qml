@@ -2,7 +2,7 @@ pragma ComponentBehavior
 
 import QtQuick
 
-import controls 1.0
+import Controls 1.0
 
 SideBarForm {
     id: root

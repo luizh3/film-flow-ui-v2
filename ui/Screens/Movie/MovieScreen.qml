@@ -4,12 +4,10 @@ import Ui.Components
 import Ui.Theme
 import Ui.Models
 
-import controls 1.0
+import Controls 1.0
 
 MovieScreenForm {
     id: root
-
-    backButtonNavigation.onClicked: root._handleCancel()
 
     function _handleCancel() {
         control.doCancel()
@@ -23,18 +21,30 @@ MovieScreenForm {
         root.close()
     }
 
+    function _handleWriteReview() {
+        const reviewModal = popupManager.push(reviewProgramModalComponent, {
+                                                  "vProgramType": vMovie.programType,
+                                                  "vProgramTitle": vMovie.title,
+                                                  "vMovieId": vMovie.id
+                                              })
+
+        reviewModal.success.connect(function doSuccess(newReview) {
+            control.doUpdateReview(newReview)
+        })
+
+        reviewModal.setReview(vMovie.myReview)
+    }
+
+    function _resetContentScrollFlickable() {
+        scrollFlickable.contentY = 0
+    }
+
     vIsLoading: control.isLoading
     vMovie: control.movie
 
-    MovieControl {
-        id: control
+    backButtonNavigation.onClicked: root._handleCancel()
 
-        onFinished: root._handleFinished()
-    }
-
-    footerScroll.buttonScroll.onPressed: function () {
-        scrollFlickable.contentY = 0
-    }
+    footerScroll.buttonScroll.onPressed: root._resetContentScrollFlickable()
 
     footerScroll.opacity: scrollFlickable.contentY > 300 ? 1 : 0
 
@@ -45,6 +55,16 @@ MovieScreenForm {
         fetchModeType: ReviewsListModel.ByProgram
         movieId: root.vMovieId
     }
+
+    scrollFlickable {
+        Behavior on contentY {
+            NumberAnimation {
+                duration: Durations.normal
+                easing.type: Easing.OutCubic
+            }
+        }
+    }
+
     reviewsList.delegate: ProgramReview {
         id: programReview
 
@@ -75,23 +95,15 @@ MovieScreenForm {
         vLikesCount: programReview.likesCount
     }
 
-    function _handleWriteReview() {
-        const reviewModal = popupManager.push(reviewProgramModalComponent, {
-                                                  "vProgramType": vMovie.programType,
-                                                  "vProgramTitle": vMovie.title,
-                                                  "vMovieId": vMovie.id
-                                              })
-
-        reviewModal.success.connect(function doSuccess(newReview) {
-            control.doUpdateReview(newReview)
-        })
-
-        reviewModal.setReview(vMovie.myReview)
-    }
-
     Component {
         id: reviewProgramModalComponent
 
         ReviewProgramModal {}
+    }
+
+    MovieControl {
+        id: control
+
+        onFinished: root._handleFinished()
     }
 }

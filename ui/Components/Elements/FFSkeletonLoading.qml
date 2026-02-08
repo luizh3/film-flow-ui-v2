@@ -1,17 +1,25 @@
 import QtQuick
 
 Rectangle {
-    id: rectRoot
+    id: root
     color: "#d0d0d0"
     clip: true
 
+    property int vOpacityDuration: 0
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: root.vOpacityDuration
+        }
+    }
+
     Rectangle {
         id: shimmer
-        width: rectRoot.width
-        height: rectRoot.height
+        width: root.width
+        height: root.height
         anchors.verticalCenter: parent.verticalCenter
         x: -width
-        radius: rectRoot.radius
+        radius: root.radius
         gradient: Gradient {
             orientation: Gradient.Horizontal
             GradientStop {
@@ -66,7 +74,7 @@ Rectangle {
             // TODO permitir configurar os valores
             PropertyAnimation {
                 from: -shimmer.width
-                to: rectRoot.width
+                to: root.width
                 duration: 2000
                 easing.period: 5
                 easing.type: Easing.InElastic

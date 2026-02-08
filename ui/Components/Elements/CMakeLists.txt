@@ -1,27 +1,26 @@
-set( MODULE_NAME Elements )
-
+set( MODULE_NAME elements )
 set( MODULE_URI Ui.Components.Elements )
 
 set( QML_FILES
     FFIcon.qml
-    InputField/FFTextField.qml
-    InputField/FFTextFieldForm.ui.qml
-    InputField/FFPasswordTextField.qml
-    InputField/FFInputStateValidator.qml
-    InputField/FFTextArea.qml
-    InputField/FFTextAreaForm.ui.qml
-    Button/FFButton.qml
-    Button/FFButtonForm.ui.qml
-    Button/FFButtonIcon.qml
-    Button/FFButtonIconForm.ui.qml
-    Button/FFButtonNavigation.qml
-    Button/FFButtonNavigationForm.ui.qml
-    Button/FFButtonReactionForm.ui.qml
-    Button/FFButtonReaction.qml
-    Button/FFButtonScroll.qml
-    Button/FFButtonScrollForm.ui.qml
-    LoadingCircle/FFLoadingCircleForm.ui.qml
-    LoadingCircle/FFLoadingCircle.qml
+    inputfield/FFTextField.qml
+    inputfield/FFTextFieldForm.ui.qml
+    inputfield/FFPasswordTextField.qml
+    inputfield/FFInputStateValidator.qml
+    inputfield/FFTextArea.qml
+    inputfield/FFTextAreaForm.ui.qml
+    button/FFButton.qml
+    button/FFButtonForm.ui.qml
+    button/FFButtonIcon.qml
+    button/FFButtonIconForm.ui.qml
+    button/FFButtonNavigation.qml
+    button/FFButtonNavigationForm.ui.qml
+    button/FFButtonReactionForm.ui.qml
+    button/FFButtonReaction.qml
+    button/FFButtonScroll.qml
+    button/FFButtonScrollForm.ui.qml
+    loadingcircle/FFLoadingCircleForm.ui.qml
+    loadingcircle/FFLoadingCircle.qml
     FFSkeletonLoading.qml
     FFProfileIcon.qml
     FFScoreBadget.qml

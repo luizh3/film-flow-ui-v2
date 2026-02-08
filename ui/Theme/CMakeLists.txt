@@ -33,7 +33,6 @@ qt_add_qml_module( ${MODULE_NAME}
         manager/themecolormanager.cpp
         factory/themecolorfactory.cpp
         models/coloritemmodel.cpp
-
         manager/themecolormanager.h
         factory/themecolorfactory.h
         models/colorrole.h

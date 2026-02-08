@@ -5,7 +5,7 @@ import QtQuick.Controls
 import Ui.Theme
 import Ui.Components.Elements
 
-import core 1.0
+import Core 1.0
 
 Rectangle {
     id: root

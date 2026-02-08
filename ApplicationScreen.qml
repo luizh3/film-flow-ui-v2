@@ -6,7 +6,7 @@ import Ui.Theme
 import Ui.Screens
 import Ui.Components
 
-import controls 1.0
+import Controls 1.0
 
 Item {
     id: root

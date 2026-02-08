@@ -1,9 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import Ui.Screens
-
-// TODO tirar esse cara dos components, nem faz sentido estar aqui kkkkkkk
+// TODO maybe create a Ui.Screens.Commons to move screenManager
 Item {
     id: root
 

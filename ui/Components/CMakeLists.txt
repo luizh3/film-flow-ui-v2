@@ -1,21 +1,22 @@
-set( MODULE_NAME Components )
+set( MODULE_NAME components )
+set( LIBRARY_URI Ui.Components )
 
 set( QML_FILES
-    SideBar/SideBar.qml
-    SideBar/SideBarForm.ui.qml
-    SideBar/SideBarItem.qml
-    SideBar/SideBarItemForm.ui.qml
-    SideBar/SideBarSectionMenu.qml
-    SideBar/SideBarSectionMenuForm.ui.qml
-    ImageGradient/ImageGradient.qml
-    Header/Header.qml
-    Header/HeaderForm.ui.qml
-    MovieSlider/MovieSliderForm.ui.qml
-    MovieSlider/MovieSlider.qml
-    CardMovie/CardMovieForm.ui.qml
-    CardMovie/CardMovie.qml
-    CardMovieList/CardMovieList.qml
-    CardMovieList/CardMovieListForm.ui.qml
+    sidebar/SideBar.qml
+    sidebar/SideBarForm.ui.qml
+    sidebar/SideBarItem.qml
+    sidebar/SideBarItemForm.ui.qml
+    sidebar/SideBarSectionMenu.qml
+    sidebar/SideBarSectionMenuForm.ui.qml
+    imagegradient/ImageGradient.qml
+    header/Header.qml
+    header/HeaderForm.ui.qml
+    movieslider/MovieSliderForm.ui.qml
+    movieslider/MovieSlider.qml
+    cardmovie/CardMovieForm.ui.qml
+    cardmovie/CardMovie.qml
+    cardmovielist/CardMovieList.qml
+    cardmovielist/CardMovieListForm.ui.qml
     SearchResultCard.qml
     SearchResultCardForm.ui.qml
     SearchProgramResultPopup.qml
@@ -24,10 +25,7 @@ set( QML_FILES
     ReviewProgramModalForm.ui.qml
     ProgramReview.qml
     ProgramReviewForm.ui.qml
-    PopupManager.qml
     GenericModal.qml
-    ToastManager.qml
-    ScreenManager.qml
     GenericScreen.qml
     NotificationsPopup.qml
     NotificationsPopupForm.ui.qml
@@ -36,15 +34,17 @@ set( QML_FILES
     NotificationCardForm.ui.qml
     ThemePickerForm.ui.qml
     ThemePicker.qml
+    FooterScroll.qml
+    FooterScrollForm.ui.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}
-    URI Ui.Components
+    URI ${LIBRARY_URI}
     VERSION 1.0
     RESOURCES qmldir
     QML_FILES
         ${QML_FILES}
 )
 
-add_subdirectory( Elements )
+add_subdirectory( elements )
 

@@ -1,7 +1,7 @@
 import QtQuick
 
-import core 1.0
-import controls 1.0
+import Core 1.0
+import Controls 1.0
 
 import Ui.Components.Elements
 
@@ -45,11 +45,9 @@ ReviewProgramModalForm {
         root.setEnabledFields(true)
         root.confirmButton.vState = FFButton.State.Active
         root.confirmButton.vType = FFButton.Type.Error
-        toastManager.error(message)
     }
 
     function _handleOnSuccess(newReview) {
-        toastManager.success("Success on created review!")
         root.success(newReview)
         root.close()
     }

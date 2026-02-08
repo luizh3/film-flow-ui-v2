@@ -1,5 +1,5 @@
-import controls 1.0
-import core 1.0
+import Controls 1.0
+import Core 1.0
 import Ui.Components.Elements
 
 RegisterScreenForm {
@@ -7,21 +7,6 @@ RegisterScreenForm {
 
     signal goBack
     signal success
-
-    backButton.onClicked: root.goBack()
-    signUpButton.onClicked: root._handleSignUp()
-
-    FFInputStateValidator {
-        id: inputStateValidator
-
-        inputs: [root.emailField, root.passwordRepeatField, root.passwordField, root.nameField]
-        onIsValidChanged: root._handleFieldsValid()
-    }
-
-    function _handleFieldsValid() {
-        root.signUpButton.vState
-                = inputStateValidator.isValid ? FFButton.State.Active : FFButton.State.Disabled
-    }
 
     property SignUp signUp: SignUp {
         name: root.nameField.vText
@@ -47,6 +32,21 @@ RegisterScreenForm {
         root.setEnabledFields(true)
         root.signUpButton.vState = FFButton.State.Active
         root.signUpButton.vType = FFButton.Type.Error
+    }
+
+    function _handleFieldsValid() {
+        root.signUpButton.vState
+                = inputStateValidator.isValid ? FFButton.State.Active : FFButton.State.Disabled
+    }
+
+    backButton.onClicked: root.goBack()
+    signUpButton.onClicked: root._handleSignUp()
+
+    FFInputStateValidator {
+        id: inputStateValidator
+
+        inputs: [root.emailField, root.passwordRepeatField, root.passwordField, root.nameField]
+        onIsValidChanged: root._handleFieldsValid()
     }
 
     AuthControl {

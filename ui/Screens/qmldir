@@ -8,3 +8,5 @@ ProgramsScreen 1.0 Program/ProgramsScreen.qml
 SettingsScreen 1.0 Settings/SettingsScreen.qml
 RegisterScreen 1.0 Register/RegisterScreen.qml
 LoginScreen 1.0 Login/LoginScreen.qml
+ScreenManager 1.0 ScreenManager.qml
+PopupManager 1.0 PopupManager.qml

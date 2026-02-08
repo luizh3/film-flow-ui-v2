@@ -7,6 +7,22 @@ import Ui.Screens
 ProgramsScreenForm {
     id: root
 
+    function _handleMovieSelected(id, tpProgram) {
+        const element = screenManager.navigate(ScreenManager.Route.MOVIE, {
+                                                   "vMovieId": id,
+                                                   "vProgramType": tpProgram
+                                               })
+        element.doStart()
+    }
+
+    function _handleSearch(text) {
+        root.vDsQuery = text
+    }
+
+    header.onSearch: text => root._handleSearch(text)
+    header.profileOption.onSelected: () => screenManager.navigate(
+                                         ScreenManager.Route.PROFILE)
+
     moviesGrid.delegate: CardMovie {
 
         required property string id
@@ -23,20 +39,4 @@ ProgramsScreenForm {
 
         onSelected: root._handleMovieSelected(id, tpProgram)
     }
-
-    function _handleMovieSelected(id, tpProgram) {
-        const element = screenManager.navigate(ScreenManager.Route.MOVIE, {
-                                                   "vMovieId": id,
-                                                   "vProgramType": tpProgram
-                                               })
-        element.doStart()
-    }
-
-    function _handleSearch(text) {
-        root.vDsQuery = text
-    }
-
-    header.onSearch: text => root._handleSearch(text)
-    header.profileOption.onSelected: () => screenManager.navigate(
-                                         ScreenManager.Route.PROFILE)
 }

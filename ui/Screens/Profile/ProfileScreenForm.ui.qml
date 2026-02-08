@@ -6,7 +6,7 @@ import Ui.Theme
 import Ui.Components
 import Ui.Components.Elements
 
-import core 1.0
+import Core 1.0
 
 GenericScreen {
     id: root
@@ -74,7 +74,7 @@ GenericScreen {
                     vIcon: Icons.outlined.star
                     vText: qsTr("Reviews")
                     vBagdetText: "23"
-                    vIconColor: Colors.primary300
+                    vIconColor: Colors.orange300
                 }
 
                 FFActionPill {

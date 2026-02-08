@@ -3,6 +3,7 @@ import QtQuick.Controls
 
 import Ui.Theme
 
+// TODO maybe create a Ui.Screens.Commons to move PopupManager
 Item {
     id: root
 

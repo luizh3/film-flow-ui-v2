@@ -1,6 +1,6 @@
 import QtQuick
 
-import controls 1.0
+import Controls 1.0
 
 ProfileScreenForm {
     id: root
@@ -8,9 +8,6 @@ ProfileScreenForm {
     function _handleClose() {
         root.close()
     }
-
-    backButtonNavigation.onClicked: root._handleClose()
-    goBackButton.onClicked: root._handleClose()
 
     function _handleUserChanged(user) {
         root.vUser = user
@@ -20,11 +17,14 @@ ProfileScreenForm {
         control.doStart()
     }
 
+    backButtonNavigation.onClicked: root._handleClose()
+    goBackButton.onClicked: root._handleClose()
+
+    Component.onCompleted: root._handleOnCompleted()
+
     ProfileScreenControl {
         id: control
 
         onUserChanged: user => root._handleUserChanged(user)
     }
-
-    Component.onCompleted: root._handleOnCompleted()
 }

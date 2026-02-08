@@ -9,8 +9,6 @@ AuthScreenForm {
 
     signal success
 
-    stackView.initialItem: loginComponent
-
     function _onLoading() {
         const screen = root.stackView.push(loginComponent, StackView.Immediate)
         screen.signUp.connect(root._onRegister)
@@ -28,6 +26,10 @@ AuthScreenForm {
         })
     }
 
+    stackView.initialItem: loginComponent
+
+    Component.onCompleted: root._onLoading()
+
     Component {
         id: loginComponent
 
@@ -39,6 +41,4 @@ AuthScreenForm {
 
         RegisterScreen {}
     }
-
-    Component.onCompleted: root._onLoading()
 }

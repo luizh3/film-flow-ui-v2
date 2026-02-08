@@ -15,6 +15,8 @@ Item {
     property var vSections: []
     property alias repeaterSections: repeaterSections
     property alias header: header
+    property alias footerScroll: footerScroll
+    property alias scrolView: scrolView
 
     ImageGradient {
         id: imageGradient
@@ -26,12 +28,7 @@ Item {
             color: Colors.grey500
             opacity: movieSlider.vIsLoading
                      || imageGradient.sourceItem.status !== Image.Ready ? 1 : 0
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: Durations.normal
-                }
-            }
+            vOpacityDuration: Durations.normal
         }
 
         // ParticleSystem {
@@ -73,7 +70,6 @@ Item {
                 leftPadding: Spacings.xl3
                 bottomPadding: Spacings.xl2
                 topPadding: Spacings.xl2
-                vOpacity: scrolView.isContentOverlay() ? 1.0 : 0.0
             }
 
             Flickable {
@@ -81,14 +77,10 @@ Item {
                 width: parent.width
                 height: parent.height - header.height
                 contentWidth: parent.width
-                contentHeight: column.height + movieSlider.height
+                contentHeight: column.height + movieSlider.height + footerScroll.height
                 clip: true
 
                 ScrollBar.vertical: ScrollBar {}
-
-                function isContentOverlay() {
-                    return scrolView.originY !== scrolView.contentY
-                }
 
                 Control {
                     id: mainContentControl
@@ -114,5 +106,9 @@ Item {
                 }
             }
         }
+    }
+
+    FooterScroll {
+        id: footerScroll
     }
 }

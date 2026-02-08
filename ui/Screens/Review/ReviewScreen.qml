@@ -6,13 +6,11 @@ import Ui.Theme
 import Ui.Models
 import Ui.Components
 
+// TODO maybe create a Ui.Screens.Commons to move screenManager
+import Ui.Screens
+
 ReviewScreenForm {
     id: root
-
-    header.searchProgramTextField.enabled: false
-    header.searchProgramTextField.vPlaceHolderText: qsTr("Search for a review")
-    header.profileOption.onSelected: () => screenManager.navigate(
-                                         ScreenManager.Route.PROFILE)
 
     function _handleMovieSelected(id, tpProgram) {
         const element = screenManager.navigate(ScreenManager.Route.MOVIE, {
@@ -25,6 +23,11 @@ ReviewScreenForm {
     function _handleTotalReviewsFound(totalReviews) {
         foundResultsLabel.text = qsTr("Found %0 results").arg(totalReviews)
     }
+
+    header.searchProgramTextField.enabled: false
+    header.searchProgramTextField.vPlaceHolderText: qsTr("Search for a review")
+    header.profileOption.onSelected: () => screenManager.navigate(
+                                         ScreenManager.Route.PROFILE)
 
     Connections {
         target: reviewsListModel
