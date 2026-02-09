@@ -2,8 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import Ui.Theme
-
-import "../LoadingCircle"
+import Ui.Components.Elements
 
 Button {
 
@@ -23,6 +22,7 @@ Button {
         opacity: root.hovered && root.enabled ? 0.8 : 1
         radius: Radius.md
 
+        // TODO move this for .qml
         Behavior on opacity {
             NumberAnimation {
                 duration: Durations.normal

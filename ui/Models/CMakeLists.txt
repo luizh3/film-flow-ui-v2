@@ -26,9 +26,6 @@ set( HEADERS
 qt_add_qml_module(${LIBRARY_NAME}
     URI ${LIBRARY_URI}
     VERSION 1.0
-    STATIC
-    PLUGIN_TARGET ${LIBRARY_NAME}Plugin
-    RESOURCES qmldir
     SOURCES
         ${SOURCES}
         ${HEADERS}

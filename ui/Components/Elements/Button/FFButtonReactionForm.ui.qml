@@ -13,12 +13,6 @@ Rectangle {
     color: mouseArea.containsMouse ? Colors.grey400 : Colors.transparent
     radius: Radius.md
 
-    Behavior on color {
-        ColorAnimation {
-            duration: Durations.fast
-        }
-    }
-
     required property string vIcon
     required property string vIconSelected
     required property string vIconColor

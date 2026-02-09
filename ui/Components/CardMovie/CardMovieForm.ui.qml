@@ -102,12 +102,7 @@ Item {
             radius: 12
             opacity: sourceItem.image.status === Image.Ready
                      && !root.vIsLoading ? 0 : 1
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: Durations.normal
-                }
-            }
+            vOpacityDuration: Durations.normal
         }
     }
 }

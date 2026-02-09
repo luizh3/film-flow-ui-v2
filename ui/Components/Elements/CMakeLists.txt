@@ -41,15 +41,9 @@ set( QML_FILES
     FFColorItemForm.ui.qml
 )
 
-set( RESOURCES
-    qmldir
-)
-
 qt_add_qml_module( ${MODULE_NAME}
     URI ${MODULE_URI}
     VERSION 1.0
     QML_FILES
         ${QML_FILES}
-    RESOURCES
-        ${RESOURCES}
 )

@@ -12,12 +12,6 @@ Rectangle {
 
     property alias handlerMouse: handlerMouse
 
-    Behavior on color {
-        ColorAnimation {
-            duration: Durations.normal
-        }
-    }
-
     Row {
         id: content
         spacing: Spacings.xs

@@ -4,14 +4,13 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QFontDatabase>
+#include <QPixmapCache>
 #include <QQuickStyle>
 #include <QTranslator>
 
 #include <core/entities/movieinformation.h>
 #include <core/entities/typeprogramenum.h>
 #include <core/manager/applicationmanager.h>
-
-#include <QPixmapCache>
 
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
@@ -20,7 +19,6 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.addImportPath("ui");
 
     ApplicationManager::instance().languageManager().intialize(&app, &engine);
 
@@ -61,10 +59,6 @@ int main(int argc, char *argv[]) {
     for (const QString &file : dir.entryList(QDir::Files)) {
         QFontDatabase::addApplicationFont(":/fonts/" + file);
     }
-
-    // qInfo() << engine.importPathList();
-
-    // MovieController().login();
 
     return app.exec();
 }

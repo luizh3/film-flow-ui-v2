@@ -1,3 +1,5 @@
+import QtQuick
+
 import Ui.Theme
 
 FFButtonScrollForm {
@@ -8,4 +10,10 @@ FFButtonScrollForm {
     color: handlerMouse.containsMouse ? Colors.grey700 : Colors.grey800
 
     handlerMouse.onClicked: root.pressed()
+
+    Behavior on color {
+        ColorAnimation {
+            duration: Durations.normal
+        }
+    }
 }

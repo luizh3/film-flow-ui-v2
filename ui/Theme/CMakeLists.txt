@@ -3,10 +3,6 @@ set( QT_QML_GENERATE_QMLLS_INI ON )
 
 set( MODULE_URI Ui.Theme )
 
-set( RESOURCES
-    qmldir
-)
-
 set( QML_SINGLETONS
     Colors.qml
     Spacings.qml
@@ -27,7 +23,6 @@ qt_add_qml_module( ${MODULE_NAME}
     QML_FILES
         ${QML_SINGLETONS}
     RESOURCES
-        ${RESOURCES}
         resources.qrc
     SOURCES
         manager/themecolormanager.cpp
@@ -39,7 +34,6 @@ qt_add_qml_module( ${MODULE_NAME}
         models/themecolormodel.h
         models/coloritemmodel.h
         theme_global.h
-
 )
 
 find_package( Qt6 REQUIRED COMPONENTS Core Qml )

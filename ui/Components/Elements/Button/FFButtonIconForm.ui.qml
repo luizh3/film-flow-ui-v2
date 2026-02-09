@@ -34,6 +34,7 @@ Button {
         radius: root._radius
         color: root.hovered && root.enabled ? root._hoverColor : root._color
 
+        // TODO move this for .qml
         Behavior on opacity {
             NumberAnimation {
                 duration: Durations.normal

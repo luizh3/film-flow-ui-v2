@@ -1,5 +1,7 @@
 import QtQuick
 
+import Ui.Theme
+
 FFButtonReactionForm {
     id: root
 
@@ -27,4 +29,10 @@ FFButtonReactionForm {
     }
 
     mouseArea.onClicked: () => root._handleOnSelected()
+
+    Behavior on color {
+        ColorAnimation {
+            duration: Durations.fast
+        }
+    }
 }

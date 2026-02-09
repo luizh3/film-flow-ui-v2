@@ -1,4 +1,4 @@
-import "../CardMovie"
+import Ui.Components
 
 CardMovieListForm {
     id: root

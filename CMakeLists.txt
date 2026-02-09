@@ -89,12 +89,11 @@ target_include_directories( ${APP_NAME}
         ${CORE_INCLUDE_DIR}
 )
 
-
 add_subdirectory( core )
 add_subdirectory( controls )
 
 add_subdirectory( ui/models )
-add_subdirectory( ui/Components )
+add_subdirectory( ui/components )
 add_subdirectory( ui/theme )
 add_subdirectory( ui/screens )
 

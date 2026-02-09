@@ -143,6 +143,7 @@ Rectangle {
                                 text: root.vProgramTitle
                                 color: aboutMovieMouse.containsMouse ? Colors.primary300 : Colors.grey50
 
+                                // TODO move this for .qml
                                 Behavior on color {
                                     ColorAnimation {
                                         duration: Durations.fast
@@ -198,6 +199,7 @@ Rectangle {
                                                        _collapsedHeight,
                                                        implicitHeight)
 
+                        // TODO movi this for .qml
                         Behavior on height {
                             NumberAnimation {
                                 duration: Durations.normal

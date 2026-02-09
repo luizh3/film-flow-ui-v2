@@ -40,6 +40,7 @@ Item {
             transformOrigin: Item.Center
             vColor: Colors.grey50
 
+            // TODO movi this for .qml
             Behavior on rotation {
                 NumberAnimation {
                     duration: Durations.fast

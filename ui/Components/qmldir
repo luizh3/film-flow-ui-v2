@@ -1,10 +1,10 @@
 module Ui.Components
-SideBar 1.0 SideBar/SideBar.qml
-ImageGradient 1.0 ImageGradient/ImageGradient.qml
-Header 1.0 Header/Header.qml
-MovieSlider 1.0 MovieSlider/MovieSlider.qml
-CardMovie 1.0 CardMovie/CardMovie.qml
-CardMovieList 1.0 CardMovieList/CardMovieList.qml
+SideBar 1.0 sideBar/SideBar.qml
+ImageGradient 1.0 imagegradient/ImageGradient.qml
+Header 1.0 header/Header.qml
+MovieSlider 1.0 movieslider/MovieSlider.qml
+CardMovie 1.0 cardmovie/CardMovie.qml
+CardMovieList 1.0 cardmovielist/CardMovieList.qml
 SearchResultCard 1.0 SearchResultCard.qml
 SearchProgramResultPopup 1.0 SearchProgramResultPopup.qml
 ProgramReview 1.0 ProgramReview.qml
@@ -15,3 +15,4 @@ NotificationCard 1.0 NotificationCard.qml
 NotificationsPopup 1.0 NotificationsPopup.qml
 ThemePicker 1.0 ThemePicker.qml
 FooterScroll 1.0 FooterScroll.qml
+BadgetProvider 1.0 BadgetProvider.qml

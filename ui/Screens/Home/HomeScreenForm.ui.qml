@@ -1,11 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Particles
 
 import Ui.Theme
 import Ui.Components
 import Ui.Components.Elements
-
-import QtQuick.Particles
 
 Item {
     id: root

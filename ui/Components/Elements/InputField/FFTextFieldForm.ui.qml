@@ -3,8 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import Ui.Theme
-
-import "../Button"
+import Ui.Components.Elements
 
 Item {
     id: root

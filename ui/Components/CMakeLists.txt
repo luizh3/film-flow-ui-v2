@@ -36,15 +36,20 @@ set( QML_FILES
     ThemePicker.qml
     FooterScroll.qml
     FooterScrollForm.ui.qml
+    BadgetProviderForm.ui.qml
+    BadgetProvider.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}
     URI ${LIBRARY_URI}
     VERSION 1.0
-    RESOURCES qmldir
     QML_FILES
         ${QML_FILES}
 )
 
 add_subdirectory( elements )
+
+target_link_libraries( ${MODULE_NAME}
+    PRIVATE FF::Controls
+)
 
