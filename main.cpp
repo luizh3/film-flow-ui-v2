@@ -14,6 +14,7 @@
 
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
+#include <ui/theme/themeinit.h>
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
@@ -31,18 +32,14 @@ int main(int argc, char *argv[]) {
         "MovieInformation não pode ser criado no QML"
         );
 
-    qmlRegisterSingletonInstance("ThemeColorManager",
-                                 1,
-                                 0,
-                                 "ThemeColorManager",
-                                 ThemeColorManager::instance());
-
     qmlRegisterUncreatableMetaObject(TypeProgram::staticMetaObject,
                                      "TypeProgramEnum",
                                      1,
                                      0,
                                      "TypeProgramEnum",
                                      "Access to enums & flags only");
+
+    Theme::registerQmlTypes();
 
     ThemeColorManager::instance()->setRoleType(ColorRole::ORANGE);
     ThemeColorManager::instance()->setTheme(ThemeColorFactory::getOrange());

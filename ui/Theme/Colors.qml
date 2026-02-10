@@ -14,6 +14,8 @@ QtObject {
 
     readonly property string neutral100: "#FFFFFF"
 
+    // TODO Here, the warning 'Unqualified access [unqualified]' occurs because the parser doesn't know that RegisterMetaType will be called in main.cpp
+    // Perhaps migrating to a plugin would resolve the warning.
     readonly property string primary50: ThemeColorManager.primary50
     readonly property string primary100: ThemeColorManager.primary100
     readonly property string primary200: ThemeColorManager.primary200

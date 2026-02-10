@@ -87,7 +87,7 @@ MovieScreenForm {
         vScore: programReview.score
         width: ListView.view.width
         vDateCreated: "24/10/2025"
-        vUserImage: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg"
+        vUserImage: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" // TODO change for te user photo
         vTitle: programReview.title
         vUserName: "test"
         vDescription: programReview.description

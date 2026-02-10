@@ -5,7 +5,6 @@ import QtQuick.Window
 import QtQuick.Controls.Basic
 
 import Ui.Screens
-import Ui.Components
 
 import Controls 1.0
 

@@ -34,6 +34,8 @@ qt_add_qml_module( ${MODULE_NAME}
         models/themecolormodel.h
         models/coloritemmodel.h
         theme_global.h
+        themeinit.h
+        themeinit.cpp
 )
 
 find_package( Qt6 REQUIRED COMPONENTS Core Qml )

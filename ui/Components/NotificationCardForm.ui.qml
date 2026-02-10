@@ -30,7 +30,7 @@ Item {
         FFSkeletonLoading {
             anchors.fill: parent
             color: Colors.grey500
-            radius: 4
+            radius: Radius.xl
         }
     }
 
@@ -48,7 +48,7 @@ Item {
 
                 FFProfileIcon {
                     vHasHover: false
-                    vIcon: "https://swordslice.com/cdn/shop/articles/jjk-does-nanami-die.webp?v=1752508661&width=1100"
+                    vIcon: "https://swordslice.com/cdn/shop/articles/jjk-does-nanami-die.webp?v=1752508661&width=1100" // TODO change for de user photo
                     Layout.leftMargin: Spacings.sm2
 
                     Rectangle {
@@ -74,8 +74,10 @@ Item {
                     text: root.vDescription
                     color: Colors.grey50
                     Layout.fillWidth: true
+                    Layout.fillHeight: true
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
+                    Layout.rightMargin: Spacings.sm
                 }
             }
 
