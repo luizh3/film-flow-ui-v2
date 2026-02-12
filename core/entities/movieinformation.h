@@ -28,6 +28,7 @@ class CORE_EXPORT MovieInformation : public QObject {
     Q_PROPERTY(TypeProgram::TypeProgramEnum programType READ tpProgram CONSTANT)
 public:
     MovieInformation();
+    ~MovieInformation();
 
     explicit MovieInformation(Review *myReview,
                               double average,

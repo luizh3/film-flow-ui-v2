@@ -19,6 +19,12 @@ MovieInformation::MovieInformation()
     , _genres{}
 {}
 
+MovieInformation::~MovieInformation()
+{
+    delete _myReview;
+    qDeleteAll(_genres);
+}
+
 MovieInformation::MovieInformation(Review *myReview,
                                    double average,
                                    const TypeProgramEnum tpProgram,

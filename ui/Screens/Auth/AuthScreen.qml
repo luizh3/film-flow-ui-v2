@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 
 import Ui.Screens
-import Ui.Components
 
 AuthScreenForm {
     id: root

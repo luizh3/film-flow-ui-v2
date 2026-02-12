@@ -8,7 +8,7 @@ Rectangle {
     implicitHeight: 728
     color: Colors.grey500
 
-    property string vSource: "https://image.tmdb.org/t/p/original/v7GQxa9ZmdMZjt4JwZF54mvAiTv.jpg"
+    property string vSource: "qrc:/imagens/backdrop.png"
 
     property alias sourceItem: sourceItem
 

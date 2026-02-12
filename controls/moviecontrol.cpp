@@ -54,13 +54,6 @@ void MovieControl::doCancel()
     emit finished();
 }
 
-void MovieControl::doUpdateReview(Review *review)
-{
-    Review *oldRview = _movie->myReview();
-    delete oldRview;
-
-    _movie->setMyReview(review);
-}
 
 MovieInformation *MovieControl::movie() const
 {

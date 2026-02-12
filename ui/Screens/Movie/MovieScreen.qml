@@ -3,6 +3,7 @@ import QtQuick 2.15
 import Ui.Components
 import Ui.Theme
 import Ui.Models
+import Ui.Screens
 
 import Controls 1.0
 
@@ -29,7 +30,7 @@ MovieScreenForm {
                                               })
 
         reviewModal.success.connect(function doSuccess(newReview) {
-            control.doUpdateReview(newReview)
+            reviewsListModel.resetReviews()
         })
 
         reviewModal.setReview(vMovie.myReview)
@@ -49,6 +50,8 @@ MovieScreenForm {
     footerScroll.opacity: scrollFlickable.contentY > 300 ? 1 : 0
 
     writeReviewButton.onClicked: root._handleWriteReview()
+
+    vIsFetchingReviews: reviewsListModel.isFetching
 
     reviewsList.model: ReviewsListModel {
         id: reviewsListModel

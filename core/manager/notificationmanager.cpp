@@ -4,6 +4,11 @@ NotificationManager::NotificationManager()
     : _notificationWs{nullptr}
 {}
 
+NotificationManager::~NotificationManager()
+{
+    delete _notificationWs;
+}
+
 NotificationManager *NotificationManager::instance()
 {
     static NotificationManager notificationManager;

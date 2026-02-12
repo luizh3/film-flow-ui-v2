@@ -81,13 +81,26 @@ QVariant ReviewsListModel::data(const QModelIndex &index, int role) const
     }
 }
 
+void ReviewsListModel::resetReviews()
+{
+    beginResetModel();
+
+    _paginationRequest->setPage(0);
+
+    qDeleteAll(_reviewsCard);
+
+    _reviewsCard.clear();
+
+    endResetModel();
+}
+
 void ReviewsListModel::fetchMore(const QModelIndex &parent)
 {
     if (parent.isValid() || _isFetching || _isReviewsEnded) {
         return;
     }
 
-    _isFetching = true;
+    setIsFetching(true);
 
     _paginationRequest->setPage(_paginationRequest->page() + 1);
 
@@ -138,7 +151,7 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
 void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 {
     if (future->isCanceled()) {
-        _isFetching = false;
+        setIsFetching(false);
         future->deleteLater();
         return;
     }
@@ -146,7 +159,7 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
     std::unique_ptr<ReviewsResult> reviewsResult(future->result());
 
     if (!reviewsResult) {
-        _isFetching = false;
+        setIsFetching(false);
         future->deleteLater();
         return;
     }
@@ -161,7 +174,7 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 
     updateCardsReview(_fetchingReviewsCard, reviewsResult->reviews());
 
-    _isFetching = false;
+    setIsFetching(false);
     future->deleteLater();
 }
 
@@ -248,4 +261,20 @@ void ReviewsListModel::setFetchModeType(ReviewFetchModeType newFetchModeType)
 
     _fetchModeType = newFetchModeType;
     emit fetchModeTypeChanged();
+}
+
+void ReviewsListModel::setIsFetching(const bool isFetching)
+{
+    if (isFetching == _isFetching) {
+        return;
+    }
+
+    emit isFetchingChanged();
+
+    _isFetching = isFetching;
+}
+
+bool ReviewsListModel::isFetching() const
+{
+    return _isFetching;
 }

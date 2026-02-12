@@ -24,6 +24,7 @@ class MODELS_EXPORT ReviewsListModel : public QAbstractListModel
     Q_PROPERTY(int movieId READ movieId WRITE setMovieId NOTIFY movieIdChanged FINAL)
     Q_PROPERTY(ReviewFetchModeType fetchModeType READ fetchModeType WRITE setFetchModeType NOTIFY
                    fetchModeTypeChanged FINAL)
+    Q_PROPERTY(bool isFetching READ isFetching NOTIFY isFetchingChanged FINAL)
 public:
     ~ReviewsListModel();
     ReviewsListModel();
@@ -65,6 +66,8 @@ public:
 
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
+    Q_INVOKABLE void resetReviews();
+
     virtual void fetchMore(const QModelIndex& parent) override;
 
     virtual bool canFetchMore(const QModelIndex& parent) const override;
@@ -77,16 +80,16 @@ public:
     ReviewFetchModeType fetchModeType() const;
     void setFetchModeType(ReviewFetchModeType newFetchModeType);
 
+    void setIsFetching(const bool isFetching);
+    bool isFetching() const;
+
 signals:
     void totalReviewsFound(int totalReviews);
-
     void searchTypeChanged();
-
     void movieIdChanged();
-
     void isLoadingChanged();
-
     void fetchModeTypeChanged();
+    void isFetchingChanged();
 
 private:
     ReviewsResult* onFetchStarted();

@@ -9,6 +9,7 @@ class CORE_EXPORT NotificationManager : public QObject
     Q_OBJECT
 public:
     NotificationManager();
+    ~NotificationManager();
 
     static NotificationManager *instance();
 

@@ -18,6 +18,7 @@ GenericScreen {
 
     property var vMovie
     property bool vIsLoading: true
+    property bool vIsFetchingReviews: true
 
     property alias backButtonNavigation: backButtonNavigation
     property alias writeReviewButton: writeReviewButton
@@ -73,7 +74,7 @@ GenericScreen {
 
     ImageGradient {
         anchors.fill: parent
-        vSource: vMovie?.backdropUrl ?? ""
+        vSource: root.vMovie?.backdropUrl ?? ""
 
         FFSkeletonLoading {
             anchors.fill: parent
@@ -121,7 +122,8 @@ GenericScreen {
 
                         FFImageRounded {
                             id: sourceItem
-                            vSource: vMovie?.posterUrl && vMovie.posterUrl
+                            vSource: root.vMovie?.posterUrl
+                                     && root.vMovie.posterUrl
                                      !== "" ? vMovie.posterUrl : "qrc:/icons/not-found"
                             vRadius: Radius.sm
                             width: 250
@@ -143,7 +145,7 @@ GenericScreen {
                             Label {
                                 id: label
                                 font: Fonts.title270
-                                text: vMovie?.title ?? ""
+                                text: root.vMovie?.title ?? ""
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
                             }
@@ -163,7 +165,7 @@ GenericScreen {
                                 width: parent.width
 
                                 FFScoreBadget {
-                                    vScore: vMovie?.average ?? ""
+                                    vScore: root.vMovie?.average ?? ""
                                     vSize: FFScoreBadget.Size.Medium
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
@@ -210,7 +212,7 @@ GenericScreen {
                                 width: parent.width
 
                                 Repeater {
-                                    model: vMovie?.genres ?? []
+                                    model: root.vMovie?.genres ?? []
 
                                     FFBadget {
 
@@ -229,7 +231,7 @@ GenericScreen {
                                 font: Fonts.label140
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
-                                text: vMovie?.overview ?? ""
+                                text: root.vMovie?.overview ?? ""
                                 width: parent.width
 
                                 FFSkeletonLoading {
@@ -267,8 +269,8 @@ GenericScreen {
                             FFButton {
                                 id: writeReviewButton
                                 vIcon: Icons.outlined.edit
-                                text: vMovie?.myReview ? qsTr("Edit") : qsTr(
-                                                             "Write")
+                                text: root.vMovie?.myReview ? qsTr("Edit") : qsTr(
+                                                                  "Write")
                                 vType: FFButton.Type.Secundary
                                 height: Spacings.xl
                                 anchors.verticalCenter: parent.verticalCenter

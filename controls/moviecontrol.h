@@ -22,7 +22,6 @@ public:
     ~MovieControl();
     Q_INVOKABLE void doStart(const int id, TypeProgramEnum tpProgram);
     Q_INVOKABLE void doCancel();
-    Q_INVOKABLE void doUpdateReview(Review *review);
 
     MovieInformation *movie() const;
     void setMovie(MovieInformation *newMovie);
