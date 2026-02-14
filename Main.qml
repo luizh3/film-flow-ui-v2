@@ -67,6 +67,10 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
     }
 
+    Component.onCompleted: {
+        NavigateManager.vPopupManager = popupManager
+    }
+
     ToastManager {
         id: toastManager
     }

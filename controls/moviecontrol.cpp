@@ -3,11 +3,14 @@
 #include <core/controller/multicontroller.h>
 #include <core/helper/taskrunhelper.h>
 
-#include <core/entities/configs.h>
-#include <core/entities/genre.h>
-#include <core/entities/programconfig.h>
 #include <core/manager/applicationmanager.h>
+#include <core/model/config/configs.h>
+#include <core/model/config/programconfig.h>
+#include <core/model/entities/genre.h>
+#include <core/model/entities/movieinformation.h>
 #include <core/network/request/multidetailsrequest.h>
+
+#include "mapper/moviemapper.h"
 
 MovieControl::MovieControl()
     : _movie{nullptr}
@@ -29,16 +32,17 @@ void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
     request.setTpProgram(TypeProgram::toString(tpProgram));
     request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
 
-    MovieInformation *movieInformation = nullptr;
+    std::unique_ptr<MovieInformation> movieInformation;
 
-    TaskRunHelper::runSync([&]() { movieInformation = _multiController.findById(id, request); });
+    TaskRunHelper::runSync(
+        [&]() { movieInformation.reset(_multiController.findById(id, request)); });
 
     if (_isCanceled) {
         emit finished();
         return;
     }
 
-    setMovie(movieInformation);
+    setMovie(MovieMapper::toModel(movieInformation.get()));
 
     setIsLoading(false);
 }
@@ -54,13 +58,12 @@ void MovieControl::doCancel()
     emit finished();
 }
 
-
-MovieInformation *MovieControl::movie() const
+MovieModel *MovieControl::movie() const
 {
     return _movie;
 }
 
-void MovieControl::setMovie(MovieInformation *newMovie)
+void MovieControl::setMovie(MovieModel *newMovie)
 {
     if (_movie == newMovie) {
         return;

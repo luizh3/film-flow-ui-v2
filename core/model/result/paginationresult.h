@@ -1,16 +1,16 @@
-#ifndef PAGINATION_H
-#define PAGINATION_H
+#ifndef PAGINATIONRESULT_H
+#define PAGINATIONRESULT_H
 
 #include "core_global.h"
 
 class QJsonObject;
-class CORE_EXPORT Pagination
+class CORE_EXPORT PaginationResult
 {
 public:
-    Pagination();
-    explicit Pagination( const int page, const int totalPage, const int totalResults );
+    PaginationResult();
+    explicit PaginationResult(const int page, const int totalPage, const int totalResults);
 
-    static Pagination* fromJson( const QJsonObject& jsonObject );
+    static PaginationResult* fromJson(const QJsonObject& jsonObject);
 
     int page() const;
     void setPage(int newPage);
@@ -27,4 +27,4 @@ private:
     int _totalResult;
 };
 
-#endif // PAGINATION_H
+#endif // PAGINATIONRESULT_H

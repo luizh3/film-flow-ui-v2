@@ -1,10 +1,10 @@
 #include "searchprogramlistmodel.h"
 
 #include <core/controller/multicontroller.h>
-#include <core/entities/movieinformation.h>
-#include <core/entities/searchmovies.h>
 #include <core/helper/taskrunhelper.h>
 #include <core/manager/applicationmanager.h>
+#include <core/model/entities/movieinformation.h>
+#include <core/model/result/searchmoviesresult.h>
 #include <core/network/request/multirequest.h>
 
 #include "helper/cardsfetchhelper.h"
@@ -17,6 +17,7 @@ SearchProgramListModel::SearchProgramListModel()
     : _multiRequest{new MultiRequest()}
     , _multiController{new MultiController()}
     , _isFetching{false}
+    , _vDsQuery(QStringLiteral(""))
     , _fechingSearchProgramCards{}
     , _programCards{}
 {
@@ -98,12 +99,13 @@ void SearchProgramListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new SearchProgramCard(); });
 
-    QFutureWatcher<SearchMovies *> *future = TaskRunHelper::async<SearchMovies *>(
+    QFutureWatcher<SearchMoviesResult *> *future = TaskRunHelper::async<SearchMoviesResult *>(
         [&]() { return _multiController->find(*_multiRequest); });
 
-    QObject::connect(future, &QFutureWatcher<SearchMovies *>::finished, this, [this, future]() {
-        onFetchEnded(future);
-    });
+    QObject::connect(future,
+                     &QFutureWatcher<SearchMoviesResult *>::finished,
+                     this,
+                     [this, future]() { onFetchEnded(future); });
 }
 
 bool SearchProgramListModel::canFetchMore(const QModelIndex &parent) const
@@ -188,7 +190,7 @@ void SearchProgramListModel::setVDsQuery(const QString &newVDsQuery)
     emit vDsQueryChanged();
 }
 
-void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
+void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future)
 {
     if (future->isCanceled()) {
         _isFetching = false;
@@ -196,7 +198,7 @@ void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future
         return;
     }
 
-    std::unique_ptr<SearchMovies> searchMovies(future->result());
+    std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
 
     if (!searchMovies) {
         _isFetching = false;

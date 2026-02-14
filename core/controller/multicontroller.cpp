@@ -1,10 +1,10 @@
 #include "multicontroller.h"
 
-#include <entities/movieinformation.h>
-#include <entities/searchmovies.h>
+#include <model/entities/movieinformation.h>
+#include <model/result/searchmoviesresult.h>
 
-#include <entities/reviewsresult.h>
 #include <manager/applicationmanager.h>
+#include <model/result/reviewsresult.h>
 
 #include <network/endpoint/filmflowmultiendpoint.h>
 #include <network/request/paginationrequest.h>
@@ -16,7 +16,7 @@ MultiController::MultiController()
 
 MultiController::~MultiController() = default;
 
-SearchMovies *MultiController::find(const MultiRequest &request)
+SearchMoviesResult *MultiController::find(const MultiRequest &request)
 {
     std::unique_ptr<Response> response(_filmFlowMultiEndpoint->find(request));
 
@@ -24,7 +24,7 @@ SearchMovies *MultiController::find(const MultiRequest &request)
         return nullptr;
     }
 
-    return SearchMovies::fromJson(response->data());
+    return SearchMoviesResult::fromJson(response->data());
 }
 
 MovieInformation *MultiController::findById(const int id, const MultiDetailsRequest &request)

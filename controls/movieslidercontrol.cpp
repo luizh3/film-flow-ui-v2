@@ -1,12 +1,13 @@
 #include "movieslidercontrol.h"
 
-#include <core/entities/searchmovies.h>
-#include <core/network/request/sectionrequest.h>
-#include <core/helper/taskrunhelper.h>
 #include <core/controller/sectioncontroller.h>
-#include <core/entities/movieinformation.h>
+#include <core/helper/taskrunhelper.h>
+#include <core/model/result/searchmoviesresult.h>
+#include <core/network/request/sectionrequest.h>
 
-#include <core/entities/signup.h>
+#include <core/network/request/signup.h>
+
+#include "mapper/moviemapper.h"
 
 MovieSliderControl::MovieSliderControl() :
     _movies{{}},
@@ -48,33 +49,25 @@ void MovieSliderControl::previous()
 }
 
 void MovieSliderControl::fetchMovies() {
+    QFutureWatcher<SearchMoviesResult*>* future = TaskRunHelper::async<SearchMoviesResult*>([&]() {
+        SectionRequest request;
+        request.setKey("TOP_RATED");
+        request.setPage(1);
+        request.setTpProgram(TypeProgramEnum::MOVIE);
 
-    QFutureWatcher<SearchMovies*>* future = TaskRunHelper::async<SearchMovies*>(
-        [&]() {
+        return SectionController().find(request);
+    });
 
-            SectionRequest request;
-            request.setKey("TOP_RATED");
-            request.setPage( 1 );
-            request.setTpProgram( TypeProgramEnum::MOVIE );
-
-            return SectionController().find( request );
-        });
-
-    QObject::connect( future, &QFutureWatcher<SearchMovies*>::finished, this, [this, future]() {
-
+    QObject::connect(future, &QFutureWatcher<SearchMoviesResult*>::finished, this, [this, future]() {
         if ( future->isFinished() && !future->isCanceled() ) {
+            std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
 
-            std::unique_ptr<SearchMovies> searchMovies( future->result() );
-
-            _movies = searchMovies->movies();
-
-            searchMovies->setMovies({});
+            _movies = MovieMapper::toModels(searchMovies->movies());
 
             emit movieChanged( QVariant::fromValue( _movies.last() ) );
 
         }
 
         future->deleteLater();
-    } );
-
+    });
 }

@@ -1,16 +1,16 @@
 #ifndef AUTHENDPOINT_H
 #define AUTHENDPOINT_H
 
-#include <entities/session.h>
+#include <model/entities/session.h>
 
-class SignUp;
-class SignIn;
+class SignUpRequest;
+class SignInRequest;
 class Response;
 
 class AuthEndpoint {
 public:
-    Response* signIn( const SignIn& signIn );
-    Response* signUp( const SignUp* signUp );
+    Response* signIn(const SignInRequest& signIn);
+    Response* signUp(const SignUpRequest* signUp);
 };
 
 #endif // AUTHENDPOINT_H

@@ -4,8 +4,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "pagination.h"
-#include "review.h"
+#include "paginationresult.h"
+#include <model/entities/review.h>
 
 ReviewsResult::~ReviewsResult()
 {
@@ -18,7 +18,7 @@ ReviewsResult::ReviewsResult()
     , _reviews{}
 {}
 
-ReviewsResult::ReviewsResult(Pagination *pagination, QList<Review *> reviews)
+ReviewsResult::ReviewsResult(PaginationResult *pagination, QList<Review *> reviews)
     : _reviews{reviews}
     , _pagination{pagination}
 {}
@@ -33,12 +33,12 @@ void ReviewsResult::setReviews(const QList<Review *> &newReviews)
     _reviews = newReviews;
 }
 
-Pagination *ReviewsResult::pagination() const
+PaginationResult *ReviewsResult::pagination() const
 {
     return _pagination;
 }
 
-void ReviewsResult::setPagination(Pagination *newPagination)
+void ReviewsResult::setPagination(PaginationResult *newPagination)
 {
     _pagination = newPagination;
 }
@@ -53,5 +53,5 @@ ReviewsResult *ReviewsResult::fromJson(const QJsonDocument &jsonDocument)
         reviews.append(Review::fromJson(reviewValue.toObject()));
     }
 
-    return new ReviewsResult(Pagination::fromJson(jsonDocument.object()), reviews);
+    return new ReviewsResult(PaginationResult::fromJson(jsonDocument.object()), reviews);
 }

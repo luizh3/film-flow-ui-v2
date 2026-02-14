@@ -1,14 +1,14 @@
 #include "notificationslistmodel.h"
 
-#include "notification.h"
-#include "notificationreviewlike.h"
-#include "notificationsresult.h"
-
 #include "helper/cardsfetchhelper.h"
 
+#include <core/model/entities/notification.h>
+#include <core/model/entities/notificationreviewlike.h>
+#include <core/model/result/notificationsresult.h>
+
 #include <core/controller/notificationcontroller.h>
-#include <core/entities/pagination.h>
 #include <core/helper/taskrunhelper.h>
+#include <core/model/result/paginationresult.h>
 #include <network/request/paginationrequest.h>
 
 namespace {

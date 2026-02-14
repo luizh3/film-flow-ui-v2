@@ -1,35 +1,35 @@
-#include "signin.h"
+#include "signinrequest.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>
 
-SignIn::SignIn() :
-    _email(QStringLiteral("")),
-    _password(QStringLiteral(""))
+SignInRequest::SignInRequest()
+    : _email(QStringLiteral(""))
+    , _password(QStringLiteral(""))
 {}
 
-QString SignIn::password() const
+QString SignInRequest::password() const
 {
     return _password;
 }
 
-void SignIn::setPassword(const QString &newPassword)
+void SignInRequest::setPassword(const QString &newPassword)
 {
     _password = newPassword;
 }
 
-QString SignIn::email() const
+QString SignInRequest::email() const
 {
     return _email;
 }
 
-void SignIn::setEmail(const QString &newEmail)
+void SignInRequest::setEmail(const QString &newEmail)
 {
     _email = newEmail;
 }
 
-QJsonDocument SignIn::toJson() const {
-
+QJsonDocument SignInRequest::toJson() const
+{
     QJsonDocument jsonDocument;
 
     QJsonObject jsonObject;

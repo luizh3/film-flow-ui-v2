@@ -1,18 +1,13 @@
 #ifndef SECTIONSCONFIG_H
 #define SECTIONSCONFIG_H
 
-#include <QObject>
-
 #include "core_global.h"
 
-#include "typeprogramenum.h"
+#include <model/enum/typeprogramenum.h>
 
 class QJsonObject;
-class CORE_EXPORT SectionsConfig : public QObject {
-    Q_OBJECT
-    Q_PROPERTY( QString key READ key CONSTANT )
-    Q_PROPERTY( QString name READ name CONSTANT )
-    Q_PROPERTY( TypeProgram::TypeProgramEnum tpProgram READ tpProgram CONSTANT )
+class CORE_EXPORT SectionsConfig
+{
 public:
     SectionsConfig();
     explicit SectionsConfig( const TypeProgramEnum tpProgram, const QString& name, const QString& key );

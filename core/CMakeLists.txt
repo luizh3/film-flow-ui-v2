@@ -8,14 +8,14 @@ set( SOURCES
     controller/applicationcontroller.cpp
     network/httpclient.cpp
     singleton/integrationmanager.cpp
-    entities/integration.cpp
+    model/entities/integration.cpp
     network/endpoint/authendpoint.cpp
-    entities/user.cpp
-    entities/session.cpp
+    model/entities/user.cpp
+    model/entities/session.cpp
     controller/authcontroller.cpp
     network/response/response.cpp
-    entities/signup.cpp
-    entities/signin.cpp
+    network/request/signuprequest.cpp
+    network/request/signinrequest.cpp
     validator/emailvalidator.cpp
     validator/rangevalidator.cpp
     validator/ffvalidator.cpp
@@ -23,16 +23,16 @@ set( SOURCES
     network/endpoint/filmflowconfigendpoint.cpp
     network/endpoint/filmflowendpoint.cpp
     manager/applicationmanager.cpp
-    entities/configs.cpp
-    entities/sectionsconfig.cpp
-    entities/programconfig.cpp
+    model/config/configs.cpp
+    model/config/sectionsconfig.cpp
+    model/config/programconfig.cpp
     network/endpoint/filmflowsectionendpoint.cpp
     network/request/sectionrequest.cpp
     controller/sectioncontroller.cpp
-    entities/movieinformation.cpp
-    entities/searchmovies.cpp
-    entities/genre.cpp
-    entities/pagination.cpp
+    model/entities/movieinformation.cpp
+    model/result/searchmoviesresult.cpp
+    model/entities/genre.cpp
+    model/result/paginationresult.cpp
     helper/taskrunhelper.cpp
     network/endpoint/filmflowmultiendpoint.cpp
     network/request/multirequest.cpp
@@ -41,16 +41,16 @@ set( SOURCES
     manager/languagemanager.cpp
     network/endpoint/filmflowreviewendpoint.cpp
     controller/reviewcontroller.cpp
-    entities/review.cpp
-    entities/reviewsresult.cpp
+    model/entities/review.cpp
+    model/result/reviewsresult.cpp
     network/request/paginationrequest.cpp
     websocket/notificationws.cpp
-    entities/notification.cpp
-    entities/notificationreviewlike.cpp
+    model/entities/notification.cpp
+    model/entities/notificationreviewlike.cpp
     manager/notificationmanager.cpp
     controller/notificationcontroller.cpp
     network/endpoint/filmflownotificationendpoint.cpp
-    entities/notificationsresult.cpp
+    model/result/notificationsresult.cpp
     controller/reviewlikecontroller.cpp
 )
 
@@ -59,15 +59,15 @@ set( HEADERS
     controller/applicationcontroller.h
     network/httpclient.h
     singleton/integrationmanager.h
-    entities/integration.h
+    model/entities/integration.h
     network/endpoint/authendpoint.h
-    entities/user.h
-    entities/session.h
+    model/entities/user.h
+    model/entities/session.h
     controller/authcontroller.h
     network/response/response.h
     network/httpstatuscode.h
-    entities/signup.h
-    entities/signin.h
+    network/request/signuprequest.h
+    network/request/signinrequest.h
     validator/emailvalidator.h
     validator/rangevalidator.h
     validator/ffvalidator.h
@@ -76,36 +76,36 @@ set( HEADERS
     network/endpoint/filmflowconfigendpoint.h
     network/endpoint/filmflowendpoint.h
     manager/applicationmanager.h
-    entities/configs.h
-    entities/sectionsconfig.h
-    entities/programconfig.h
-    entities/genre.h
-    entities/typeprogramenum.h
+    model/config/configs.h
+    model/config/sectionsconfig.h
+    model/config/programconfig.h
+    model/entities/genre.h
+    model/enum/typeprogramenum.h
     network/endpoint/filmflowsectionendpoint.h
     network/request/sectionrequest.h
     controller/sectioncontroller.h
-    entities/pagination.h
-    entities/movieinformation.h
-    entities/searchmovies.h
+    model/result/paginationresult.h
+    model/entities/movieinformation.h
+    model/result/searchmoviesresult.h
     helper/taskrunhelper.h
     network/endpoint/filmflowmultiendpoint.h
     network/request/multirequest.h
     controller/multicontroller.h
     network/request/multidetailsrequest.h
     manager/languagemanager.h
-    entities/review.h
+    model/entities/review.h
     network/endpoint/filmflowreviewendpoint.h
     controller/reviewcontroller.h
     network/request/paginationrequest.h
-    entities/reviewsresult.h
+    model/result/reviewsresult.h
     websocket/notificationws.h
-    entities/notification.h
-    entities/notificationreviewlike.h
-    entities/typenotificationenum.h
+    model/entities/notification.h
+    model/entities/notificationreviewlike.h
+    model/enum/typenotificationenum.h
     manager/notificationmanager.h
     controller/notificationcontroller.h
     network/endpoint/filmflownotificationendpoint.h
-    entities/notificationsresult.h
+    model/result/notificationsresult.h
     controller/reviewlikecontroller.h
     core_global.h
 )
@@ -135,8 +135,10 @@ target_link_libraries( ${LIBRARY_NAME} PUBLIC
     PRIVATE Qt6::WebSockets
 )
 
+#TODO Review this to use only CMAKE_CURRENT_SOURCE_DIR, as QML_ELEMENT cannot find it when used this way for now.
 target_include_directories(${LIBRARY_NAME} PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/entities
+  ${CMAKE_CURRENT_SOURCE_DIR}/model
+  ${CMAKE_CURRENT_SOURCE_DIR}/model/entities
   ${CMAKE_CURRENT_SOURCE_DIR}/controller
   ${CMAKE_CURRENT_SOURCE_DIR}/network
   ${CMAKE_CURRENT_SOURCE_DIR}/manager

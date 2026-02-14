@@ -122,27 +122,6 @@ MovieInformation *MovieInformation::fromJson(const QJsonDocument &jsonDocument)
     return fromJson(jsonDocument.object());
 }
 
-MovieInformation *MovieInformation::fromJson(const QJsonObject &jsonObject) {
-    QList<Genre *> genres = {};
-
-    for (const QJsonValue &&genreValue : jsonObject["genres"].toArray()) {
-        genres.append(Genre::fromJson(genreValue.toObject()));
-    }
-
-    return new MovieInformation(Review::fromJson(jsonObject["myReview"].toObject()),
-                                jsonObject["average"].toDouble(),
-                                TypeProgram::fromString(jsonObject["mediaType"].toString()),
-                                jsonObject["title"].toString(),
-                                jsonObject["id"].toString(),
-                                jsonObject["backdropUrl"].toString(),
-                                jsonObject["posterUrl"].toString(),
-                                jsonObject["overview"].toString(),
-                                jsonObject["release"].toString(),
-                                genres
-
-    );
-}
-
 QList<Genre *> MovieInformation::genres() const
 {
     return _genres;
@@ -170,8 +149,27 @@ Review *MovieInformation::myReview() const
 
 void MovieInformation::setMyReview(Review *newMyReview)
 {
-    if (_myReview == newMyReview)
-        return;
     _myReview = newMyReview;
-    emit myReviewChanged();
+}
+
+MovieInformation *MovieInformation::fromJson(const QJsonObject &jsonObject)
+{
+    QList<Genre *> genres = {};
+
+    for (const QJsonValue &&genreValue : jsonObject["genres"].toArray()) {
+        genres.append(Genre::fromJson(genreValue.toObject()));
+    }
+
+    return new MovieInformation(Review::fromJson(jsonObject["myReview"].toObject()),
+                                jsonObject["average"].toDouble(),
+                                TypeProgram::fromString(jsonObject["mediaType"].toString()),
+                                jsonObject["title"].toString(),
+                                jsonObject["id"].toString(),
+                                jsonObject["backdropUrl"].toString(),
+                                jsonObject["posterUrl"].toString(),
+                                jsonObject["overview"].toString(),
+                                jsonObject["release"].toString(),
+                                genres
+
+    );
 }

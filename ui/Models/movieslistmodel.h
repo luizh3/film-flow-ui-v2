@@ -9,12 +9,12 @@
 
 #include <models_global.h>
 
-#include <core/entities/typeprogramenum.h>
+#include <core/model/enum/typeprogramenum.h>
 
 class SectionRequest;
 class MovieInformation;
 class SectionController;
-class SearchMovies;
+class SearchMoviesResult;
 class MODELS_EXPORT MoviesListModel : public QAbstractListModel {
     Q_OBJECT
     QML_ELEMENT
@@ -52,7 +52,7 @@ public:
      void setKey(const QString& newKey);
 
  private:
-     void onFetchEnded(QFutureWatcher<SearchMovies*>* future);
+     void onFetchEnded(QFutureWatcher<SearchMoviesResult*>* future);
 
      void updateCardsMovie(const QList<CardMovie*>& cardsMovie,
                            const QList<MovieInformation*>& moviesInformation);

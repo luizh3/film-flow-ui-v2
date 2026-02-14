@@ -2,11 +2,11 @@
 
 #include <core/controller/applicationcontroller.h>
 
-#include <entities/session.h>
-#include <manager/applicationmanager.h>
-#include <manager/notificationmanager.h>
+#include <core/manager/applicationmanager.h>
+#include <core/manager/notificationmanager.h>
+#include <core/model/entities/session.h>
 
-#include <entities/notificationreviewlike.h>
+#include <core/model/entities/notificationreviewlike.h>
 
 void ApplicationControl::doStart()
 {

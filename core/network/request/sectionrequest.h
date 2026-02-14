@@ -5,7 +5,7 @@
 
 #include <core_global.h>
 
-#include <entities/typeprogramenum.h>
+#include <model/enum/typeprogramenum.h>
 
 class QUrlQuery;
 class CORE_EXPORT SectionRequest {

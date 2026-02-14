@@ -1,6 +1,6 @@
 #include "sectioncontroller.h"
 
-#include <entities/searchmovies.h>
+#include <model/result/searchmoviesresult.h>
 
 #include <manager/applicationmanager.h>
 
@@ -13,7 +13,7 @@ SectionController::SectionController()
 
 SectionController::~SectionController() = default;
 
-SearchMovies *SectionController::find(const SectionRequest &request)
+SearchMoviesResult *SectionController::find(const SectionRequest &request)
 {
     std::unique_ptr<Response> response(_filmFlowSectionEndpoint->find(request));
 
@@ -21,7 +21,7 @@ SearchMovies *SectionController::find(const SectionRequest &request)
         return nullptr;
     }
 
-    return SearchMovies::fromJson( response->data() );
+    return SearchMoviesResult::fromJson(response->data());
 }
 
 void SectionController::cancel()

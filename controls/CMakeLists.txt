@@ -67,6 +67,7 @@ add_dependencies(
     ${LIBRARY_NAME}
     FF::Theme
     FF::Core
+    FF::Models
 )
 
 target_link_libraries( ${LIBRARY_NAME}
@@ -76,6 +77,7 @@ target_link_libraries( ${LIBRARY_NAME}
     PRIVATE Qt6::WebSockets
     PRIVATE FF::Core
     PRIVATE FF::Theme
+    PRIVATE FF::Models
 )
 
 target_include_directories(${LIBRARY_NAME}

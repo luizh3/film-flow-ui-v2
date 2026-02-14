@@ -10,7 +10,7 @@
 
 #include <models_global.h>
 
-#include <core/entities/typeprogramenum.h>
+#include <core/model/enum/typeprogramenum.h>
 
 class Review;
 class PaginationRequest;

@@ -3,7 +3,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-#include "genre.h"
+#include <model/entities/genre.h>
 
 ProgramConfig::~ProgramConfig() {
     qDeleteAll(_genresById);

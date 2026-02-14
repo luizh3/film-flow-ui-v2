@@ -5,6 +5,8 @@
 #include <core/controller/authcontroller.h>
 #include <core/controller/applicationcontroller.h>
 
+#include "mapper/signupmapper.h"
+
 void AuthControl::signIn(const QString& password, const QString& email)
 {
     qInfo() << "AuthControl::authenticate";
@@ -23,7 +25,7 @@ void AuthControl::signIn(const QString& password, const QString& email)
     qInfo() << "AuthControl::authenticate";
 }
 
-void AuthControl::signUp(const SignUp* signUp)
+void AuthControl::signUp(const SignUpModel* signUp)
 {
     qInfo() << "AuthControl::authenticate";
 
@@ -35,7 +37,9 @@ void AuthControl::signUp(const SignUp* signUp)
         emit error();
     });
 
-    controller.signUp(signUp);
+    std::unique_ptr<SignUpRequest> signUpRequest(SignUpMapper::toRequest(signUp));
+
+    controller.signUp(signUpRequest.get());
 
     qInfo() << "AuthControl::authenticate";
 }

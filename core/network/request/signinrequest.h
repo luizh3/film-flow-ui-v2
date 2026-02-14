@@ -1,12 +1,13 @@
-#ifndef SIGNIN_H
-#define SIGNIN_H
+#ifndef SIGNINREQUEST_H
+#define SIGNINREQUEST_H
 
 #include <QString>
 
 class QJsonDocument;
-class SignIn {
+class SignInRequest
+{
 public:
-    SignIn();
+    SignInRequest();
 
     QString password() const;
     void setPassword(const QString &newPassword);
@@ -21,4 +22,4 @@ private:
     QString _email;
 };
 
-#endif // SIGNIN_H
+#endif // SIGNINREQUEST_H

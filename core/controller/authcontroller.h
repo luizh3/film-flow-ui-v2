@@ -5,14 +5,14 @@
 
 #include <core_global.h>
 
-class SignUp;
+class SignUpRequest;
 
 class CORE_EXPORT AuthController : public QObject
 {
     Q_OBJECT
 public:
     void signIn( const QString& password, const QString& email );
-    void signUp( const SignUp* signUp );
+    void signUp(const SignUpRequest* signUp);
 signals:
     void success();
     void error( const QString& message );

@@ -1,8 +1,8 @@
 import QtQuick
 
-import Core 1.0
 import Controls 1.0
 
+import Ui.Models
 import Ui.Components.Elements
 
 ReviewProgramModalForm {
@@ -15,12 +15,13 @@ ReviewProgramModalForm {
     required property string vMovieId
     required property var vProgramType
 
-    property Review review: Review {
+    property ReviewModel review: ReviewModel {
         title: root.titleField.vText
         description: root.descriptionField.vText
         score: root.ratingStars.vCurrentValue
         movieId: root.vMovieId
         programTitle: root.vProgramTitle
+        // TODO Because the enum is in the core, qmlls is unable to understand where its definition is located.
         programType: root.vProgramType
     }
 

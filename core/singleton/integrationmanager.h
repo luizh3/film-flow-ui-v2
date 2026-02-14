@@ -1,7 +1,7 @@
 #ifndef INTEGRATIONMANAGER_H
 #define INTEGRATIONMANAGER_H
 
-#include <entities/integration.h>
+#include <model/entities/integration.h>
 
 using MapIntegrationType = std::unordered_map<Integration::IntegrationType, Integration*>;
 

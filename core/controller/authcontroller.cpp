@@ -5,12 +5,12 @@
 #include <network/response/response.h>
 #include <network/endpoint/authendpoint.h>
 
-#include <entities/signup.h>
-#include <entities/signin.h>
+#include <network/request/signinrequest.h>
+#include <network/request/signup.h>
 
 void AuthController::signIn(const QString& password, const QString& email)
 {
-    SignIn signIn;
+    SignInRequest signIn;
     signIn.setPassword( password );
     signIn.setEmail( email );
 
@@ -26,7 +26,7 @@ void AuthController::signIn(const QString& password, const QString& email)
     emit success();
 }
 
-void AuthController::signUp(const SignUp* signUp)
+void AuthController::signUp(const SignUpRequest* signUp)
 {
     std::unique_ptr<Response> response( AuthEndpoint().signUp( signUp ) );
 

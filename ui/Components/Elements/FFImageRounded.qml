@@ -8,6 +8,7 @@ Item {
     required property int vRadius
     property int vMargin: 0
     property alias image: sourceItem
+    property bool vIsReady: sourceItem.status === Image.Ready
 
     Image {
         id: sourceItem

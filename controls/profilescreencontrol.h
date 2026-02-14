@@ -6,7 +6,7 @@
 
 #include <controls_global.h>
 
-#include <entities/user.h>
+#include <core/model/entities/user.h>
 
 class User;
 class CONTROLS_EXPORT ProfileScreenControl : public QObject

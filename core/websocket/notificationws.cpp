@@ -3,7 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "entities/notification.h"
+#include <model/entities/notification.h>
 
 NotificationWs::NotificationWs(const QUrl &dsUrl, const QString &dsToken)
 {

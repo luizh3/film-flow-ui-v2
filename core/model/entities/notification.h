@@ -4,7 +4,7 @@
 #include <QObject>
 #include <core_global.h>
 
-#include "typenotificationenum.h"
+#include <model/enum/typenotificationenum.h>
 
 class QJsonDocument;
 class CORE_EXPORT Notification : public QObject

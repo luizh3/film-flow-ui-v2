@@ -1,9 +1,9 @@
 #include "movieslistmodel.h"
 
-#include <core/entities/searchmovies.h>
-#include <core/helper/taskrunhelper.h>
-#include <core/entities/movieinformation.h>
 #include <core/controller/sectioncontroller.h>
+#include <core/helper/taskrunhelper.h>
+#include <core/model/entities/movieinformation.h>
+#include <core/model/result/searchmoviesresult.h>
 #include <core/network/request/sectionrequest.h>
 
 #include "helper/cardsfetchhelper.h"
@@ -89,14 +89,13 @@ void MoviesListModel::fetchMore( const QModelIndex &parent ) {
 
         []() { return new CardMovie(); });
 
-    QFutureWatcher<SearchMovies*>* future = TaskRunHelper::async<SearchMovies*>(
-    [&]() {
-        return _sectionController->find( *_sectionRequest );
-    });
+    QFutureWatcher<SearchMoviesResult *> *future = TaskRunHelper::async<SearchMoviesResult *>(
+        [&]() { return _sectionController->find(*_sectionRequest); });
 
-    QObject::connect(future, &QFutureWatcher<SearchMovies *>::finished, this, [this, future]() {
-        onFetchEnded(future);
-    });
+    QObject::connect(future,
+                     &QFutureWatcher<SearchMoviesResult *>::finished,
+                     this,
+                     [this, future]() { onFetchEnded(future); });
 }
 
 bool MoviesListModel::canFetchMore( const QModelIndex& parent) const {
@@ -169,7 +168,7 @@ void MoviesListModel::setKey(const QString &newKey)
 
 }
 
-void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
+void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future)
 {
     if (future->isCanceled()) {
         future->deleteLater();
@@ -177,7 +176,7 @@ void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMovies *> *future)
         return;
     }
 
-    std::unique_ptr<SearchMovies> searchMovies(future->result());
+    std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
 
     if (!searchMovies) {
         future->deleteLater();

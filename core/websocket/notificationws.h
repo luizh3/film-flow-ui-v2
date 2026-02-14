@@ -6,7 +6,7 @@
 
 #include <core_global.h>
 
-#include <entities/notification.h>
+#include <model/entities/notification.h>
 
 class CORE_EXPORT NotificationWs : public QObject
 {

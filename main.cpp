@@ -8,9 +8,8 @@
 #include <QQuickStyle>
 #include <QTranslator>
 
-#include <core/entities/movieinformation.h>
-#include <core/entities/typeprogramenum.h>
 #include <core/manager/applicationmanager.h>
+#include <core/model/enum/typeprogramenum.h>
 
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
@@ -25,13 +24,14 @@ int main(int argc, char *argv[]) {
 
     QQuickStyle::setStyle("Basic");
 
-    qRegisterMetaType<MovieInformation*>("MovieInformation*");
-    qRegisterMetaType<TypeProgram::TypeProgramEnum>("TypeProgramEnum");
-    qmlRegisterUncreatableType<MovieInformation*>(
-        "MovieInformation", 1, 0, "MovieInformation",
-        "MovieInformation não pode ser criado no QML"
-        );
+    // qRegisterMetaType<MovieModel *>("MovieModel*");
+    // qmlRegisterUncreatableType<MovieModel *>("MovieModel",
+    //                                          1,
+    //                                          0,
+    //                                          "MovieModel",
+    //                                          "MovieModel não pode ser criado no QML");
 
+    qRegisterMetaType<TypeProgram::TypeProgramEnum>("TypeProgramEnum");
     qmlRegisterUncreatableMetaObject(TypeProgram::staticMetaObject,
                                      "TypeProgramEnum",
                                      1,

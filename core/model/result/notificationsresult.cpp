@@ -4,9 +4,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "notification.h"
-#include "notificationreviewlike.h"
-#include "pagination.h"
+#include "paginationresult.h"
+#include <model/entities/notification.h>
+#include <model/entities/notificationreviewlike.h>
 
 NotificationsResult::~NotificationsResult()
 {
@@ -19,17 +19,18 @@ NotificationsResult::NotificationsResult()
     , _notifications{}
 {}
 
-NotificationsResult::NotificationsResult(Pagination *pagination, QList<Notification *> notifications)
+NotificationsResult::NotificationsResult(PaginationResult *pagination,
+                                         QList<Notification *> notifications)
     : _pagination{pagination}
     , _notifications{notifications}
 {}
 
-Pagination *NotificationsResult::pagination() const
+PaginationResult *NotificationsResult::pagination() const
 {
     return _pagination;
 }
 
-void NotificationsResult::setPagination(Pagination *newPagination)
+void NotificationsResult::setPagination(PaginationResult *newPagination)
 {
     _pagination = newPagination;
 }
@@ -64,5 +65,5 @@ NotificationsResult *NotificationsResult::fromJson(const QJsonDocument &jsonDocu
         }
     }
 
-    return new NotificationsResult(Pagination::fromJson(jsonDocument.object()), notifications);
+    return new NotificationsResult(PaginationResult::fromJson(jsonDocument.object()), notifications);
 }

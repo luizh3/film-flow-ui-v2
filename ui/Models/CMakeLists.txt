@@ -12,6 +12,16 @@ set( SOURCES
     reviewslistmodel.cpp
     helper/cardsfetchhelper.cpp
     notificationslistmodel.cpp
+    signupmodel.cpp
+    reviewmodel.cpp
+    genremodel.cpp
+    moviemodel.cpp
+    mapper/signupmapper.cpp
+    mapper/reviewmapper.cpp
+    mapper/moviemapper.cpp
+    mapper/genremapper.cpp
+    mapper/sectionconfigmapper.cpp
+    sectionconfigmodel.cpp
 )
 
 set( HEADERS
@@ -21,6 +31,16 @@ set( HEADERS
     reviewslistmodel.h
     helper/cardsfetchhelper.h
     notificationslistmodel.h
+    signupmodel.h
+    reviewmodel.h
+    genremodel.h
+    moviemodel.h
+    mapper/signupmapper.h
+    mapper/reviewmapper.h
+    mapper/moviemapper.h
+    mapper/genremapper.h
+    mapper/sectionconfigmapper.h
+    sectionconfigmodel.h
 )
 
 qt_add_qml_module(${LIBRARY_NAME}

@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 
 import Ui.Theme
 import Ui.Components
@@ -18,6 +17,9 @@ GenericScreen {
 
     property alias backButtonNavigation: backButtonNavigation
     property alias goBackButton: goBackButton
+
+    property string vUserName: root.vUser?.name ?? ""
+    property string vUserEmail: root.vUser?.email ?? ""
 
     ColumnLayout {
         anchors.fill: parent
@@ -37,18 +39,28 @@ GenericScreen {
             Layout.alignment: Qt.AlignHCenter
 
             FFProfileIcon {
+                id: ffProfileIcon
                 Layout.preferredWidth: 150
                 Layout.preferredHeight: 150
                 vHasHover: false
                 Layout.alignment: Qt.AlignHCenter
                 vIcon: "https://swordslice.com/cdn/shop/articles/jjk-does-nanami-die.webp?v=1752508661&width=1100"
+
+                FFSkeletonLoading {
+                    id: skeletonLoading
+                    anchors.fill: parent
+                    color: Colors.grey600
+                    radius: parent.radius
+                    opacity: ffProfileIcon.vIsReady ? 0 : 1
+                    vOpacityDuration: Durations.normal
+                }
             }
 
             FFTextField {
                 id: nameField
                 Layout.fillWidth: true
                 vLabel: qsTr("Name")
-                vText: vUser?.name ?? ""
+                vText: root.vUserName
                 vType: FFTextField.Type.Primary
                 enabled: false
                 vValidator: RangeValidator {
@@ -61,7 +73,7 @@ GenericScreen {
                 id: emailField
                 Layout.fillWidth: true
                 vLabel: qsTr("E-mail")
-                vText: vUser?.email ?? ""
+                vText: root.vUserEmail
                 enabled: false
                 vValidator: EmailValidator {}
             }

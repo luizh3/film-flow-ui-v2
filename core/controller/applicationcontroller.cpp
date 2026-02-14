@@ -6,7 +6,7 @@
 
 #include <manager/applicationmanager.h>
 
-#include <entities/configs.h>
+#include <model/config/configs.h>
 
 #include <QDebug>
 

@@ -1,31 +1,17 @@
 #ifndef MOVIEINFORMATION_H
 #define MOVIEINFORMATION_H
 
-#include <QObject>
-#include <QQmlEngine>
-
 #include <core_global.h>
 
-#include "typeprogramenum.h"
+#include <model/enum/typeprogramenum.h>
 
-#include "review.h"
+#include <model/entities/review.h>
 
 class QJsonDocument;
 class QJsonObject;
 class Genre;
-class CORE_EXPORT MovieInformation : public QObject {
-    Q_OBJECT
-    QML_ELEMENT
-    Q_PROPERTY(QString id READ id CONSTANT)
-    Q_PROPERTY( QString title READ title CONSTANT )
-    Q_PROPERTY(QString backdropUrl READ backdropUrl CONSTANT);
-    Q_PROPERTY(QString posterUrl READ posterUrl CONSTANT)
-    Q_PROPERTY(double average READ average CONSTANT)
-    Q_PROPERTY(QString overview READ overview CONSTANT)
-    Q_PROPERTY(QString release READ release CONSTANT)
-    Q_PROPERTY(QList<Genre *> genres READ genres CONSTANT)
-    Q_PROPERTY(Review *myReview READ myReview CONSTANT)
-    Q_PROPERTY(TypeProgram::TypeProgramEnum programType READ tpProgram CONSTANT)
+class CORE_EXPORT MovieInformation
+{
 public:
     MovieInformation();
     ~MovieInformation();
@@ -73,9 +59,6 @@ public:
 
     Review *myReview() const;
     void setMyReview(Review *newMyReview);
-
-signals:
-    void myReviewChanged();
 
 private:
     Review *_myReview;

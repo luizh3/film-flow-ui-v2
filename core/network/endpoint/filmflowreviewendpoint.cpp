@@ -2,7 +2,7 @@
 
 #include <QUrlQuery>
 
-#include <entities/review.h>
+#include <model/entities/review.h>
 
 #include <network/httpclient.h>
 #include <network/request/paginationrequest.h>

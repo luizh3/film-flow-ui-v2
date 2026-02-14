@@ -15,6 +15,26 @@ Review::Review()
     , _programTitle(QStringLiteral(""))
 {}
 
+Review::Review(double score,
+               int likesCount,
+               TypeProgram::TypeProgramEnum tpProgram,
+               bool isLikedByMe,
+               QString reviewId,
+               QString title,
+               QString description,
+               QString movieId,
+               QString programTitle)
+    : _score(score)
+    , _likesCount(likesCount)
+    , _tpProgram(tpProgram)
+    , _isLikedByMe(isLikedByMe)
+    , _reviewId(std::move(reviewId))
+    , _title(std::move(title))
+    , _description(std::move(description))
+    , _movieId(std::move(movieId))
+    , _programTitle(std::move(programTitle))
+{}
+
 double Review::score() const
 {
     return _score;
@@ -22,12 +42,7 @@ double Review::score() const
 
 void Review::setScore(double newScore)
 {
-    if (qFuzzyCompare(_score, newScore)) {
-        return;
-    }
-
     _score = newScore;
-    emit scoreChanged();
 }
 
 QString Review::title() const
@@ -37,12 +52,7 @@ QString Review::title() const
 
 void Review::setTitle(const QString &newTitle)
 {
-    if (_title == newTitle) {
-        return;
-    }
-
     _title = newTitle;
-    emit titleChanged();
 }
 
 QString Review::description() const
@@ -52,12 +62,7 @@ QString Review::description() const
 
 void Review::setDescription(const QString &newDescription)
 {
-    if (_description == newDescription) {
-        return;
-    }
-
     _description = newDescription;
-    emit descriptionChanged();
 }
 
 QString Review::movieId() const
@@ -67,12 +72,7 @@ QString Review::movieId() const
 
 void Review::setMovieId(const QString &newMovieId)
 {
-    if (_movieId == newMovieId) {
-        return;
-    }
-
     _movieId = newMovieId;
-    emit movieIdChanged();
 }
 
 QString Review::reviewId() const
@@ -82,12 +82,7 @@ QString Review::reviewId() const
 
 void Review::setReviewId(QString newReviewId)
 {
-    if (_reviewId == newReviewId) {
-        return;
-    }
-
     _reviewId = newReviewId;
-    emit reviewIdChanged();
 }
 
 QString Review::programTitle() const
@@ -97,12 +92,7 @@ QString Review::programTitle() const
 
 void Review::setProgramTitle(const QString &newProgramTitle)
 {
-    if (_programTitle == newProgramTitle) {
-        return;
-    }
-
     _programTitle = newProgramTitle;
-    emit programTitleChanged();
 }
 
 TypeProgram::TypeProgramEnum Review::tpProgram() const
@@ -112,12 +102,8 @@ TypeProgram::TypeProgramEnum Review::tpProgram() const
 
 void Review::setTpProgram(TypeProgram::TypeProgramEnum newTpProgram)
 {
-    if (_tpProgram == newTpProgram) {
-        return;
-    }
 
     _tpProgram = newTpProgram;
-    emit tpProgramChanged();
 }
 
 int Review::likesCount() const
@@ -127,12 +113,8 @@ int Review::likesCount() const
 
 void Review::setLikesCount(int newLikesCount)
 {
-    if (_likesCount == newLikesCount) {
-        return;
-    }
 
     _likesCount = newLikesCount;
-    emit likesCountChanged();
 }
 
 bool Review::isLikedByMe() const
@@ -142,12 +124,7 @@ bool Review::isLikedByMe() const
 
 void Review::setIsLikedByMe(bool newIsLikedByMe)
 {
-    if (_isLikedByMe == newIsLikedByMe) {
-        return;
-    }
-
     _isLikedByMe = newIsLikedByMe;
-    emit isLikedByMeChanged();
 }
 
 QJsonDocument Review::toJson() const

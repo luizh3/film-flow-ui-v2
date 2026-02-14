@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 
 import Ui.Theme
 import Ui.Screens
@@ -69,6 +68,7 @@ Item {
                 visible: true
             }
 
+            // TODO change this to has a singleton connections.
             ScreenManager {
                 id: screenManager
                 anchors.fill: parent
@@ -107,6 +107,7 @@ Item {
     }
 
     Component.onCompleted: function () {
+        NavigateManager.vScreenManager = screenManager
         control.doStart()
         root._handleChangeItem(SideBar.TypeMenuItem.Home)
     }

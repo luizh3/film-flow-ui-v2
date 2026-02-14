@@ -5,11 +5,11 @@
 #include <core/controller/multicontroller.h>
 #include <core/controller/reviewcontroller.h>
 
-#include <core/entities/review.h>
-#include <core/entities/reviewsresult.h>
+#include <core/model/entities/review.h>
+#include <core/model/result/reviewsresult.h>
 
-#include <core/entities/pagination.h>
 #include <core/helper/taskrunhelper.h>
+#include <core/model/result/paginationresult.h>
 
 #include "helper/cardsfetchhelper.h"
 

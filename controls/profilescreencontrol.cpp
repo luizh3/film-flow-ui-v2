@@ -2,7 +2,7 @@
 
 #include <core/manager/applicationmanager.h>
 
-#include <core/entities/session.h>
+#include <core/model/entities/session.h>
 
 ProfileScreenControl::ProfileScreenControl()
     : _user{nullptr}

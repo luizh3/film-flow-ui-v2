@@ -8,7 +8,9 @@
 
 #include <controls_global.h>
 
-#include <core/entities/signup.h>
+#include <core/network/request/signuprequest.h>
+
+#include "signupmodel.h"
 
 class CONTROLS_EXPORT AuthControl : public Control
 {
@@ -16,7 +18,7 @@ class CONTROLS_EXPORT AuthControl : public Control
     QML_ELEMENT
 public:
     Q_INVOKABLE void signIn(const QString& password, const QString& email);
-    Q_INVOKABLE void signUp(const SignUp* signUp);
+    Q_INVOKABLE void signUp(const SignUpModel* signUp);
 signals:
     void success();
     void error();

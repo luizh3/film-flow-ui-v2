@@ -2,7 +2,17 @@
 
 #include <QJsonObject>
 
-SignUpRequest::SignUpRequest() {}
+SignUpRequest::SignUpRequest()
+    : _name(QStringLiteral(""))
+    , _email(QStringLiteral(""))
+    , _password(QStringLiteral(""))
+{}
+
+SignUpRequest::SignUpRequest(const QString &name, const QString &email, const QString &password)
+    : _name{name}
+    , _email{email}
+    , _password{password}
+{}
 
 QJsonDocument SignUpRequest::toJson() const {
 

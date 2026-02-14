@@ -4,7 +4,10 @@
 
 #include <core/controller/reviewcontroller.h>
 
-void ReviewProgramModalControl::doConfirm(const Review *review) const
+#include "mapper/reviewmapper.h"
+
+
+void ReviewProgramModalControl::doConfirm(const ReviewModel *review) const
 {
     const bool isNewReview = review->reviewId().isEmpty();
 
@@ -16,7 +19,7 @@ void ReviewProgramModalControl::doConfirm(const Review *review) const
     doUpdate(review);
 }
 
-void ReviewProgramModalControl::doCreate(const Review *review) const
+void ReviewProgramModalControl::doCreate(const ReviewModel *review) const
 {
     qInfo() << "ReviewProgramModalControl::doCreate";
 
@@ -31,12 +34,14 @@ void ReviewProgramModalControl::doCreate(const Review *review) const
                      this,
                      &ReviewProgramModalControl::onSuccess);
 
-    controller.create(review);
+    std::unique_ptr<Review> reviewEntity(ReviewMapper::toEntity(review));
+
+    controller.create(reviewEntity.get());
 
     qInfo() << "ReviewProgramModalControl::doCreate";
 }
 
-void ReviewProgramModalControl::doUpdate(const Review *review) const
+void ReviewProgramModalControl::doUpdate(const ReviewModel *review) const
 {
     qInfo() << "ReviewProgramModalControl::Update";
 
@@ -51,7 +56,9 @@ void ReviewProgramModalControl::doUpdate(const Review *review) const
                      this,
                      &ReviewProgramModalControl::onSuccess);
 
-    controller.update(review);
+    std::unique_ptr<Review> reviewEntity(ReviewMapper::toEntity(review));
+
+    controller.update(reviewEntity.get());
 
     qInfo() << "ReviewProgramModalControl::Update";
 }
@@ -73,7 +80,7 @@ void ReviewProgramModalControl::onSuccess(Review *review)
 
     toastSuccess(tr("Success on created review!"));
 
-    emit success(review);
+    emit success(ReviewMapper::toModel(review));
 
     qInfo() << "ReviewProgramModalControl::onSuccess";
 }

@@ -1,14 +1,19 @@
 #include "homecontrol.h"
 
 #include <core/manager/applicationmanager.h>
-#include <core/entities/sectionsconfig.h>
-#include <core/entities/configs.h>
+#include <core/model/config/configs.h>
+#include <core/model/config/sectionsconfig.h>
 
-Q_DECLARE_METATYPE(SectionsConfig*)
-Q_DECLARE_METATYPE( QList<SectionsConfig*> );
+#include "mapper/sectionconfigmapper.h"
+
+HomeControl::~HomeControl()
+{
+    qDeleteAll(_sectionsConfig);
+}
 
 void HomeControl::doStart() {
+    _sectionsConfig = SectionConfigMapper::toModels(
+        ApplicationManager::instance().configs()->sectionsConfig());
 
-    emit sectionsChanged( QVariant::fromValue( ApplicationManager::instance().configs()->sectionsConfig() ) );
-
+    emit sectionsChanged(QVariant::fromValue(_sectionsConfig));
 }

@@ -5,7 +5,7 @@
 
 #include "core_global.h"
 
-class Pagination;
+class PaginationResult;
 class Notification;
 class QJsonDocument;
 class CORE_EXPORT NotificationsResult
@@ -13,10 +13,10 @@ class CORE_EXPORT NotificationsResult
 public:
     ~NotificationsResult();
     NotificationsResult();
-    NotificationsResult(Pagination *pagination, QList<Notification *> notifications);
+    NotificationsResult(PaginationResult *pagination, QList<Notification *> notifications);
 
-    Pagination *pagination() const;
-    void setPagination(Pagination *newPagination);
+    PaginationResult *pagination() const;
+    void setPagination(PaginationResult *newPagination);
 
     QList<Notification *> notifications() const;
     void setNotifications(const QList<Notification *> &newNotifications);
@@ -24,7 +24,7 @@ public:
     static NotificationsResult *fromJson(const QJsonDocument &jsonDocument);
 
 private:
-    Pagination *_pagination;
+    PaginationResult *_pagination;
     QList<Notification *> _notifications;
 };
 

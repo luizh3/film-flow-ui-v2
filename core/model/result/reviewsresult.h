@@ -5,7 +5,7 @@
 
 #include "core_global.h"
 
-class Pagination;
+class PaginationResult;
 class Review;
 class QJsonDocument;
 class CORE_EXPORT ReviewsResult
@@ -14,18 +14,18 @@ public:
     ReviewsResult();
     ~ReviewsResult();
 
-    ReviewsResult(Pagination *pagination, QList<Review *> reviews);
+    ReviewsResult(PaginationResult *pagination, QList<Review *> reviews);
 
     QList<Review *> reviews() const;
     void setReviews(const QList<Review *> &newReviews);
 
-    Pagination *pagination() const;
-    void setPagination(Pagination *newPagination);
+    PaginationResult *pagination() const;
+    void setPagination(PaginationResult *newPagination);
 
     static ReviewsResult *fromJson(const QJsonDocument &jsonDocument);
 
 private:
-    Pagination *_pagination;
+    PaginationResult *_pagination;
     QList<Review *> _reviews;
 };
 

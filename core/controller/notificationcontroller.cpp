@@ -5,7 +5,7 @@
 
 #include <manager/applicationmanager.h>
 
-#include <entities/notificationsresult.h>
+#include <model/result/notificationsresult.h>
 
 NotificationController::NotificationController()
     : _filmFlowNotificationEndpoint{

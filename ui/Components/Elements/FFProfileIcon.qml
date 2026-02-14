@@ -12,6 +12,7 @@ Rectangle {
 
     property bool vHasHover: true
     required property string vIcon
+    property alias vIsReady: ffImageRounded.vIsReady
 
     signal selected
 
@@ -28,6 +29,7 @@ Rectangle {
     }
 
     FFImageRounded {
+        id: ffImageRounded
         width: parent.width
         height: parent.height
         vRadius: parent.width / 2

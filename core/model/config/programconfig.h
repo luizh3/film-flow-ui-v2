@@ -6,7 +6,7 @@
 
 #include <core_global.h>
 
-#include "typeprogramenum.h"
+#include <model/enum/typeprogramenum.h>
 
 class Genre;
 class QJsonObject;

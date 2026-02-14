@@ -6,7 +6,7 @@
 
 #include "control.h"
 
-#include <entities/notification.h>
+#include <core/model/entities/notification.h>
 
 class ApplicationControl : public Control
 {

@@ -6,9 +6,10 @@
 
 #include <controls_global.h>
 
-class MovieInformation;
+#include "moviemodel.h"
 
-class CONTROLS_EXPORT MovieSliderControl : public QObject {
+class CONTROLS_EXPORT MovieSliderControl : public QObject
+{
     Q_OBJECT
     QML_ELEMENT
 public:
@@ -21,12 +22,11 @@ public:
 signals:
     void movieChanged( const QVariant& movie );
 private:
-    QList<MovieInformation*> _movies;
+    QList<MovieModel*> _movies;
 
     int _currentIndex;
 
     void fetchMovies();
 };
-
 
 #endif // MOVIESLIDERCONTROL_H

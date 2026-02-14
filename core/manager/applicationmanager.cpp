@@ -1,7 +1,7 @@
 #include "applicationmanager.h"
 
-#include <entities/session.h>
-#include <entities/configs.h>
+#include <model/config/configs.h>
+#include <model/entities/session.h>
 
 ApplicationManager::~ApplicationManager() {
     delete _session;

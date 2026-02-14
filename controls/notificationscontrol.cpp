@@ -1,6 +1,6 @@
 #include "notificationscontrol.h"
 
-#include <manager/notificationmanager.h>
+#include <core/manager/notificationmanager.h>
 
 NotificationsControl::NotificationsControl()
 {

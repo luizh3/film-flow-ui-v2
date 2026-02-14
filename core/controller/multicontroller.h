@@ -5,7 +5,7 @@
 
 #include <core_global.h>
 
-class SearchMovies;
+class SearchMoviesResult;
 class MovieInformation;
 class MultiRequest;
 class MultiDetailsRequest;
@@ -18,7 +18,7 @@ public:
     MultiController();
     ~MultiController();
 
-    SearchMovies* find(const MultiRequest& request);
+    SearchMoviesResult* find(const MultiRequest& request);
     MovieInformation* findById(const int id, const MultiDetailsRequest& request);
     ReviewsResult* findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
 

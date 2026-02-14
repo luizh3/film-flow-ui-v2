@@ -5,7 +5,7 @@
 
 #include <core_global.h>
 
-class SearchMovies;
+class SearchMoviesResult;
 class SectionRequest;
 class FilmFlowSectionEndpoint;
 class CORE_EXPORT SectionController : public QObject
@@ -15,7 +15,7 @@ public:
     SectionController();
     ~SectionController();
 
-    SearchMovies* find(const SectionRequest& request);
+    SearchMoviesResult* find(const SectionRequest& request);
 
     void cancel();
 

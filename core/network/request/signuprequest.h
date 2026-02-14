@@ -1,15 +1,18 @@
 #ifndef SIGNUPREQUEST_H
 #define SIGNUPREQUEST_H
 
-#include <QString>
+#include <core_global.h>
 
-#include "request.h"
+#include <QJsonDocument>
 
-class SignUpRequest : public Request {
+class CORE_EXPORT SignUpRequest
+{
 public:
     SignUpRequest();
+    SignUpRequest(const QString &name, const QString &email, const QString &password);
 
-    QJsonDocument toJson() const override;
+    QJsonDocument toJson() const;
+
     QString name() const;
     void setName(const QString &newName);
 

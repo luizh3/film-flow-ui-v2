@@ -8,7 +8,7 @@
 
 #include <manager/applicationmanager.h>
 
-#include <entities/session.h>
+#include <model/entities/session.h>
 
 // TODO this token is fake, is a token of the middleware, not dangerous commit this. The private variables, they are in the .env file.
 FilmFlowEndpoint::FilmFlowEndpoint(const Session* session)

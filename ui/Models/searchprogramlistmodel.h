@@ -8,12 +8,12 @@
 
 #include <models_global.h>
 
-#include <core/entities/typeprogramenum.h>
+#include <core/model/enum/typeprogramenum.h>
 
 class MultiRequest;
 class MovieInformation;
 class MultiController;
-class SearchMovies;
+class SearchMoviesResult;
 
 class MODELS_EXPORT SearchProgramListModel : public QAbstractListModel
 {
@@ -67,7 +67,7 @@ signals:
     void cancelRequest();
 
 private:
-    void onFetchEnded(QFutureWatcher<SearchMovies *> *future);
+    void onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future);
 
     void updateCardsMovie(const QList<SearchProgramCard *> &searchProgramCards,
                           const QList<MovieInformation *> &moviesInformation);
@@ -79,7 +79,7 @@ private:
     MultiController *_multiController;
 
     bool _isFetching;
-    QString _vDsQuery = "";
+    QString _vDsQuery;
 
     QList<SearchProgramCard *> _fechingSearchProgramCards;
     QList<SearchProgramCard *> _programCards;

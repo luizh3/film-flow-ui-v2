@@ -1,7 +1,7 @@
 #include "reviewcontroller.h"
 
-#include <entities/review.h>
-#include <entities/reviewsresult.h>
+#include <model/entities/review.h>
+#include <model/result/reviewsresult.h>
 
 #include <manager/applicationmanager.h>
 #include <network/endpoint/filmflowreviewendpoint.h>
