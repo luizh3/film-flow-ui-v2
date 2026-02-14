@@ -1,5 +1,7 @@
 import Controls 1.0
-import Core 1.0
+
+import Ui.Models
+
 import Ui.Components.Elements
 
 RegisterScreenForm {
@@ -8,7 +10,7 @@ RegisterScreenForm {
     signal goBack
     signal success
 
-    property SignUp signUp: SignUp {
+    property SignUpModel signUp: SignUpModel {
         name: root.nameField.vText
         email: root.emailField.vText
         password: root.passwordField.vText

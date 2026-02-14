@@ -7,7 +7,7 @@ QtObject {
 
     readonly property string _path: "qrc:/icons/%1"
 
-    readonly property QtObject outlined: QtObject {
+    readonly property var outlined: QtObject {
         readonly property string edit: root._path.arg("edit")
         readonly property string play: root._path.arg("play")
         readonly property string warning: root._path.arg("warning")
@@ -24,7 +24,7 @@ QtObject {
         readonly property string star: root._path.arg("star-unfilled")
     }
 
-    readonly property QtObject filled: QtObject {
+    readonly property var filled: QtObject {
         readonly property string star: root._path.arg("star")
         readonly property string favorite: root._path.arg("favorite-filled")
     }

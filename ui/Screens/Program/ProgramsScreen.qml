@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Ui.Components
 
 import Ui.Screens
@@ -8,10 +7,11 @@ ProgramsScreenForm {
     id: root
 
     function _handleMovieSelected(id, tpProgram) {
-        const element = screenManager.navigate(ScreenManager.Route.MOVIE, {
-                                                   "vMovieId": id,
-                                                   "vProgramType": tpProgram
-                                               })
+        const element = NavigateManager.navigateScreen(
+                          ScreenManager.Route.MOVIE, {
+                              "vMovieId": id,
+                              "vProgramType": tpProgram
+                          })
         element.doStart()
     }
 

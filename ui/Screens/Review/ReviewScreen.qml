@@ -13,10 +13,11 @@ ReviewScreenForm {
     id: root
 
     function _handleMovieSelected(id, tpProgram) {
-        const element = screenManager.navigate(ScreenManager.Route.MOVIE, {
-                                                   "vMovieId": id,
-                                                   "vProgramType": tpProgram
-                                               })
+        const element = NavigateManager.navigateScreen(
+                          ScreenManager.Route.MOVIE, {
+                              "vMovieId": id,
+                              "vProgramType": tpProgram
+                          })
         element.doStart()
     }
 
@@ -26,7 +27,7 @@ ReviewScreenForm {
 
     header.searchProgramTextField.enabled: false
     header.searchProgramTextField.vPlaceHolderText: qsTr("Search for a review")
-    header.profileOption.onSelected: () => screenManager.navigate(
+    header.profileOption.onSelected: () => NavigateManager.navigateScreen(
                                          ScreenManager.Route.PROFILE)
 
     Connections {

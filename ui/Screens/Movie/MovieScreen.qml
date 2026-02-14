@@ -23,11 +23,12 @@ MovieScreenForm {
     }
 
     function _handleWriteReview() {
-        const reviewModal = popupManager.push(reviewProgramModalComponent, {
-                                                  "vProgramType": vMovie.programType,
-                                                  "vProgramTitle": vMovie.title,
-                                                  "vMovieId": vMovie.id
-                                              })
+        const reviewModal = NavigateManager.navigatePopup(
+                              reviewProgramModalComponent, {
+                                  "vProgramType": vMovie.programType,
+                                  "vProgramTitle": vMovie.title,
+                                  "vMovieId": vMovie.id
+                              })
 
         reviewModal.success.connect(function doSuccess(newReview) {
             reviewsListModel.resetReviews()

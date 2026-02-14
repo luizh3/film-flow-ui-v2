@@ -24,11 +24,21 @@ set( QML_FILES
     PopupManager.qml
 )
 
+set( QML_SINGLETONS
+    NavigateManager.qml
+)
+
+set_source_files_properties(
+    ${QML_SINGLETONS}
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE
+)
+
 qt_add_qml_module( ${MODULE_NAME}
     URI ${MODULE_URI}
     VERSION 1.0
     QML_FILES
         ${QML_FILES}
+        ${QML_SINGLETONS}
 )
 
 target_link_libraries( ${MODULE_NAME}

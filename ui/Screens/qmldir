@@ -10,3 +10,4 @@ RegisterScreen 1.0 register/RegisterScreen.qml
 LoginScreen 1.0 login/LoginScreen.qml
 ScreenManager 1.0 ScreenManager.qml
 PopupManager 1.0 PopupManager.qml
+singleton NavigateManager 1.0 NavigateManager.qml

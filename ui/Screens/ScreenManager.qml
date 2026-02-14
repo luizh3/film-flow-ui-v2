@@ -63,10 +63,26 @@ Item {
     StackView {
         id: stack
         visible: stack.depth > 0
+        opacity: stack.visible ? 1 : 0
+
         anchors.fill: parent
+
+        property int _duration: 0
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: stack._duration
+            }
+        }
 
         background: Rectangle {
             color: "#000000"
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: stack._duration
+                }
+            }
 
             MouseArea {
                 anchors.fill: parent
@@ -80,7 +96,7 @@ Item {
                 property: "opacity"
                 from: 0
                 to: 1
-                duration: 0
+                duration: stack._duration
             }
         }
 
@@ -89,7 +105,7 @@ Item {
                 property: "opacity"
                 from: 1
                 to: 0
-                duration: 0
+                duration: stack._duration
             }
         }
 
@@ -98,7 +114,7 @@ Item {
                 property: "opacity"
                 from: 0
                 to: 1
-                duration: 0
+                duration: stack._duration
             }
         }
 
@@ -107,7 +123,7 @@ Item {
                 property: "opacity"
                 from: 1
                 to: 0
-                duration: 0
+                duration: stack._duration
             }
         }
     }
