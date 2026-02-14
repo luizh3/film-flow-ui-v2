@@ -18,13 +18,27 @@ GenericScreen {
 
     property var vMovie
     property bool vIsLoading: true
-    property bool vIsFetchingReviews: true
+    property bool vIsLoadingReviews: true
 
     property alias backButtonNavigation: backButtonNavigation
     property alias writeReviewButton: writeReviewButton
     property alias footerScroll: footerScroll
     property alias scrollFlickable: scrollFlickable
     property alias reviewsList: reviewsList
+
+    property var vMovieGenres: root.vMovie?.genres ?? []
+    property double vMovieAverage: root.vMovie?.average ?? ""
+    property string vMovieOverview: root.vMovie?.overview ?? ""
+    property string vMovieTitle: root.vMovie?.title ?? ""
+    property string vBackgroundImage: root.vMovie?.backdropUrl ?? ""
+    property string vPosterImage: root.vMovie?.posterUrl
+                                  && root.vMovie.posterUrl
+                                  !== "" ? vMovie.posterUrl : "qrc:/icons/not-found"
+    property string vReviewButtonTitle: root.vMovie?.myReview ? qsTr("Edit") : qsTr(
+                                                                    "Write")
+
+    property bool vIsVisibleReviews: root.vIsLoadingReviews
+                                     || reviewsList.count !== 0
 
     component FeedbackReviewsFounded: Item {
         height: childrenRect.height
@@ -74,7 +88,7 @@ GenericScreen {
 
     ImageGradient {
         anchors.fill: parent
-        vSource: root.vMovie?.backdropUrl ?? ""
+        vSource: root.vBackgroundImage
 
         FFSkeletonLoading {
             anchors.fill: parent
@@ -122,9 +136,7 @@ GenericScreen {
 
                         FFImageRounded {
                             id: sourceItem
-                            vSource: root.vMovie?.posterUrl
-                                     && root.vMovie.posterUrl
-                                     !== "" ? vMovie.posterUrl : "qrc:/icons/not-found"
+                            vSource: root.vPosterImage
                             vRadius: Radius.sm
                             width: 250
                             height: 380
@@ -143,9 +155,8 @@ GenericScreen {
                             spacing: Spacings.xl
 
                             Label {
-                                id: label
                                 font: Fonts.title270
-                                text: root.vMovie?.title ?? ""
+                                text: root.vMovieTitle
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
                             }
@@ -165,7 +176,7 @@ GenericScreen {
                                 width: parent.width
 
                                 FFScoreBadget {
-                                    vScore: root.vMovie?.average ?? ""
+                                    vScore: root.vMovieAverage
                                     vSize: FFScoreBadget.Size.Medium
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
@@ -212,7 +223,7 @@ GenericScreen {
                                 width: parent.width
 
                                 Repeater {
-                                    model: root.vMovie?.genres ?? []
+                                    model: root.vMovieGenres
 
                                     FFBadget {
 
@@ -231,7 +242,7 @@ GenericScreen {
                                 font: Fonts.label140
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
-                                text: root.vMovie?.overview ?? ""
+                                text: root.vMovieOverview
                                 width: parent.width
 
                                 FFSkeletonLoading {
@@ -269,8 +280,7 @@ GenericScreen {
                             FFButton {
                                 id: writeReviewButton
                                 vIcon: Icons.outlined.edit
-                                text: root.vMovie?.myReview ? qsTr("Edit") : qsTr(
-                                                                  "Write")
+                                text: root.vReviewButtonTitle
                                 vType: FFButton.Type.Secundary
                                 height: Spacings.xl
                                 anchors.verticalCenter: parent.verticalCenter
@@ -284,7 +294,7 @@ GenericScreen {
                             height: childrenRect.height
                             clip: true
                             spacing: Spacings.md
-                            visible: reviewsList.count !== 0
+                            visible: root.vIsVisibleReviews
                             cacheBuffer: reviewsList.height / 2
                         }
 

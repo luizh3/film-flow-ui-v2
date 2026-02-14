@@ -11,8 +11,9 @@ class QJsonDocument;
 class CORE_EXPORT ReviewsResult
 {
 public:
-    ~ReviewsResult();
     ReviewsResult();
+    ~ReviewsResult();
+
     ReviewsResult(Pagination *pagination, QList<Review *> reviews);
 
     QList<Review *> reviews() const;
@@ -24,8 +25,8 @@ public:
     static ReviewsResult *fromJson(const QJsonDocument &jsonDocument);
 
 private:
-    QList<Review *> _reviews;
     Pagination *_pagination;
+    QList<Review *> _reviews;
 };
 
 #endif // REVIEWSRESULT_H

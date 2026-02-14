@@ -17,6 +17,7 @@ class CONTROLS_EXPORT SettingsControl : public Control
     QML_ELEMENT
 public:
     SettingsControl();
+    ~SettingsControl();
 
     Q_INVOKABLE void doStart();
     Q_INVOKABLE void doSave(const int indexLanguageSelect, ColorItemModel *colorItem);

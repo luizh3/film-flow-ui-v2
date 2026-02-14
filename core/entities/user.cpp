@@ -1,6 +1,10 @@
 #include "user.h"
 
-User::User() {}
+User::User()
+    : _email{QStringLiteral("")}
+    , _avatarUrl{QStringLiteral("")}
+    , _name{QStringLiteral("")}
+{}
 
 User::User(const User* user)
     : _email{user->email()}

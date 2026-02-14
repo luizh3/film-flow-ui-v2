@@ -18,7 +18,6 @@ public:
     User(const User *user);
 
     QString email() const;
-
     void setEmail( const QString &newEmail );
 
     QString name() const;

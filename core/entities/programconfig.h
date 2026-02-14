@@ -12,9 +12,9 @@ class Genre;
 class QJsonObject;
 class CORE_EXPORT ProgramConfig {
 public:
+    ProgramConfig();
     ~ProgramConfig();
 
-    ProgramConfig();
     explicit ProgramConfig(const TypeProgramEnum tpProgram, const QMap<int, Genre *> &genresById);
 
     TypeProgramEnum tpProgram() const;

@@ -14,8 +14,8 @@ ReviewsResult::~ReviewsResult()
 }
 
 ReviewsResult::ReviewsResult()
-    : _reviews{}
-    , _pagination{nullptr}
+    : _pagination{nullptr}
+    , _reviews{}
 {}
 
 ReviewsResult::ReviewsResult(Pagination *pagination, QList<Review *> reviews)

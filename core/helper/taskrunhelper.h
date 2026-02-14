@@ -37,6 +37,11 @@ public:
         future.setFuture(QtConcurrent::run(callBack));
         eventLoop.exec();
     }
+
+    static void runQueued(QObject* context, std::function<void()> callBack)
+    {
+        QMetaObject::invokeMethod(context, callBack, Qt::QueuedConnection);
+    }
 };
 
 #endif // TASKRUNHELPER_H

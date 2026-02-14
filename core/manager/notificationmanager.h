@@ -2,6 +2,7 @@
 #define NOTIFICATIONMANAGER_H
 
 #include <QObject>
+
 #include <websocket/notificationws.h>
 
 class CORE_EXPORT NotificationManager : public QObject

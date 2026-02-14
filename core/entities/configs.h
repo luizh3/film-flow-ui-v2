@@ -13,9 +13,9 @@ class SectionsConfig;
 class CORE_EXPORT Configs
 {
 public:
+    Configs();
     ~Configs();
 
-    Configs();
     explicit Configs(const QMap<TypeProgramEnum, ProgramConfig*>& programsConfigByType,
                      const QList<SectionsConfig*>& sectionsConfig);
 

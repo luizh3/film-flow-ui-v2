@@ -1,8 +1,9 @@
 #include "session.h"
 
-Session::Session() :
-    _token{ QStringLiteral("") },
-    _user{ nullptr }{}
+Session::Session()
+    : _user{nullptr}
+    , _token{QStringLiteral("")}
+{}
 
 QString Session::token() const {
     return _token;

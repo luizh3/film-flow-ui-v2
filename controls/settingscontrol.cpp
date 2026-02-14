@@ -4,18 +4,21 @@
 
 #include <core/manager/applicationmanager.h>
 
-// #include <theme/themecolorfactory.h>
-
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
 #include <ui/theme/models/colorrole.h>
 
 SettingsControl::SettingsControl()
     : _languages{}
-// , _colorsItems{}
+    , _colorsItems{}
 {
     initializeLanguages();
     initializeColors();
+}
+
+SettingsControl::~SettingsControl()
+{
+    qDeleteAll(_colorsItems);
 }
 
 void SettingsControl::doStart()
@@ -68,8 +71,6 @@ void SettingsControl::initializeLanguages()
 
 void SettingsControl::initializeColors()
 {
-    ThemeColorManager::instance();
-
     const QList<ColorRole> colorsRole = {ColorRole::ORANGE,
                                          ColorRole::BLUE,
                                          ColorRole::GREEN,

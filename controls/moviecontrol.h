@@ -35,9 +35,11 @@ signals:
     void finished();
 
 private:
+    MovieInformation *_movie;
+
     bool _isLoading;
     bool _isCanceled;
-    MovieInformation *_movie;
+
     MultiController _multiController;
 };
 

@@ -38,6 +38,7 @@ ReviewsListModel::ReviewsListModel()
     , _fetchModeType(ReviewsListModel::ReviewFetchModeType::ByUser)
     , _isReviewsEnded{false}
     , _isFetching{false}
+    , _isLoading{true}
     , _fetchingReviewsCard{}
     , _reviewsCard{}
 {}
@@ -100,6 +101,7 @@ void ReviewsListModel::fetchMore(const QModelIndex &parent)
         return;
     }
 
+    setIsLoading(true);
     setIsFetching(true);
 
     _paginationRequest->setPage(_paginationRequest->page() + 1);
@@ -152,6 +154,7 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 {
     if (future->isCanceled()) {
         setIsFetching(false);
+        setIsLoading(false);
         future->deleteLater();
         return;
     }
@@ -160,6 +163,7 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 
     if (!reviewsResult) {
         setIsFetching(false);
+        setIsLoading(false);
         future->deleteLater();
         return;
     }
@@ -174,6 +178,7 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 
     updateCardsReview(_fetchingReviewsCard, reviewsResult->reviews());
 
+    setIsLoading(false);
     setIsFetching(false);
     future->deleteLater();
 }
@@ -277,4 +282,18 @@ void ReviewsListModel::setIsFetching(const bool isFetching)
 bool ReviewsListModel::isFetching() const
 {
     return _isFetching;
+}
+
+bool ReviewsListModel::isLoading() const
+{
+    return _isLoading;
+}
+
+void ReviewsListModel::setIsLoading(bool newIsLoading)
+{
+    if (_isLoading == newIsLoading) {
+        return;
+    }
+    _isLoading = newIsLoading;
+    emit isLoadingChanged();
 }

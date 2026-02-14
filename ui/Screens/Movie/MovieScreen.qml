@@ -51,7 +51,7 @@ MovieScreenForm {
 
     writeReviewButton.onClicked: root._handleWriteReview()
 
-    vIsFetchingReviews: reviewsListModel.isFetching
+    vIsLoadingReviews: reviewsListModel.isLoading
 
     reviewsList.model: ReviewsListModel {
         id: reviewsListModel
@@ -88,7 +88,6 @@ MovieScreenForm {
         vLoadingColor: Colors.grey500
         vIsLoading: programReview.isLoading
         vScore: programReview.score
-        width: ListView.view.width
         vDateCreated: "24/10/2025"
         vUserImage: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" // TODO change for te user photo
         vTitle: programReview.title
@@ -96,6 +95,8 @@ MovieScreenForm {
         vDescription: programReview.description
         vIsLikedByMe: programReview.isLikedByMe
         vLikesCount: programReview.likesCount
+
+        width: ListView.view.width
     }
 
     Component {

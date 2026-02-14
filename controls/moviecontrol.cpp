@@ -10,9 +10,9 @@
 #include <core/network/request/multidetailsrequest.h>
 
 MovieControl::MovieControl()
-    : _isLoading{true}
+    : _movie{nullptr}
+    , _isLoading{true}
     , _isCanceled{false}
-    , _movie{nullptr}
     , _multiController{}
 {}
 
@@ -62,8 +62,10 @@ MovieInformation *MovieControl::movie() const
 
 void MovieControl::setMovie(MovieInformation *newMovie)
 {
-    if (_movie == newMovie)
+    if (_movie == newMovie) {
         return;
+    }
+
     _movie = newMovie;
     emit movieChanged();
 }
@@ -75,8 +77,10 @@ bool MovieControl::isLoading() const
 
 void MovieControl::setIsLoading(bool newIsLoading)
 {
-    if (_isLoading == newIsLoading)
+    if (_isLoading == newIsLoading) {
         return;
+    }
+
     _isLoading = newIsLoading;
     emit isLoadingChanged();
 }

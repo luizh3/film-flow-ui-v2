@@ -25,6 +25,7 @@ class MODELS_EXPORT ReviewsListModel : public QAbstractListModel
     Q_PROPERTY(ReviewFetchModeType fetchModeType READ fetchModeType WRITE setFetchModeType NOTIFY
                    fetchModeTypeChanged FINAL)
     Q_PROPERTY(bool isFetching READ isFetching NOTIFY isFetchingChanged FINAL)
+    Q_PROPERTY(bool isLoading READ isLoading WRITE setIsLoading NOTIFY isLoadingChanged FINAL)
 public:
     ~ReviewsListModel();
     ReviewsListModel();
@@ -83,6 +84,9 @@ public:
     void setIsFetching(const bool isFetching);
     bool isFetching() const;
 
+    bool isLoading() const;
+    void setIsLoading(bool newIsLoading);
+
 signals:
     void totalReviewsFound(int totalReviews);
     void searchTypeChanged();
@@ -105,6 +109,7 @@ private:
     ReviewFetchModeType _fetchModeType;
     bool _isReviewsEnded;
     bool _isFetching;
+    bool _isLoading;
 
     QList<CardReview*> _fetchingReviewsCard;
     QList<CardReview*> _reviewsCard;

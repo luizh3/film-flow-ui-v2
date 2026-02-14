@@ -22,8 +22,8 @@ public:
     static Session* fromJson( const QJsonDocument& jsonDocument );
 
 private:
-    QString _token;
     User* _user;
+    QString _token;
 };
 
 #endif // SESSION_H
