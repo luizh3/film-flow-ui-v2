@@ -2,6 +2,7 @@ import QtQuick
 import Ui.Components
 
 import Ui.Screens
+import Ui.Models
 
 ProgramsScreenForm {
     id: root
@@ -19,8 +20,19 @@ ProgramsScreenForm {
         root.vDsQuery = text
     }
 
+    function _handleTotalProgramsFound(totalPrograms) {
+        root.foundResultsLabel.text = qsTr("Found %0 results").arg(
+                    totalPrograms)
+    }
+
+    moviesGrid.model: SearchProgramListModel {
+        onTotalProgramsFound: totalPrograms => root._handleTotalProgramsFound(
+                                  totalPrograms)
+        vDsQuery: root.vDsQuery
+    }
+
     header.onSearch: text => root._handleSearch(text)
-    header.profileOption.onSelected: () => screenManager.navigate(
+    header.profileOption.onSelected: () => NavigateManager.navigateScreen(
                                          ScreenManager.Route.PROFILE)
 
     moviesGrid.delegate: CardMovie {

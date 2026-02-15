@@ -86,6 +86,8 @@ void ReviewsListModel::resetReviews()
 {
     beginResetModel();
 
+    _isReviewsEnded = false;
+
     _paginationRequest->setPage(0);
 
     qDeleteAll(_reviewsCard);

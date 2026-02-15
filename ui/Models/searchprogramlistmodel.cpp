@@ -4,6 +4,7 @@
 #include <core/helper/taskrunhelper.h>
 #include <core/manager/applicationmanager.h>
 #include <core/model/entities/movieinformation.h>
+#include <core/model/result/paginationresult.h>
 #include <core/model/result/searchmoviesresult.h>
 #include <core/network/request/multirequest.h>
 
@@ -204,6 +205,12 @@ void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *
         _isFetching = false;
         future->deleteLater();
         return;
+    }
+
+    const bool isFirstPage = _multiRequest->page() == 1;
+
+    if (isFirstPage) {
+        emit totalProgramsFound(searchMovies->pagination()->totalResult());
     }
 
     updateCardsMovie(_fechingSearchProgramCards, searchMovies->movies());

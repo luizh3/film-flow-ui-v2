@@ -65,6 +65,7 @@ public:
 signals:
     void vDsQueryChanged();
     void cancelRequest();
+    void totalProgramsFound(int totalReviews);
 
 private:
     void onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future);

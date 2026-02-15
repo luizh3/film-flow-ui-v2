@@ -6,8 +6,6 @@ import Ui.Theme
 import Ui.Components
 import Ui.Components.Elements
 
-import Ui.Models
-
 Rectangle {
     id: root
 
@@ -16,6 +14,7 @@ Rectangle {
 
     property alias moviesGrid: moviesGrid
     property alias header: header
+    property alias foundResultsLabel: foundResultsLabel
 
     color: Colors.grey500
 
@@ -101,9 +100,9 @@ Rectangle {
                 }
 
                 Label {
+                    id: foundResultsLabel
                     font: Fonts.caption250
                     color: Colors.grey50
-                    text: qsTr("Found 100 results")
                 }
             }
 
@@ -117,10 +116,6 @@ Rectangle {
                 clip: true
                 cellWidth: 204 + Spacings.sm2
                 cellHeight: 266 + Spacings.md
-
-                model: SearchProgramListModel {
-                    vDsQuery: root.vDsQuery
-                }
 
                 ScrollBar.vertical: ScrollBar {}
             }

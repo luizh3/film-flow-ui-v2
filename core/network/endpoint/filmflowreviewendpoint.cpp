@@ -9,6 +9,7 @@
 
 namespace {
 constexpr const char *REVIEW_ENDPOINT = "/review";
+constexpr const char *REVIEW_UPDATE_ENDPOINT = "/review/%0";
 constexpr const char *REVIEW_LIKE = "/review/%0/like";
 }
 
@@ -25,7 +26,7 @@ Response *FilmFlowReviewEndpoint::create(const Review *review)
 
 Response *FilmFlowReviewEndpoint::update(const Review *review)
 {
-    QUrl baseUrl(toEndpoint(REVIEW_ENDPOINT));
+    QUrl baseUrl(toEndpoint(QString(REVIEW_UPDATE_ENDPOINT).arg(review->reviewId())));
 
     return _httpClient->put(baseUrl, review->toJson(), _headers);
 }
