@@ -4,7 +4,6 @@ set( MODULE_URI Core )
 set(CMAKE_AUTOMOC ON)
 
 set( SOURCES
-    controller/moviecontroller.cpp
     controller/applicationcontroller.cpp
     network/httpclient.cpp
     singleton/integrationmanager.cpp
@@ -55,7 +54,6 @@ set( SOURCES
 )
 
 set( HEADERS
-    controller/moviecontroller.h
     controller/applicationcontroller.h
     network/httpclient.h
     singleton/integrationmanager.h

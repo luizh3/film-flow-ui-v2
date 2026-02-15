@@ -31,13 +31,13 @@ Response *FilmFlowReviewEndpoint::update(const Review *review)
     return _httpClient->put(baseUrl, review->toJson(), _headers);
 }
 
-Response *FilmFlowReviewEndpoint::findAll(const PaginationRequest *request)
+QFuture<Response *> FilmFlowReviewEndpoint::findAll(const PaginationRequest *request)
 {
     QUrl baseUrl(toEndpoint(REVIEW_ENDPOINT));
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers, false);
 }
 
 Response *FilmFlowReviewEndpoint::like(const QString &reviewId)

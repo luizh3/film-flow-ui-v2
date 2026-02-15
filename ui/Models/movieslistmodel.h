@@ -52,7 +52,7 @@ public:
      void setKey(const QString& newKey);
 
  private:
-     void onFetchEnded(QFutureWatcher<SearchMoviesResult*>* future);
+     void onFetchEnded(SearchMoviesResult* searchMovies);
 
      void updateCardsMovie(const QList<CardMovie*>& cardsMovie,
                            const QList<MovieInformation*>& moviesInformation);

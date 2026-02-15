@@ -1,6 +1,8 @@
 #ifndef FILMFLOWREVIEWENDPOINT_H
 #define FILMFLOWREVIEWENDPOINT_H
 
+#include <QFuture>
+
 #include "filmflowendpoint.h"
 
 class Response;
@@ -13,7 +15,7 @@ public:
 
     Response* create(const Review* review);
     Response* update(const Review* review);
-    Response* findAll(const PaginationRequest* request);
+    QFuture<Response*> findAll(const PaginationRequest* request);
     Response* like(const QString& reviewId);
     Response* unlike(const QString& reviewId);
 };

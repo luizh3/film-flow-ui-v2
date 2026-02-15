@@ -5,6 +5,8 @@
 
 #include <core_global.h>
 
+#include <QFuture>
+
 class SearchMoviesResult;
 class SectionRequest;
 class FilmFlowSectionEndpoint;
@@ -15,7 +17,7 @@ public:
     SectionController();
     ~SectionController();
 
-    SearchMoviesResult* find(const SectionRequest& request);
+    QFuture<SearchMoviesResult*> find(const SectionRequest& request);
 
     void cancel();
 

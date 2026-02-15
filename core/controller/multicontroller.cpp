@@ -10,21 +10,18 @@
 #include <network/request/paginationrequest.h>
 #include <network/response/response.h>
 
+#include <helper/taskrunhelper.h>
+
 MultiController::MultiController()
     : _filmFlowMultiEndpoint{new FilmFlowMultiEndpoint(ApplicationManager::instance().session())}
 {}
 
 MultiController::~MultiController() = default;
 
-SearchMoviesResult *MultiController::find(const MultiRequest &request)
+QFuture<SearchMoviesResult *> MultiController::find(const MultiRequest &request)
 {
-    std::unique_ptr<Response> response(_filmFlowMultiEndpoint->find(request));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return SearchMoviesResult::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<SearchMoviesResult, Response>(
+        _filmFlowMultiEndpoint->find(request));
 }
 
 MovieInformation *MultiController::findById(const int id, const MultiDetailsRequest &request)
@@ -38,16 +35,11 @@ MovieInformation *MultiController::findById(const int id, const MultiDetailsRequ
     return MovieInformation::fromJson(response->data());
 }
 
-ReviewsResult *MultiController::findAllReviewsByIdMovie(const int id,
-                                                        const PaginationRequest *request)
+QFuture<ReviewsResult *> MultiController::findAllReviewsByIdMovie(const int id,
+                                                                  const PaginationRequest *request)
 {
-    std::unique_ptr<Response> response(_filmFlowMultiEndpoint->findAllReviewsByIdMovie(id, request));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return ReviewsResult::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<ReviewsResult, Response>(
+        _filmFlowMultiEndpoint->findAllReviewsByIdMovie(id, request));
 }
 
 void MultiController::cancel()

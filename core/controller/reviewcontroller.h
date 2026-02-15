@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include <QFuture>
 #include <core_global.h>
 
 class Review;
@@ -18,7 +19,8 @@ public:
 
     void create(const Review* review);
     void update(const Review* review);
-    ReviewsResult* findAll(const PaginationRequest* paginationRequest);
+
+    QFuture<ReviewsResult*> findAll(const PaginationRequest* paginationRequest);
 
     void cancel() const;
 

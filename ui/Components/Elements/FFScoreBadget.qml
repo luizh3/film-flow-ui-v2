@@ -5,7 +5,7 @@ import Ui.Theme
 
 Item {
     id: root
-    // TODO ajustar
+    // TODO adjust size of component to be dinamyc
     implicitWidth: root.vSize
                    === FFScoreBadget.Size.Medium ? 26 + 32 + label.anchors.leftMargin : 16
                                                    + 32 + label.anchors.leftMargin

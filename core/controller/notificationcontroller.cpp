@@ -7,6 +7,8 @@
 
 #include <model/result/notificationsresult.h>
 
+#include <helper/taskrunhelper.h>
+
 NotificationController::NotificationController()
     : _filmFlowNotificationEndpoint{
           new FilmFlowNotificationEndpoint(ApplicationManager::instance().session())}
@@ -14,15 +16,11 @@ NotificationController::NotificationController()
 
 NotificationController::~NotificationController() = default;
 
-NotificationsResult *NotificationController::findAll(const PaginationRequest *paginationRequest)
+QFuture<NotificationsResult *> NotificationController::findAll(
+    const PaginationRequest *paginationRequest)
 {
-    std::unique_ptr<Response> response(_filmFlowNotificationEndpoint->findAll(paginationRequest));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return NotificationsResult::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<NotificationsResult, Response>(
+        _filmFlowNotificationEndpoint->findAll(paginationRequest));
 }
 
 void NotificationController::cancel()

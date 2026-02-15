@@ -8,12 +8,15 @@
 
 #include "moviemodel.h"
 
+class SectionController;
 class CONTROLS_EXPORT MovieSliderControl : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
 public:
     MovieSliderControl();
+    ~MovieSliderControl();
+
     Q_INVOKABLE void doStart();
 
     Q_INVOKABLE void next();
@@ -22,6 +25,7 @@ public:
 signals:
     void movieChanged( const QVariant& movie );
 private:
+    SectionController* _sectionController;
     QList<MovieModel*> _movies;
 
     int _currentIndex;

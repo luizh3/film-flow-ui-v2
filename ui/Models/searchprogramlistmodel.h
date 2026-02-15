@@ -68,7 +68,7 @@ signals:
     void totalProgramsFound(int totalReviews);
 
 private:
-    void onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future);
+    void onFetchEnded(SearchMoviesResult *searchMovies);
 
     void updateCardsMovie(const QList<SearchProgramCard *> &searchProgramCards,
                           const QList<MovieInformation *> &moviesInformation);

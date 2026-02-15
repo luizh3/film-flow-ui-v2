@@ -1,18 +1,39 @@
 #include "httpclient.h"
 
 #include <QEventLoop>
+#include <QFuture>
 #include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QStandardPaths>
 #include <QTimer>
 
 #include "httpstatuscode.h"
 
-Response* HttpClient::get(const QUrl& dsUrl, const HeaderMap& headers, const int timeout)
+HttpClient::HttpClient()
+    : _networkManager{new QNetworkAccessManager()}
+{
+    QNetworkDiskCache* diskCache = new QNetworkDiskCache(this);
+    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    diskCache->setCacheDirectory(cacheDir);
+    diskCache->setMaximumCacheSize(50 * 1024 * 1024);
+
+    _networkManager->setCache(diskCache);
+}
+
+HttpClient::~HttpClient() = default;
+
+Response* HttpClient::get(const QUrl& dsUrl,
+                          const HeaderMap& headers,
+                          const bool isUseCache,
+                          const int timeout)
 {
     QNetworkRequest request = QNetworkRequest(dsUrl);
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                         isUseCache ? QNetworkRequest::PreferCache : QNetworkRequest::AlwaysNetwork);
 
     setRawHeaders(&request, headers);
 
@@ -78,8 +99,7 @@ Response* HttpClient::makeRequest(const QUrl& dsUrl,
                                   const int timeout,
                                   std::function<QNetworkReply*(QNetworkAccessManager&)> method)
 {
-    QNetworkAccessManager networkManager;
-    QNetworkReply* reply = method(networkManager);
+    QNetworkReply* reply = method(*_networkManager.get());
 
     QTimer timer;
     QEventLoop loop;
@@ -111,12 +131,78 @@ Response* HttpClient::makeRequest(const QUrl& dsUrl,
 
     const QByteArray result = reply->readAll();
 
+    const QVariant dsCacheControl = reply->rawHeader("Cache-Control");
+    const QVariant dsEtag = reply->rawHeader("ETag");
+    const bool isFromCache = reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute).toBool();
+
+    qInfo() << "HttpClient::makeRequest [DS_CACHE_CONTROL]" << dsCacheControl << "[DS_ETAG]"
+            << dsEtag << "[IS_FROM_CACHE]" << isFromCache;
+
     const auto status = HttpStatusCode(
         reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
 
     delete reply;
 
     return new Response(status, QJsonDocument::fromJson(result));
+}
+
+// TODO Review to reduce duplicate code.
+QFuture<Response*> HttpClient::getAsync(const QUrl& dsUrl,
+                                        const HeaderMap& headers,
+                                        const bool isUseCache,
+                                        const int timeout)
+{
+    QPromise<Response*> promise;
+    auto future = promise.future();
+
+    QNetworkRequest request = QNetworkRequest(dsUrl);
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                         isUseCache ? QNetworkRequest::PreferCache : QNetworkRequest::AlwaysNetwork);
+
+    setRawHeaders(&request, headers);
+
+    QNetworkReply* reply = _networkManager->get(request);
+
+    QTimer timer;
+
+    QObject::connect(&timer, &QTimer::timeout, reply, &QNetworkReply::abort, Qt::QueuedConnection);
+
+    QObject::connect(this,
+                     &HttpClient::cancelRequested,
+                     reply,
+                     &QNetworkReply::abort,
+                     Qt::QueuedConnection);
+
+    QObject::connect(reply, &QNetworkReply::finished, [reply, promise = std::move(promise)]() mutable {
+        if (reply->error() != QNetworkReply::NoError) {
+            promise.addResult(nullptr);
+            promise.finish();
+
+            reply->deleteLater();
+            return;
+        }
+
+        const auto status = HttpStatusCode(
+            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
+
+        const QVariant dsCacheControl = reply->rawHeader("Cache-Control");
+        const QVariant dsEtag = reply->rawHeader("ETag");
+        const bool isFromCache = reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute)
+                                     .toBool();
+
+        qInfo() << "HttpClient::getAsync [DS_CACHE_CONTROL]" << dsCacheControl << "[DS_ETAG]"
+                << dsEtag << "[IS_FROM_CACHE]" << isFromCache;
+
+        Response* response = new Response(status, QJsonDocument::fromJson(reply->readAll()));
+        promise.addResult(response);
+        promise.finish();
+
+        reply->deleteLater();
+    });
+
+    return future;
 }
 
 void HttpClient::cancel()

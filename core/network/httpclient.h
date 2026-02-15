@@ -1,6 +1,7 @@
 #ifndef HTTPCLIENT_H
 #define HTTPCLIENT_H
 
+#include <QFuture>
 #include <QJsonDocument>
 #include <QMap>
 #include <QObject>
@@ -16,7 +17,13 @@ class HttpClient : public QObject
 {
     Q_OBJECT
 public:
-    Response* get(const QUrl& dsUrl, const HeaderMap& headers = {}, const int timeout = 15000);
+    HttpClient();
+    ~HttpClient();
+
+    Response* get(const QUrl& dsUrl,
+                  const HeaderMap& headers = {},
+                  const bool isUseCache = true,
+                  const int timeout = 15000);
 
     Response* post(const QUrl& dsUrl,
                    const QJsonDocument& request,
@@ -38,9 +45,17 @@ public:
                           const int timeout,
                           std::function<QNetworkReply*(QNetworkAccessManager& network)> method);
 
+    QFuture<Response*> getAsync(const QUrl& dsUrl,
+                                const HeaderMap& headers = {},
+                                const bool isUseCache = false,
+                                const int timeout = 15000);
+
     void cancel();
 signals:
     void cancelRequested();
+
+private:
+    std::unique_ptr<QNetworkAccessManager> _networkManager;
 };
 
 #endif // HTTPCLIENT_H

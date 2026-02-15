@@ -9,9 +9,17 @@
 
 #include "mapper/moviemapper.h"
 
-MovieSliderControl::MovieSliderControl() :
-    _movies{{}},
-    _currentIndex{0}{}
+MovieSliderControl::MovieSliderControl()
+    : _sectionController{new SectionController()}
+    , _movies{{}}
+    , _currentIndex{0}
+{}
+
+MovieSliderControl::~MovieSliderControl()
+{
+    delete _sectionController;
+    qDeleteAll(_movies);
+}
 
 void MovieSliderControl::doStart() {
 
@@ -49,25 +57,20 @@ void MovieSliderControl::previous()
 }
 
 void MovieSliderControl::fetchMovies() {
-    QFutureWatcher<SearchMoviesResult*>* future = TaskRunHelper::async<SearchMoviesResult*>([&]() {
-        SectionRequest request;
-        request.setKey("TOP_RATED");
-        request.setPage(1);
-        request.setTpProgram(TypeProgramEnum::MOVIE);
+    SectionRequest request;
+    request.setKey("TOP_RATED");
+    request.setPage(1);
+    request.setTpProgram(TypeProgramEnum::MOVIE);
 
-        return SectionController().find(request);
-    });
-
-    QObject::connect(future, &QFutureWatcher<SearchMoviesResult*>::finished, this, [this, future]() {
-        if ( future->isFinished() && !future->isCanceled() ) {
-            std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
-
-            _movies = MovieMapper::toModels(searchMovies->movies());
-
-            emit movieChanged( QVariant::fromValue( _movies.last() ) );
-
+    _sectionController->find(request).then([&](SearchMoviesResult* searchMovies) {
+        if (!searchMovies) {
+            return;
         }
 
-        future->deleteLater();
+        _movies = MovieMapper::toModels(searchMovies->movies());
+
+        emit movieChanged(QVariant::fromValue(_movies.last()));
+
+        delete searchMovies;
     });
 }

@@ -5,6 +5,8 @@
 
 #include <core_global.h>
 
+#include <QFuture>
+
 class PaginationRequest;
 class NotificationsResult;
 class FilmFlowNotificationEndpoint;
@@ -15,7 +17,7 @@ public:
     NotificationController();
     ~NotificationController();
 
-    NotificationsResult* findAll(const PaginationRequest* paginationRequest);
+    QFuture<NotificationsResult*> findAll(const PaginationRequest* paginationRequest);
 
     void cancel();
 

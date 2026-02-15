@@ -42,8 +42,8 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    NotificationsResult* onFetchStarted();
-    void onFetchEnded(QFutureWatcher<NotificationsResult*>* future);
+    QFuture<NotificationsResult*> onFetchStarted();
+    void onFetchEnded(NotificationsResult* future);
     void updateCardsNotification(const QList<CardNotification*>& cardsNotification,
                                  const QList<Notification*>& notifications);
     static void updateCardNotification(CardNotification* cardNotification,

@@ -13,11 +13,11 @@ FilmFlowSectionEndpoint::FilmFlowSectionEndpoint(const Session* session)
     : FilmFlowEndpoint(session)
 {}
 
-Response* FilmFlowSectionEndpoint::find(const SectionRequest& request)
+QFuture<Response*> FilmFlowSectionEndpoint::find(const SectionRequest& request)
 {
     QUrl baseUrl(toEndpoint(SECTION_ENDPOINT));
 
     baseUrl.setQuery( request.toQuerys() );
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers);
 }

@@ -119,12 +119,7 @@ void ReviewsListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new CardReview(); });
 
-    QFutureWatcher<ReviewsResult *> *future = TaskRunHelper::async<ReviewsResult *>(
-        [&]() { return onFetchStarted(); });
-
-    QObject::connect(future, &QFutureWatcher<ReviewsResult *>::finished, this, [this, future]() {
-        onFetchEnded(future);
-    });
+    onFetchStarted().then([&](ReviewsResult *reviewsResult) { onFetchEnded(reviewsResult); });
 }
 
 bool ReviewsListModel::canFetchMore(const QModelIndex &parent) const
@@ -152,21 +147,12 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
     return mapping;
 }
 
-void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
+void ReviewsListModel::onFetchEnded(ReviewsResult *reviewsResult)
 {
-    if (future->isCanceled()) {
-        setIsFetching(false);
-        setIsLoading(false);
-        future->deleteLater();
-        return;
-    }
-
-    std::unique_ptr<ReviewsResult> reviewsResult(future->result());
 
     if (!reviewsResult) {
         setIsFetching(false);
         setIsLoading(false);
-        future->deleteLater();
         return;
     }
 
@@ -182,7 +168,8 @@ void ReviewsListModel::onFetchEnded(QFutureWatcher<ReviewsResult *> *future)
 
     setIsLoading(false);
     setIsFetching(false);
-    future->deleteLater();
+
+    delete reviewsResult;
 }
 
 void ReviewsListModel::updateCardsReview(const QList<CardReview *> &cardsReview,
@@ -229,7 +216,7 @@ ReviewsListModel::CardReview::CardReview()
     , isLikedByMe{false}
 {}
 
-ReviewsResult *ReviewsListModel::onFetchStarted()
+QFuture<ReviewsResult *> ReviewsListModel::onFetchStarted()
 {
     switch (_fetchModeType) {
     case ReviewsListModel::ReviewFetchModeType::ByUser:
@@ -237,7 +224,7 @@ ReviewsResult *ReviewsListModel::onFetchStarted()
     case ReviewsListModel::ReviewFetchModeType::ByProgram:
         return _multiController->findAllReviewsByIdMovie(_movieId, _paginationRequest);
     default:
-        return nullptr;
+        return QFuture<ReviewsResult *>(nullptr);
     }
 }
 

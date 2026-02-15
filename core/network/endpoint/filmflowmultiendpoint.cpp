@@ -16,13 +16,13 @@ FilmFlowMultiEndpoint::FilmFlowMultiEndpoint(const Session *session)
     : FilmFlowEndpoint(session)
 {}
 
-Response *FilmFlowMultiEndpoint::find(const MultiRequest &request)
+QFuture<Response *> FilmFlowMultiEndpoint::find(const MultiRequest &request)
 {
     QUrl baseUrl(toEndpoint(MULTI_ENDPOINT));
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers);
 }
 
 Response *FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsRequest &request)
@@ -34,12 +34,12 @@ Response *FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsReques
     return _httpClient->get(baseUrl, _headers);
 }
 
-Response *FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
-                                                         const PaginationRequest *request)
+QFuture<Response *> FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
+                                                                   const PaginationRequest *request)
 {
     QUrl baseUrl(toEndpoint(QString(MULTI_FIND_REVIEWS_BY_ID).arg(id)));
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers, false);
 }

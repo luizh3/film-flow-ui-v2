@@ -100,13 +100,9 @@ void SearchProgramListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new SearchProgramCard(); });
 
-    QFutureWatcher<SearchMoviesResult *> *future = TaskRunHelper::async<SearchMoviesResult *>(
-        [&]() { return _multiController->find(*_multiRequest); });
-
-    QObject::connect(future,
-                     &QFutureWatcher<SearchMoviesResult *>::finished,
-                     this,
-                     [this, future]() { onFetchEnded(future); });
+    _multiController->find(*_multiRequest).then([&](SearchMoviesResult *result) {
+        onFetchEnded(result);
+    });
 }
 
 bool SearchProgramListModel::canFetchMore(const QModelIndex &parent) const
@@ -191,19 +187,11 @@ void SearchProgramListModel::setVDsQuery(const QString &newVDsQuery)
     emit vDsQueryChanged();
 }
 
-void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future)
+void SearchProgramListModel::onFetchEnded(SearchMoviesResult *searchMovies)
 {
-    if (future->isCanceled()) {
-        _isFetching = false;
-        future->deleteLater();
-        return;
-    }
-
-    std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
 
     if (!searchMovies) {
         _isFetching = false;
-        future->deleteLater();
         return;
     }
 
@@ -217,7 +205,7 @@ void SearchProgramListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *
 
     _isFetching = false;
 
-    future->deleteLater();
+    delete searchMovies;
 }
 
 SearchProgramListModel::SearchProgramCard::SearchProgramCard()

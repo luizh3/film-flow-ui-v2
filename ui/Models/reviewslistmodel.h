@@ -96,8 +96,8 @@ signals:
     void isFetchingChanged();
 
 private:
-    ReviewsResult* onFetchStarted();
-    void onFetchEnded(QFutureWatcher<ReviewsResult*>* future);
+    QFuture<ReviewsResult*> onFetchStarted();
+    void onFetchEnded(ReviewsResult* reviewsResult);
     void updateCardsReview(const QList<CardReview*>& cardsReview, const QList<Review*>& reviews);
     static void updateCardReview(CardReview* cardReview, const Review* review);
 

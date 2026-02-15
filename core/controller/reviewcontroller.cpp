@@ -7,6 +7,8 @@
 #include <network/endpoint/filmflowreviewendpoint.h>
 #include <network/response/response.h>
 
+#include <helper/taskrunhelper.h>
+
 ReviewController::~ReviewController() = default;
 
 ReviewController::ReviewController()
@@ -37,15 +39,10 @@ void ReviewController::update(const Review *review)
     emit success(Review::fromJson(response->data()));
 }
 
-ReviewsResult *ReviewController::findAll(const PaginationRequest *paginationRequest)
+QFuture<ReviewsResult *> ReviewController::findAll(const PaginationRequest *paginationRequest)
 {
-    std::unique_ptr<Response> response(_filmFlowReviewEndpoint->findAll(paginationRequest));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return ReviewsResult::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<ReviewsResult, Response>(
+        _filmFlowReviewEndpoint->findAll(paginationRequest));
 }
 
 void ReviewController::cancel() const

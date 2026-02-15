@@ -81,13 +81,8 @@ void NotificationsListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new CardNotification(); });
 
-    QFutureWatcher<NotificationsResult *> *future = TaskRunHelper::async<NotificationsResult *>(
-        [&]() { return onFetchStarted(); });
-
-    QObject::connect(future,
-                     &QFutureWatcher<NotificationsResult *>::finished,
-                     this,
-                     [this, future]() { onFetchEnded(future); });
+    onFetchStarted().then(
+        [&](NotificationsResult *notificationsResult) { onFetchEnded(notificationsResult); });
 }
 
 bool NotificationsListModel::canFetchMore(const QModelIndex &parent) const
@@ -108,23 +103,15 @@ QHash<int, QByteArray> NotificationsListModel::roleNames() const
     return mapping;
 }
 
-NotificationsResult *NotificationsListModel::onFetchStarted()
+QFuture<NotificationsResult *> NotificationsListModel::onFetchStarted()
 {
     return _notificationController->findAll(_paginationRequest);
 }
 
-void NotificationsListModel::onFetchEnded(QFutureWatcher<NotificationsResult *> *future)
+void NotificationsListModel::onFetchEnded(NotificationsResult *notificationsResult)
 {
-    if (future->isCanceled()) {
-        _isFetching = false;
-        future->deleteLater();
-        return;
-    }
-
-    std::unique_ptr<NotificationsResult> notificationsResult(future->result());
 
     if (!notificationsResult) {
-        future->deleteLater();
         _isFetching = false;
         return;
     }
@@ -135,7 +122,7 @@ void NotificationsListModel::onFetchEnded(QFutureWatcher<NotificationsResult *> 
 
     _isFetching = false;
 
-    future->deleteLater();
+    delete notificationsResult;
 }
 
 void NotificationsListModel::updateCardsNotification(
@@ -162,7 +149,7 @@ void NotificationsListModel::updateCardNotification(CardNotification *cardNotifi
     case TypeNotificationEnum::REVIEW_LIKE: {
         const NotificationReviewLike *notificationReviewLike = static_cast<NotificationReviewLike *>(
             notification);
-        cardNotification->description = QString("<b>%0</b> liked your review on the <b>%1</b>")
+        cardNotification->description = QString(tr("<b>%0</b> liked your review on the <b>%1</b>"))
                                             .arg(notificationReviewLike->actorName(),
                                                  notificationReviewLike->programTitle());
         cardNotification->icon = "qrc:/icons/favorite";

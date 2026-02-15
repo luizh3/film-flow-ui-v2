@@ -42,6 +42,26 @@ public:
     {
         QMetaObject::invokeMethod(context, callBack, Qt::QueuedConnection);
     }
+
+    template<typename ResultType, typename Response>
+    static QFuture<ResultType*> promiseAsync(QFuture<Response*> future)
+    {
+        QPromise<ResultType*> promise;
+        auto resultFuture = promise.future();
+
+        future.then([promise = std::move(promise)](Response* response) mutable {
+            if (!response) {
+                promise.addResult(nullptr);
+            } else {
+                auto result = ResultType::fromJson(response->data());
+                delete response;
+                promise.addResult(result);
+            }
+            promise.finish();
+        });
+
+        return resultFuture;
+    }
 };
 
 #endif // TASKRUNHELPER_H

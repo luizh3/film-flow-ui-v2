@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include <QFuture>
 #include <core_global.h>
 
 class SearchMoviesResult;
@@ -18,9 +19,9 @@ public:
     MultiController();
     ~MultiController();
 
-    SearchMoviesResult* find(const MultiRequest& request);
+    QFuture<SearchMoviesResult*> find(const MultiRequest& request);
     MovieInformation* findById(const int id, const MultiDetailsRequest& request);
-    ReviewsResult* findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
+    QFuture<ReviewsResult*> findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
 
     void cancel();
 

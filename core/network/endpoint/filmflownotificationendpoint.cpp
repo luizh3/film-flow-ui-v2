@@ -13,11 +13,11 @@ FilmFlowNotificationEndpoint::FilmFlowNotificationEndpoint(const Session *sessio
     : FilmFlowEndpoint(session)
 {}
 
-Response *FilmFlowNotificationEndpoint::findAll(const PaginationRequest *request)
+QFuture<Response *> FilmFlowNotificationEndpoint::findAll(const PaginationRequest *request)
 {
     QUrl baseUrl(toEndpoint(NOTIFICATION_ENDPOINT));
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers);
 }

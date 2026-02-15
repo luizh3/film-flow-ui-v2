@@ -89,13 +89,9 @@ void MoviesListModel::fetchMore( const QModelIndex &parent ) {
 
         []() { return new CardMovie(); });
 
-    QFutureWatcher<SearchMoviesResult *> *future = TaskRunHelper::async<SearchMoviesResult *>(
-        [&]() { return _sectionController->find(*_sectionRequest); });
-
-    QObject::connect(future,
-                     &QFutureWatcher<SearchMoviesResult *>::finished,
-                     this,
-                     [this, future]() { onFetchEnded(future); });
+    _sectionController->find(*_sectionRequest).then([&](SearchMoviesResult *searchMovies) {
+        onFetchEnded(searchMovies);
+    });
 }
 
 bool MoviesListModel::canFetchMore( const QModelIndex& parent) const {
@@ -168,18 +164,10 @@ void MoviesListModel::setKey(const QString &newKey)
 
 }
 
-void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future)
+void MoviesListModel::onFetchEnded(SearchMoviesResult *searchMovies)
 {
-    if (future->isCanceled()) {
-        future->deleteLater();
-        _isFetching = false;
-        return;
-    }
-
-    std::unique_ptr<SearchMoviesResult> searchMovies(future->result());
 
     if (!searchMovies) {
-        future->deleteLater();
         _isFetching = false;
         return;
     }
@@ -188,7 +176,7 @@ void MoviesListModel::onFetchEnded(QFutureWatcher<SearchMoviesResult *> *future)
 
     _isFetching = false;
 
-    future->deleteLater();
+    delete searchMovies;
 }
 
 MoviesListModel::CardMovie::CardMovie()

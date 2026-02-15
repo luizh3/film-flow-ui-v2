@@ -7,21 +7,18 @@
 #include <network/endpoint/filmflowsectionendpoint.h>
 #include <network/response/response.h>
 
+#include <helper/taskrunhelper.h>
+
 SectionController::SectionController()
     : _filmFlowSectionEndpoint{new FilmFlowSectionEndpoint(ApplicationManager::instance().session())}
 {}
 
 SectionController::~SectionController() = default;
 
-SearchMoviesResult *SectionController::find(const SectionRequest &request)
+QFuture<SearchMoviesResult *> SectionController::find(const SectionRequest &request)
 {
-    std::unique_ptr<Response> response(_filmFlowSectionEndpoint->find(request));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return SearchMoviesResult::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<SearchMoviesResult, Response>(
+        _filmFlowSectionEndpoint->find(request));
 }
 
 void SectionController::cancel()

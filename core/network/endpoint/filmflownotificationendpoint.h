@@ -3,6 +3,8 @@
 
 #include "filmflowendpoint.h"
 
+#include <QFuture>
+
 class Response;
 class Notification;
 class PaginationRequest;
@@ -11,7 +13,7 @@ class FilmFlowNotificationEndpoint : public FilmFlowEndpoint
 public:
     FilmFlowNotificationEndpoint(const Session* session);
 
-    Response* findAll(const PaginationRequest* request);
+    QFuture<Response*> findAll(const PaginationRequest* request);
 };
 
 #endif // FILMFLOWNOTIFICATIONENDPOINT_H

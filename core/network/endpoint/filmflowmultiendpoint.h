@@ -3,6 +3,8 @@
 
 #include "filmflowendpoint.h"
 
+#include <QFuture>
+
 #include <network/httpclient.h>
 
 class Response;
@@ -14,9 +16,9 @@ class FilmFlowMultiEndpoint : public FilmFlowEndpoint
 public:
     FilmFlowMultiEndpoint(const Session* session);
 
-    Response* find(const MultiRequest& request);
+    QFuture<Response*> find(const MultiRequest& request);
     Response* findById(const int id, const MultiDetailsRequest& request);
-    Response* findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
+    QFuture<Response*> findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
 };
 
 #endif // FILMFLOWMULTIENDPOINT_H
