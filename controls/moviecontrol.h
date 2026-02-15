@@ -40,6 +40,8 @@ private:
     bool _isCanceled;
 
     MultiController _multiController;
+
+    void onFetchEnded(MovieInformation *movieInformation);
 };
 
 #endif // MOVIECONTROL_H

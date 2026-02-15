@@ -24,6 +24,25 @@ MovieControl::~MovieControl()
     delete _movie;
 }
 
+void MovieControl::onFetchEnded(MovieInformation *movieInformation)
+{
+    if (!movieInformation) {
+        return;
+    }
+
+    if (_isCanceled) {
+        delete movieInformation;
+        emit finished();
+        return;
+    }
+
+    setMovie(MovieMapper::toModel(movieInformation));
+
+    setIsLoading(false);
+
+    delete movieInformation;
+}
+
 void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
 {
     setIsLoading(true);
@@ -32,19 +51,9 @@ void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
     request.setTpProgram(TypeProgram::toString(tpProgram));
     request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
 
-    std::unique_ptr<MovieInformation> movieInformation;
-
-    TaskRunHelper::runSync(
-        [&]() { movieInformation.reset(_multiController.findById(id, request)); });
-
-    if (_isCanceled) {
-        emit finished();
-        return;
-    }
-
-    setMovie(MovieMapper::toModel(movieInformation.get()));
-
-    setIsLoading(false);
+    _multiController.findById(id, request).then([&](MovieInformation *movieInformation) {
+        onFetchEnded(movieInformation);
+    });
 }
 
 void MovieControl::doCancel()

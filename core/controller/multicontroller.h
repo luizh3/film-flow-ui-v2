@@ -20,7 +20,7 @@ public:
     ~MultiController();
 
     QFuture<SearchMoviesResult*> find(const MultiRequest& request);
-    MovieInformation* findById(const int id, const MultiDetailsRequest& request);
+    QFuture<MovieInformation*> findById(const int id, const MultiDetailsRequest& request);
     QFuture<ReviewsResult*> findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
 
     void cancel();

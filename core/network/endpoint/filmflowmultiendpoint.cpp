@@ -25,13 +25,13 @@ QFuture<Response *> FilmFlowMultiEndpoint::find(const MultiRequest &request)
     return _httpClient->getAsync(baseUrl, _headers);
 }
 
-Response *FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsRequest &request)
+QFuture<Response *> FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsRequest &request)
 {
     QUrl baseUrl(toEndpoint(QString(MULTI_FIND_BY_ID).arg(id)));
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient->get(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers);
 }
 
 QFuture<Response *> FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,

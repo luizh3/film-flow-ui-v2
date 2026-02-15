@@ -24,15 +24,11 @@ QFuture<SearchMoviesResult *> MultiController::find(const MultiRequest &request)
         _filmFlowMultiEndpoint->find(request));
 }
 
-MovieInformation *MultiController::findById(const int id, const MultiDetailsRequest &request)
+QFuture<MovieInformation *> MultiController::findById(const int id,
+                                                      const MultiDetailsRequest &request)
 {
-    std::unique_ptr<Response> response(_filmFlowMultiEndpoint->findById(id, request));
-
-    if (!response) {
-        return nullptr;
-    }
-
-    return MovieInformation::fromJson(response->data());
+    return TaskRunHelper::promiseAsync<MovieInformation, Response>(
+        _filmFlowMultiEndpoint->findById(id, request));
 }
 
 QFuture<ReviewsResult *> MultiController::findAllReviewsByIdMovie(const int id,

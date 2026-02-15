@@ -17,7 +17,7 @@ public:
     FilmFlowMultiEndpoint(const Session* session);
 
     QFuture<Response*> find(const MultiRequest& request);
-    Response* findById(const int id, const MultiDetailsRequest& request);
+    QFuture<Response*> findById(const int id, const MultiDetailsRequest& request);
     QFuture<Response*> findAllReviewsByIdMovie(const int id, const PaginationRequest* request);
 };
 
