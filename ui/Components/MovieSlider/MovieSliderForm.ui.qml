@@ -65,7 +65,7 @@ Item {
 
             FFButton {
                 vIcon: Icons.outlined.play
-                text: qsTr("Play")
+                text: qsTr("See more")
             }
 
             RowLayout {

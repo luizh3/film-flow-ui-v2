@@ -19,5 +19,5 @@ QFuture<Response*> FilmFlowSectionEndpoint::find(const SectionRequest& request)
 
     baseUrl.setQuery( request.toQuerys() );
 
-    return _httpClient->getAsync(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers, true);
 }

@@ -19,5 +19,5 @@ QFuture<Response *> FilmFlowNotificationEndpoint::findAll(const PaginationReques
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->getAsync(baseUrl, _headers);
+    return _httpClient->getAsync(baseUrl, _headers, true);
 }
