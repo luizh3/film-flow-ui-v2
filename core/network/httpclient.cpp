@@ -19,6 +19,8 @@ HttpClient::HttpClient()
     diskCache->setCacheDirectory(cacheDir);
     diskCache->setMaximumCacheSize(50 * 1024 * 1024);
 
+    qInfo() << "HttpClient::HttpClient [CACHE_DIRECTORY]" << cacheDir;
+
     _networkManager->setCache(diskCache);
 }
 

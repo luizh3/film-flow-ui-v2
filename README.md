@@ -148,5 +148,14 @@ A aplicação suporta múltiplos idiomas:
 - Inglês (en_US)
 - Espanhol (es_ES)
 
+Atualizar linguist
+
+lupdate . -ts i18n/*.ts
+
+- Traduzir manualmente
+
+lrelease i18n/*.ts
+
+
 **Desenvolvido usando Qt/QML**
 
