@@ -149,7 +149,7 @@ Response* HttpClient::makeRequest(const QUrl& dsUrl,
 // TODO Review to reduce duplicate code.
 QFuture<Response*> HttpClient::getAsync(const QUrl& dsUrl,
                                         const HeaderMap& headers,
-                                        const bool isUseCache,
+                                        QNetworkRequest::CacheLoadControl typeCacheControl,
                                         const int timeout)
 {
     QPromise<Response*> promise;
@@ -158,8 +158,7 @@ QFuture<Response*> HttpClient::getAsync(const QUrl& dsUrl,
     QNetworkRequest request = QNetworkRequest(dsUrl);
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
-                         isUseCache ? QNetworkRequest::PreferCache : QNetworkRequest::AlwaysNetwork);
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, typeCacheControl);
 
     setRawHeaders(&request, headers);
 

@@ -159,6 +159,7 @@ GenericScreen {
                                 text: root.vMovieTitle
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
+                                visible: !root.vIsLoading
                             }
 
                             FFSkeletonLoading {
@@ -239,19 +240,21 @@ GenericScreen {
                             }
 
                             Label {
+                                id: overviewLabel
                                 font: Fonts.label140
                                 color: Colors.grey50
                                 wrapMode: Text.Wrap
                                 text: root.vMovieOverview
                                 width: parent.width
+                                visible: !root.vIsLoading
+                            }
 
-                                FFSkeletonLoading {
-                                    width: parent.width
-                                    height: 145
-                                    color: Colors.grey500
-                                    radius: Radius.xl
-                                    visible: root.vIsLoading
-                                }
+                            FFSkeletonLoading {
+                                width: parent.width
+                                height: 145
+                                color: Colors.grey500
+                                radius: Radius.xl
+                                visible: root.vIsLoading
                             }
                         }
                     }

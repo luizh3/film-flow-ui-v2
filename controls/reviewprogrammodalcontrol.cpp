@@ -6,12 +6,12 @@
 
 #include "mapper/reviewmapper.h"
 
-
 void ReviewProgramModalControl::doConfirm(const ReviewModel *review) const
 {
     const bool isNewReview = review->reviewId().isEmpty();
 
-    if (isNewReview) {
+    if (isNewReview)
+    {
         doCreate(review);
         return;
     }

@@ -1,8 +1,6 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
-#include <QObject>
-
 #include <core_global.h>
 
 #include <QFuture>

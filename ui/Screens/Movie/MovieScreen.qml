@@ -32,6 +32,7 @@ MovieScreenForm {
 
         reviewModal.success.connect(function doSuccess(newReview) {
             reviewsListModel.resetReviews()
+            control.doRefresh(root.vMovieId, root.vProgramType)
         })
 
         reviewModal.setReview(vMovie.myReview)
@@ -90,7 +91,7 @@ MovieScreenForm {
         vIsLoading: programReview.isLoading
         vScore: programReview.score
         vDateCreated: "24/10/2025"
-        vUserImage: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" // TODO change for te user photo
+        vUserImage: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO change for te user photo
         vTitle: programReview.title
         vUserName: "test"
         vDescription: programReview.description

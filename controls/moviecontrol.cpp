@@ -13,11 +13,9 @@
 #include "mapper/moviemapper.h"
 
 MovieControl::MovieControl()
-    : _movie{nullptr}
-    , _isLoading{true}
-    , _isCanceled{false}
-    , _multiController{}
-{}
+    : _movie{nullptr}, _isLoading{true}, _isCanceled{false}, _multiController{}
+{
+}
 
 MovieControl::~MovieControl()
 {
@@ -26,11 +24,13 @@ MovieControl::~MovieControl()
 
 void MovieControl::onFetchEnded(MovieInformation *movieInformation)
 {
-    if (!movieInformation) {
+    if (!movieInformation)
+    {
         return;
     }
 
-    if (_isCanceled) {
+    if (_isCanceled)
+    {
         delete movieInformation;
         emit finished();
         return;
@@ -51,14 +51,19 @@ void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
     request.setTpProgram(TypeProgram::toString(tpProgram));
     request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
 
-    _multiController.findById(id, request).then([&](MovieInformation *movieInformation) {
-        onFetchEnded(movieInformation);
-    });
+    _multiController.findById(id, request).then([&](MovieInformation *movieInformation)
+                                                { onFetchEnded(movieInformation); });
+}
+
+void MovieControl::doRefresh(const int id, TypeProgramEnum tpProgram)
+{
+    doStart(id, tpProgram);
 }
 
 void MovieControl::doCancel()
 {
-    if (_isLoading) {
+    if (_isLoading)
+    {
         _multiController.cancel();
         _isCanceled = true;
         return;
@@ -74,7 +79,8 @@ MovieModel *MovieControl::movie() const
 
 void MovieControl::setMovie(MovieModel *newMovie)
 {
-    if (_movie == newMovie) {
+    if (_movie == newMovie)
+    {
         return;
     }
 
@@ -89,7 +95,8 @@ bool MovieControl::isLoading() const
 
 void MovieControl::setIsLoading(bool newIsLoading)
 {
-    if (_isLoading == newIsLoading) {
+    if (_isLoading == newIsLoading)
+    {
         return;
     }
 

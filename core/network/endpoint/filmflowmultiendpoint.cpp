@@ -22,7 +22,7 @@ QFuture<Response *> FilmFlowMultiEndpoint::find(const MultiRequest &request)
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient->getAsync(baseUrl, _headers, true);
+    return _httpClient->getAsync(baseUrl, _headers, QNetworkRequest::CacheLoadControl::PreferCache);
 }
 
 QFuture<Response *> FilmFlowMultiEndpoint::findById(const int id, const MultiDetailsRequest &request)
@@ -31,7 +31,9 @@ QFuture<Response *> FilmFlowMultiEndpoint::findById(const int id, const MultiDet
 
     baseUrl.setQuery(request.toQuerys());
 
-    return _httpClient->getAsync(baseUrl, _headers, true);
+    return _httpClient->getAsync(baseUrl,
+                                 _headers,
+                                 QNetworkRequest::CacheLoadControl::PreferNetwork);
 }
 
 QFuture<Response *> FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
@@ -41,5 +43,7 @@ QFuture<Response *> FilmFlowMultiEndpoint::findAllReviewsByIdMovie(const int id,
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->getAsync(baseUrl, _headers, true);
+    return _httpClient->getAsync(baseUrl,
+                                 _headers,
+                                 QNetworkRequest::CacheLoadControl::PreferNetwork);
 }

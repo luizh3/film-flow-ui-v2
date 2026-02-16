@@ -20,6 +20,7 @@ public:
     MovieControl();
     ~MovieControl();
     Q_INVOKABLE void doStart(const int id, TypeProgramEnum tpProgram);
+    Q_INVOKABLE void doRefresh(const int id, TypeProgramEnum tpProgram);
     Q_INVOKABLE void doCancel();
 
     MovieModel *movie() const;

@@ -37,7 +37,7 @@ QFuture<Response *> FilmFlowReviewEndpoint::findAll(const PaginationRequest *req
 
     baseUrl.setQuery(request->toQuerys());
 
-    return _httpClient->getAsync(baseUrl, _headers, true);
+    return _httpClient->getAsync(baseUrl, _headers, QNetworkRequest::CacheLoadControl::PreferCache);
 }
 
 Response *FilmFlowReviewEndpoint::like(const QString &reviewId)

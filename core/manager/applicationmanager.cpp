@@ -3,18 +3,19 @@
 #include <model/config/configs.h>
 #include <model/entities/session.h>
 
-ApplicationManager::~ApplicationManager() {
+ApplicationManager::~ApplicationManager()
+{
     delete _session;
     delete _configs;
 }
 
 ApplicationManager::ApplicationManager()
-    : _session{nullptr}
-    , _configs{nullptr}
-    , _languageManager{}
-{}
+    : _session{nullptr}, _configs{nullptr}, _languageManager{}
+{
+}
 
-ApplicationManager& ApplicationManager::instance() {
+ApplicationManager &ApplicationManager::instance()
+{
     static ApplicationManager applicationManager;
     return applicationManager;
 }

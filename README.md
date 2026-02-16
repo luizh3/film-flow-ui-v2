@@ -19,7 +19,7 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
 
 ## Tecnologias
 
-- **Qt 6.5+**: Framework multiplataforma
+- **Qt 6.8.3+**: Framework multiplataforma
 - **QML/Qt Quick**: Interface declarativa e moderna
 - **C++17**: Lógica de negócio e performance
 - **CMake**: Sistema de build
@@ -28,7 +28,7 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
 ## Requisitos
 
 - CMake 3.16 ou superior
-- Qt 6.5 ou superior
+- Qt 6.8.3 ou superior
 - Compilador C++17 compatível
 - Componentes Qt necessários:
   - Qt6::Quick
@@ -36,25 +36,67 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
   - Qt6::Qml
   - Qt6::LinguistTools
 
+## Padrão de Arquitetura
+
+A aplicação segue um padrão **MVP (Model-View-Presenter)** com características de **MVVM**.
+
+| Camada | Implementação |
+|--------|---------------|
+| **View** | Telas e componentes QML (`ui/screens/`, `ui/components/`) |
+| **Presenter/ViewModel** | Controls em C++ (`controls/`) – `MovieControl`, `AuthControl`, etc. |
+| **Model** | Controllers, entidades e modelos de lista (`core/`, `ui/models/`) |
+
+Os **Controls** atuam como Presenters: recebem ações da View, orquestram os Controllers, expõem estado via propriedades e emitem sinais. O QML faz binding declarativo nas propriedades dos Controls.
+
 ## Estrutura do Projeto
 
 ```
 film-flow-ui/
-├── core/              # Lógica de negócio e entidades
-│   ├── controller/    # Controladores de API
-│   ├── entities/      # Modelos de dados
-│   ├── manager/       # Gerenciadores de aplicação
-│   ├── network/       # Camada de rede
-│   └── validator/     # Validadores
-├── controls/          # Controles QML (C++)
+├── core/                      # Lógica de negócio e camada de dados
+│   ├── controller/            # Controladores de API (AuthController, SectionController, etc.)
+│   ├── manager/               # Gerenciadores de aplicação (ApplicationManager, NotificationManager)
+│   ├── model/                 # Modelos de domínio
+│   │   ├── config/            # Configurações (Configs, ProgramConfig, SectionsConfig)
+│   │   ├── entities/          # Entidades (Review, MovieInformation, Session, User, etc.)
+│   │   ├── enum/              # Enumeradores
+│   │   └── result/            # Resultados de API (PaginationResult, ReviewsResult, etc.)
+│   ├── network/               # Camada de rede
+│   │   ├── endpoint/          # Endpoints da API
+│   │   ├── request/           # Requisições
+│   │   └── response/          # Respostas HTTP
+│   ├── validator/             # Validadores
+│   ├── helper/                # Utilitários (TaskRunHelper, etc.)
+│   ├── singleton/             # Singletons (IntegrationManager)
+│   └── websocket/             # WebSocket (NotificationWs)
+├── controls/                  # Presenters/ViewModels (C++) – bridge entre QML e lógica
 ├── ui/
-│   ├── Components/    # Componentes reutilizáveis QML
-│   ├── Screens/       # Telas da aplicação
-│   ├── Theme/         # Tema e recursos visuais
-│   └── Models/        # Modelos QML
-├── documentation/     # Imagens de documentação
-├── fonts/            # Fontes personalizadas
-└── resources/        # Recursos estáticos
+│   ├── components/            # Componentes reutilizáveis QML
+│   │   ├── elements/          # Elementos base (botões, inputs, ícones, etc.)
+│   │   ├── header/            # Cabeçalho
+│   │   ├── sidebar/           # Menu lateral
+│   │   ├── movieslider/       # Slider de filmes
+│   │   ├── cardmovie/         # Card de filme
+│   │   └── ...
+│   ├── models/                # Modelos para QML (ReviewsListModel, MoviesListModel, etc.)
+│   │   ├── mapper/            # Conversão entre entidades e modelos de UI
+│   │   └── helper/            # Auxiliares (CardFetchHelper)
+│   ├── screens/               # Telas da aplicação
+│   │   ├── auth/              # Autenticação
+│   │   ├── home/              # Tela inicial
+│   │   ├── movie/             # Detalhes do filme
+│   │   ├── program/           # Catálogo de programas
+│   │   ├── profile/           # Perfil
+│   │   ├── review/            # Avaliações
+│   │   ├── settings/          # Configurações
+│   │   └── ...
+│   └── theme/                 # Tema e recursos visuais
+│       ├── factory/           # Fábrica de cores
+│       ├── manager/           # Gerenciador de tema
+│       └── models/            # Modelos de cor
+├── documentation/             # Imagens de documentação
+├── fonts/                     # Fontes personalizadas (Poppins)
+├── i18n/                      # Arquivos de internacionalização
+└── resources/                 # Recursos estáticos (ícones, imagens)
 ```
 
 ## Capturas de Tela

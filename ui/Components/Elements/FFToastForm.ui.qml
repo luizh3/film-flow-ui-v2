@@ -6,7 +6,7 @@ import Ui.Theme
 
 Rectangle {
     id: root
-    width: 350
+    width: 400
     height: 48
     color: Colors.grey500
     radius: Radius.md

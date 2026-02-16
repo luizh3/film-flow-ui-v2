@@ -2,7 +2,8 @@
 
 NotificationManager::NotificationManager()
     : _notificationWs{nullptr}
-{}
+{
+}
 
 NotificationManager::~NotificationManager()
 {

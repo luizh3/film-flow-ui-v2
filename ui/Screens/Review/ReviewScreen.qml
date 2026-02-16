@@ -69,7 +69,7 @@ ReviewScreenForm {
             width: parent.width - (2 * Spacings.xl3)
             anchors.horizontalCenter: parent.horizontalCenter
             vDateCreated: "24/10/2025"
-            vUserImage: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg"
+            vUserImage: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg"
             vTitle: currentDelegate.title
             vUserName: "test"
             vDescription: currentDelegate.description

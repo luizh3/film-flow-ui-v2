@@ -4,6 +4,7 @@
 #include <QFuture>
 #include <QJsonDocument>
 #include <QMap>
+#include <QNetworkRequest>
 #include <QObject>
 
 #include "response/response.h"
@@ -11,7 +12,6 @@
 using HeaderMap = QMap<QString, QString>;
 
 class QNetworkReply;
-class QNetworkRequest;
 class QNetworkAccessManager;
 class HttpClient : public QObject
 {
@@ -47,7 +47,8 @@ public:
 
     QFuture<Response*> getAsync(const QUrl& dsUrl,
                                 const HeaderMap& headers = {},
-                                const bool isUseCache = false,
+                                const QNetworkRequest::CacheLoadControl typeCacheControl
+                                = QNetworkRequest::CacheLoadControl::AlwaysNetwork,
                                 const int timeout = 15000);
 
     void cancel();

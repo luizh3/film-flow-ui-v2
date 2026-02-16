@@ -62,7 +62,7 @@ Control {
 
             FFProfileIcon {
                 id: profileOption
-                vIcon: "https://swordslice.com/cdn/shop/articles/jjk-does-nanami-die.webp?v=1752508661&width=1100"
+                vIcon: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO change for de user photo
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
