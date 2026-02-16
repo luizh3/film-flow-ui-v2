@@ -35,12 +35,12 @@ void ProgramReviewControl::like(const QString &reviewId)
 {
     _reviewLikeController.cancel();
 
-    TaskRunHelper::runSync([&]() { _reviewLikeController.like(reviewId); });
+    _reviewLikeController.like(reviewId);
 }
 
 void ProgramReviewControl::unlike(const QString &reviewId)
 {
     _reviewLikeController.cancel();
 
-    TaskRunHelper::runSync([&]() { _reviewLikeController.unlike(reviewId); });
+    _reviewLikeController.unlike(reviewId);
 }

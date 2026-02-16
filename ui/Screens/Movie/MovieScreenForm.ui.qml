@@ -93,7 +93,8 @@ GenericScreen {
         FFSkeletonLoading {
             anchors.fill: parent
             color: Colors.grey600
-            visible: root.vIsLoading
+            vIsVisible: root.vIsLoading
+            vOpacityDuration: Durations.normal
         }
 
         ColumnLayout {
@@ -145,8 +146,9 @@ GenericScreen {
                                 anchors.fill: parent
                                 color: Colors.grey500
                                 radius: Radius.xl
-                                visible: root.vIsLoading
-                                         || sourceItem.image.status !== Image.Ready
+                                vIsVisible: root.vIsLoading
+                                            || sourceItem.image.status !== Image.Ready
+                                vOpacityDuration: Durations.normal
                             }
                         }
 

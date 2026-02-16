@@ -7,6 +7,11 @@ Rectangle {
 
     property int vOpacityDuration: 0
 
+    property bool vIsVisible: true
+
+    visible: opacity > 0
+
+    opacity: root.vIsVisible ? 1 : 0
     Behavior on opacity {
         NumberAnimation {
             duration: root.vOpacityDuration

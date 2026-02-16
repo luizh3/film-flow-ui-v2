@@ -206,6 +206,105 @@ QFuture<Response*> HttpClient::getAsync(const QUrl& dsUrl,
     return future;
 }
 
+// TODO Review to reduce duplicate code.
+QFuture<Response*> HttpClient::deleteResourceAsync(const QUrl& dsUrl,
+                                                   const HeaderMap& headers,
+                                                   const int timeout)
+{
+    QPromise<Response*> promise;
+    auto future = promise.future();
+
+    QNetworkRequest request = QNetworkRequest(dsUrl);
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+
+    setRawHeaders(&request, headers);
+
+    QNetworkReply* reply = _networkManager->deleteResource(request);
+
+    QTimer timer;
+
+    QObject::connect(&timer, &QTimer::timeout, reply, &QNetworkReply::abort, Qt::QueuedConnection);
+
+    QObject::connect(this,
+                     &HttpClient::cancelRequested,
+                     reply,
+                     &QNetworkReply::abort,
+                     Qt::QueuedConnection);
+
+    QObject::connect(reply, &QNetworkReply::finished, [reply, promise = std::move(promise)]() mutable {
+        if (reply->error() != QNetworkReply::NoError) {
+            promise.addResult(nullptr);
+            promise.finish();
+
+            reply->deleteLater();
+            return;
+        }
+
+        const auto status = HttpStatusCode(
+            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
+
+        Response* response = new Response(status, QJsonDocument::fromJson(reply->readAll()));
+        promise.addResult(response);
+        promise.finish();
+
+        reply->deleteLater();
+    });
+
+    return future;
+}
+
+// TODO Review to reduce duplicate code.
+QFuture<Response*> HttpClient::postAsync(const QUrl& dsUrl,
+                                         const QJsonDocument& data,
+                                         const HeaderMap& headers,
+                                         const int timeout)
+{
+    QPromise<Response*> promise;
+    auto future = promise.future();
+
+    QNetworkRequest request = QNetworkRequest(dsUrl);
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+
+    if (!data.isEmpty()) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    }
+
+    setRawHeaders(&request, headers);
+
+    QNetworkReply* reply = _networkManager->post(request, data.toJson());
+
+    QTimer timer;
+
+    QObject::connect(&timer, &QTimer::timeout, reply, &QNetworkReply::abort, Qt::QueuedConnection);
+
+    QObject::connect(this,
+                     &HttpClient::cancelRequested,
+                     reply,
+                     &QNetworkReply::abort,
+                     Qt::QueuedConnection);
+
+    QObject::connect(reply, &QNetworkReply::finished, [reply, promise = std::move(promise)]() mutable {
+        if (reply->error() != QNetworkReply::NoError) {
+            promise.addResult(nullptr);
+            promise.finish();
+
+            reply->deleteLater();
+            return;
+        }
+
+        const auto status = HttpStatusCode(
+            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
+
+        Response* response = new Response(status, QJsonDocument::fromJson(reply->readAll()));
+        promise.addResult(response);
+        promise.finish();
+
+        reply->deleteLater();
+    });
+
+    return future;
+}
+
 void HttpClient::cancel()
 {
     emit cancelRequested();

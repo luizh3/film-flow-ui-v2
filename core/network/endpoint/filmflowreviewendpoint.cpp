@@ -40,17 +40,17 @@ QFuture<Response *> FilmFlowReviewEndpoint::findAll(const PaginationRequest *req
     return _httpClient->getAsync(baseUrl, _headers, QNetworkRequest::CacheLoadControl::PreferCache);
 }
 
-Response *FilmFlowReviewEndpoint::like(const QString &reviewId)
+QFuture<Response *> FilmFlowReviewEndpoint::like(const QString &reviewId)
 {
     QUrl baseUrl(toEndpoint(QString(REVIEW_LIKE).arg(reviewId)));
 
-    return _httpClient->post(baseUrl, {}, _headers);
+    return _httpClient->postAsync(baseUrl, {}, _headers);
 }
 
-Response *FilmFlowReviewEndpoint::unlike(const QString &reviewId)
+QFuture<Response *> FilmFlowReviewEndpoint::unlike(const QString &reviewId)
 {
     QUrl baseUrl(toEndpoint(QString(REVIEW_LIKE).arg(reviewId)));
 
-    return _httpClient->deleteResource(baseUrl, _headers);
+    return _httpClient->deleteResourceAsync(baseUrl, _headers);
 }
 

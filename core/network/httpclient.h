@@ -51,6 +51,15 @@ public:
                                 = QNetworkRequest::CacheLoadControl::AlwaysNetwork,
                                 const int timeout = 15000);
 
+    QFuture<Response*> deleteResourceAsync(const QUrl& dsUrl,
+                                           const HeaderMap& headers = {},
+                                           const int timeout = 15000);
+
+    QFuture<Response*> postAsync(const QUrl& dsUrl,
+                                 const QJsonDocument& request,
+                                 const HeaderMap& headers = {},
+                                 const int timeout = 15000);
+
     void cancel();
 signals:
     void cancelRequested();
