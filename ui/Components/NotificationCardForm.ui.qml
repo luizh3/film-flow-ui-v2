@@ -12,6 +12,7 @@ Item {
     required property string vIcon
     required property string vDescription
     required property bool vIsLoading
+    required property string vActorAvatarUrl
 
     property alias loader: loader
 
@@ -48,7 +49,7 @@ Item {
 
                 FFProfileIcon {
                     vHasHover: false
-                    vIcon: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO change for de user photo
+                    vIcon: root.vActorAvatarUrl
                     Layout.leftMargin: Spacings.sm2
 
                     Rectangle {

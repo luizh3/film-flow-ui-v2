@@ -31,7 +31,7 @@ GenericPopup {
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
-            spacing: 0
+            spacing: Spacings.xs
             cacheBuffer: notificationsList.height / 2
 
             ScrollBar.vertical: ScrollBar {}

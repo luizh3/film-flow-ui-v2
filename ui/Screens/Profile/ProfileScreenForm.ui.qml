@@ -20,6 +20,8 @@ GenericScreen {
 
     property string vUserName: root.vUser?.name ?? ""
     property string vUserEmail: root.vUser?.email ?? ""
+    property string vUserImage: root.vUser?.avatarUrl
+                                || "qrc:/imagens/no-user.png"
 
     ColumnLayout {
         anchors.fill: parent
@@ -44,7 +46,7 @@ GenericScreen {
                 Layout.preferredHeight: 150
                 vHasHover: false
                 Layout.alignment: Qt.AlignHCenter
-                vIcon: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO, change for user data
+                vIcon: root.vUserImage
 
                 FFSkeletonLoading {
                     id: skeletonLoading

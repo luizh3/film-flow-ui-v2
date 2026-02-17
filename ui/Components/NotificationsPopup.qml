@@ -16,10 +16,12 @@ NotificationsPopupForm {
         required property string description
         required property string icon
         required property bool isLoading
+        required property string actorAvatarUrl
 
         vDescription: notificationCard.description
         vIcon: notificationCard.icon
         vIsLoading: notificationCard.isLoading
+        vActorAvatarUrl: notificationCard.actorAvatarUrl
     }
 
     function positionerByElement(element) {

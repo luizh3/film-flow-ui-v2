@@ -26,12 +26,7 @@ Session* Session::fromJson( const QJsonDocument& jsonDocument ) {
     Session* session = new Session();
     session->setToken( jsonDocument["accessToken"].toString() );
 
-    User* user = new User();
-    user->setAvatarUrl( jsonDocument["avatarUrl"].toString() );
-    user->setName(jsonDocument["name"].toString());
-    user->setEmail( jsonDocument["email"].toString() );
-
-    session->setUser( user );
+    session->setUser(User::fromJson(jsonDocument));
 
     return session;
 

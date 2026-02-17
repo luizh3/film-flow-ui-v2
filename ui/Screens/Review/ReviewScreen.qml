@@ -58,9 +58,10 @@ ReviewScreenForm {
         required property var programType
         required property bool isLikedByMe
         required property int likesCount
+        required property var author
 
         ProgramReview {
-            vReviewId: id
+            vReviewId: currentDelegate.id
             vProgramTitle: currentDelegate.programTitle
             vIsShowAboutMovie: true
             vLoadingColor: Colors.grey600
@@ -69,9 +70,10 @@ ReviewScreenForm {
             width: parent.width - (2 * Spacings.xl3)
             anchors.horizontalCenter: parent.horizontalCenter
             vDateCreated: "24/10/2025"
-            vUserImage: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg"
+            vUserImage: currentDelegate.author?.avatarUrl
+                        || "qrc:/imagens/no-user.png"
             vTitle: currentDelegate.title
-            vUserName: "test"
+            vUserName: currentDelegate.author?.name ?? ""
             vDescription: currentDelegate.description
             vIsLikedByMe: currentDelegate.isLikedByMe
             vLikesCount: currentDelegate.likesCount

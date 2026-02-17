@@ -9,7 +9,7 @@ Rectangle {
     id: root
     height: 72
     color: mouseArea.containsMouse ? Colors.grey400 : Colors.grey700
-    radius: 4
+    radius: Radius.xl
 
     required property bool vIsLoading
     required property string vTitle
@@ -42,14 +42,14 @@ Rectangle {
         FFSkeletonLoading {
             anchors.fill: parent
             color: Colors.grey500
-            radius: 4
+            radius: Radius.xl
 
             FFSkeletonLoading {
                 width: 48
                 height: 64
                 color: Colors.grey600
-                radius: 4
-                anchors.leftMargin: 4
+                radius: Radius.xl
+                anchors.leftMargin: Spacings.xs
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -61,23 +61,32 @@ Rectangle {
 
         Item {
             anchors.fill: parent
-            anchors.leftMargin: 4
+            anchors.leftMargin: Spacings.xs
 
             RowLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width
-                spacing: 6
+                spacing: Spacings.sm
 
                 FFImageRounded {
                     id: sourceItem
                     vSource: root.vPosterUrl !== "" ? root.vPosterUrl : "qrc:/icons/not-found"
-                    vRadius: 8
+                    vRadius: Spacings.sm
                     Layout.preferredWidth: 48
                     Layout.preferredHeight: 64
+
+                    FFSkeletonLoading {
+                        anchors.fill: parent
+                        color: Colors.grey600
+                        radius: Spacings.sm
+                        vOpacityDuration: Durations.normal
+                        anchors.left: parent.left
+                        vIsVisible: sourceItem.image.status !== Image.Ready
+                    }
                 }
 
                 ColumnLayout {
-                    spacing: 6
+                    spacing: Spacings.sm
                     Layout.fillWidth: true
 
                     Label {

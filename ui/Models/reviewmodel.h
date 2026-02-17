@@ -8,6 +8,8 @@
 
 #include <models_global.h>
 
+#include "usermodel.h"
+
 class MODELS_EXPORT ReviewModel : public QObject
 {
     Q_OBJECT
@@ -24,6 +26,7 @@ class MODELS_EXPORT ReviewModel : public QObject
     Q_PROPERTY(QString movieId READ movieId WRITE setMovieId NOTIFY movieIdChanged FINAL)
     Q_PROPERTY(QString programTitle READ programTitle WRITE setProgramTitle NOTIFY
                    programTitleChanged FINAL)
+    Q_PROPERTY(UserModel *author READ author WRITE setAuthor NOTIFY authorChanged FINAL)
 public:
     ReviewModel();
 
@@ -35,7 +38,8 @@ public:
                 QString title,
                 QString description,
                 QString movieId,
-                QString programTitle);
+                QString programTitle,
+                UserModel *_author = nullptr);
 
     double score() const;
     void setScore(double newScore);
@@ -64,6 +68,9 @@ public:
     QString programTitle() const;
     void setProgramTitle(const QString &newProgramTitle);
 
+    UserModel *author() const;
+    void setAuthor(UserModel *newAuthor);
+
 signals:
     void scoreChanged();
     void likesCountChanged();
@@ -75,7 +82,10 @@ signals:
     void movieIdChanged();
     void programTitleChanged();
 
+    void authorChanged();
+
 private:
+    UserModel *_author;
     double _score;
     int _likesCount;
     TypeProgramEnum _tpProgram;

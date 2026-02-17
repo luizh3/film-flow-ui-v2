@@ -19,7 +19,7 @@ FFButtonIconForm {
     onClicked: root._handleOnClicked()
 
     function _handleOnClicked() {
-        root.vHasNotification = 0
+        root.vNotificationCount = 0
     }
 
     function addNotificationCount(count) {

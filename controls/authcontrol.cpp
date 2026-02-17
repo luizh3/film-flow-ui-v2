@@ -31,7 +31,10 @@ void AuthControl::signUp(const SignUpModel* signUp)
 
     AuthController controller;
 
-    QObject::connect( &controller, &AuthController::success, this, &AuthControl::success );
+    QObject::connect(&controller, &AuthController::success, this, [this]() {
+        toastSuccess(tr("Success on register!"));
+        emit success();
+    });
     QObject::connect(&controller, &AuthController::error, this, [this](const QString& message) {
         toastError(message);
         emit error();

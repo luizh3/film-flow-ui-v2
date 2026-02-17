@@ -1,7 +1,8 @@
 #include "reviewmodel.h"
 
 ReviewModel::ReviewModel()
-    : _score{0.00}
+    : _author{nullptr}
+    , _score{0.00}
     , _likesCount{0}
     , _tpProgram{TypeProgramEnum::UNKNOW}
     , _isLikedByMe{false}
@@ -20,8 +21,10 @@ ReviewModel::ReviewModel(double score,
                          QString title,
                          QString description,
                          QString movieId,
-                         QString programTitle)
-    : _score(score)
+                         QString programTitle,
+                         UserModel *author)
+    : _author{author}
+    , _score(score)
     , _likesCount(likesCount)
     , _tpProgram(tpProgram)
     , _isLikedByMe(isLikedByMe)
@@ -165,4 +168,19 @@ void ReviewModel::setProgramTitle(const QString &newProgramTitle)
 
     _programTitle = newProgramTitle;
     emit programTitleChanged();
+}
+
+UserModel *ReviewModel::author() const
+{
+    return _author;
+}
+
+void ReviewModel::setAuthor(UserModel *newAuthor)
+{
+    if (_author == newAuthor) {
+        return;
+    }
+
+    _author = newAuthor;
+    emit authorChanged();
 }

@@ -83,6 +83,7 @@ MovieScreenForm {
         required property var programType
         required property bool isLikedByMe
         required property int likesCount
+        required property var author
 
         vReviewId: programReview.id
         vProgramTitle: programReview.programTitle
@@ -91,9 +92,10 @@ MovieScreenForm {
         vIsLoading: programReview.isLoading
         vScore: programReview.score
         vDateCreated: "24/10/2025"
-        vUserImage: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO change for te user photo
+        vUserImage: programReview.author?.avatarUrl
+                    || "qrc:/imagens/no-user.png"
         vTitle: programReview.title
-        vUserName: "test"
+        vUserName: programReview.author?.name ?? ""
         vDescription: programReview.description
         vIsLikedByMe: programReview.isLikedByMe
         vLikesCount: programReview.likesCount

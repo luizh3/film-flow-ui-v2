@@ -48,6 +48,7 @@ ProgramReviewForm {
         loader.item.likedButton.doSelected()
     }
 
+    // TODO To consider if this is the best approach, in this way each review will have a networking class
     ProgramReviewControl {
         id: control
 

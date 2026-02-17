@@ -25,8 +25,8 @@ Item {
         FFSkeletonLoading {
             anchors.fill: parent
             color: Colors.grey500
-            opacity: movieSlider.vIsLoading
-                     || imageGradient.sourceItem.status !== Image.Ready ? 1 : 0
+            vIsVisible: movieSlider.vIsLoading
+                        || imageGradient.sourceItem.status !== Image.Ready
             vOpacityDuration: Durations.normal
         }
 

@@ -11,6 +11,8 @@ HeaderForm {
 
     signal programSelected(var id, var tpProgram)
 
+    vUserImage: UiControlManager.user?.avatarUrl || "qrc:/imagens/no-user.png"
+
     function _handleProgramSelected(id, tpProgram) {
         root.searchProgramTextField.clear()
         root.programSelected(id, tpProgram)
@@ -52,7 +54,7 @@ HeaderForm {
 
     NotificationsControl {
         onNewNotification: function (count) {
-            notificationButton.addNotificationCount(count)
+            root.notificationButton.addNotificationCount(count)
         }
     }
 

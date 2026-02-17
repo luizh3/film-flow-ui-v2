@@ -12,6 +12,8 @@
 
 #include <core/model/enum/typeprogramenum.h>
 
+#include "usermodel.h"
+
 class Review;
 class PaginationRequest;
 class ReviewController;
@@ -44,13 +46,16 @@ public:
         ProgramTitle,
         ProgramType,
         IsLikedByMe,
-        LikesCount
+        LikesCount,
+        Author
     };
 
     struct CardReview
     {
         CardReview();
+        ~CardReview();
 
+        UserModel* author;
         TypeProgramEnum programType;
         QString programTitle;
         QString title;

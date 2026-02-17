@@ -4,6 +4,8 @@
 
 #include "reviewmodel.h"
 
+#include "mapper/usermapper.h"
+
 Review *ReviewMapper::toEntity(const ReviewModel *reviewModel)
 {
     if (!reviewModel) {
@@ -35,5 +37,6 @@ ReviewModel *ReviewMapper::toModel(const Review *review)
                            review->title(),
                            review->description(),
                            review->movieId(),
-                           review->programTitle());
+                           review->programTitle(),
+                           UserMapper::toModel(review->author()));
 }

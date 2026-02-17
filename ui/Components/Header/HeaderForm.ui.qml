@@ -4,7 +4,6 @@ import QtQuick.Controls
 
 import Ui.Theme
 import Ui.Components.Elements
-import Ui.Components
 
 Control {
     id: root
@@ -16,6 +15,8 @@ Control {
     property alias searchProgramTextField: searchProgramTextField
     property alias notificationButton: notificationButton
     property alias profileOption: profileOption
+
+    property string vUserImage: ""
 
     background: Item {
         anchors.fill: parent
@@ -62,7 +63,7 @@ Control {
 
             FFProfileIcon {
                 id: profileOption
-                vIcon: "https://i.pinimg.com/736x/31/4c/2b/314c2b6b26e17f4235697ecb8e4cd87e.jpg" // TODO change for de user photo
+                vIcon: root.vUserImage
                 anchors.verticalCenter: parent.verticalCenter
             }
         }

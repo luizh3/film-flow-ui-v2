@@ -1,5 +1,8 @@
 #include "user.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 User::User()
     : _email{QStringLiteral("")}
     , _avatarUrl{QStringLiteral("")}
@@ -12,19 +15,19 @@ User::User(const User* user)
     , _name{user->name()}
 {}
 
+User::User(const QString& email, const QString& name, const QString& avatarUrl, const QString& id)
+    : _email(email)
+    , _name(name)
+    , _avatarUrl(avatarUrl)
+    , _id{id}
+{}
+
 QString User::email() const {
     return _email;
 }
 
 void User::setEmail( const QString& newEmail ) {
-
-    if (_email == newEmail) {
-        return;
-    }
-
     _email = newEmail;
-
-    emit emailChanged();
 }
 
 QString User::name() const {
@@ -32,14 +35,7 @@ QString User::name() const {
 }
 
 void User::setName( const QString& newName ) {
-
-    if (_name == newName) {
-        return;
-    }
-
     _name = newName;
-
-    emit nameChanged();
 }
 
 QString User::avatarUrl() const {
@@ -47,12 +43,30 @@ QString User::avatarUrl() const {
 }
 
 void User::setAvatarUrl( const QString& newAvatarUrl ) {
-
-    if ( _avatarUrl == newAvatarUrl ) {
-        return;
-    }
-
     _avatarUrl = newAvatarUrl;
+}
 
-    emit avatarUrlChanged();
+QString User::id() const
+{
+    return _id;
+}
+
+void User::setId(const QString& newId)
+{
+    _id = newId;
+}
+
+User* User::fromJson(const QJsonDocument& jsonDocument)
+{
+    return User::fromJson(jsonDocument.object());
+}
+
+User* User::fromJson(const QJsonObject& jsonObject)
+{
+    User* user = new User(jsonObject["email"].toString(),
+                          jsonObject["name"].toString(),
+                          jsonObject["avatarUrl"].toString(),
+                          jsonObject["id"].toString());
+
+    return user;
 }

@@ -21,7 +21,10 @@ set( SOURCES
     mapper/moviemapper.cpp
     mapper/genremapper.cpp
     mapper/sectionconfigmapper.cpp
+    mapper/usermapper.cpp
     sectionconfigmodel.cpp
+    usermodel.cpp
+
 )
 
 set( HEADERS
@@ -40,7 +43,10 @@ set( HEADERS
     mapper/moviemapper.h
     mapper/genremapper.h
     mapper/sectionconfigmapper.h
+    mapper/usermapper.h
     sectionconfigmodel.h
+    usermodel.h
+
 )
 
 qt_add_qml_module(${LIBRARY_NAME}

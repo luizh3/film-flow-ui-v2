@@ -51,7 +51,6 @@ void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
     request.setTpProgram(TypeProgram::toString(tpProgram));
     request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
 
-    // TODO something canceling the screen is not canceling a request.
     _multiController.findById(id, request).then([&](MovieInformation *movieInformation)
                                                 { onFetchEnded(movieInformation); });
 }

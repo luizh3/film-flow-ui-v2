@@ -1,21 +1,21 @@
 #ifndef USER_H
 #define USER_H
 
-#include <QObject>
-#include <QQmlEngine>
+#include <QString>
 
 #include <core_global.h>
 
-class CORE_EXPORT User : public QObject
+class QJsonObject;
+class QJsonDocument;
+class CORE_EXPORT User
 {
-    Q_OBJECT
-    QML_ELEMENT
-    Q_PROPERTY( QString email READ email WRITE setEmail NOTIFY emailChanged FINAL )
-    Q_PROPERTY( QString name READ name WRITE setName NOTIFY nameChanged FINAL )
-    Q_PROPERTY( QString avatarUrl READ avatarUrl WRITE setAvatarUrl NOTIFY avatarUrlChanged FINAL )
 public:
     User();
     User(const User *user);
+    User(const QString &email,
+         const QString &name,
+         const QString &avatarUrl,
+         const QString &id = QStringLiteral(""));
 
     QString email() const;
     void setEmail( const QString &newEmail );
@@ -26,12 +26,14 @@ public:
     QString avatarUrl() const;
     void setAvatarUrl(const QString &newAvatarUrl);
 
-signals:
-    void emailChanged();
-    void nameChanged();
-    void avatarUrlChanged();
+    QString id() const;
+    void setId(const QString &newId);
+
+    static User *fromJson(const QJsonDocument &jsonDocument);
+    static User *fromJson(const QJsonObject &jsonObject);
 
 private:
+    QString _id;
     QString _email;
     QString _name;
     QString _avatarUrl;

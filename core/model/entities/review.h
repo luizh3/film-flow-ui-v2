@@ -7,6 +7,7 @@
 
 #include <model/enum/typeprogramenum.h>
 
+class User;
 class CORE_EXPORT Review
 {
 
@@ -21,7 +22,8 @@ public:
            QString title,
            QString description,
            QString movieId,
-           QString programTitle);
+           QString programTitle,
+           User *author = nullptr);
 
     double score() const;
     void setScore(double newScore);
@@ -55,7 +57,11 @@ public:
     bool isLikedByMe() const;
     void setIsLikedByMe(bool newIsLikedByMe);
 
+    User *author() const;
+    void setAuthor(User *newAuthor);
+
 private:
+    User *_author;
     double _score;
     int _likesCount;
     TypeProgram::TypeProgramEnum _tpProgram;

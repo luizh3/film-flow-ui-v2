@@ -3,15 +3,16 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "user.h"
+
 NotificationReviewLike::NotificationReviewLike()
-    : _reviewId{QStringLiteral("")}
-    , _actorId{QStringLiteral("")}
-    , _actorName(QStringLiteral(""))
-    , _avatarUrl{QStringLiteral("")}
+    : _actor{nullptr}
+    , _reviewId{QStringLiteral("")}
     , _programId{QStringLiteral("")}
     , _programTitle{QStringLiteral("")}
-
 {}
+
+NotificationReviewLike::~NotificationReviewLike() = default;
 
 TypeNotificationEnum NotificationReviewLike::type()
 {
@@ -26,36 +27,6 @@ QString NotificationReviewLike::reviewId() const
 void NotificationReviewLike::setReviewId(const QString &newReviewId)
 {
     _reviewId = newReviewId;
-}
-
-QString NotificationReviewLike::actorId() const
-{
-    return _actorId;
-}
-
-void NotificationReviewLike::setActorId(const QString &newActorId)
-{
-    _actorId = newActorId;
-}
-
-QString NotificationReviewLike::actorName() const
-{
-    return _actorName;
-}
-
-void NotificationReviewLike::setActorName(const QString &newActorName)
-{
-    _actorName = newActorName;
-}
-
-QString NotificationReviewLike::avatarUrl() const
-{
-    return _avatarUrl;
-}
-
-void NotificationReviewLike::setAvatarUrl(const QString &newAvatarUrl)
-{
-    _avatarUrl = newAvatarUrl;
 }
 
 QString NotificationReviewLike::programId() const
@@ -78,6 +49,16 @@ void NotificationReviewLike::setProgramTitle(const QString &newProgramTitle)
     _programTitle = newProgramTitle;
 }
 
+User *NotificationReviewLike::actor() const
+{
+    return _actor.get();
+}
+
+void NotificationReviewLike::setActor(std::unique_ptr<User> newActor)
+{
+    _actor = std::move(newActor);
+}
+
 void NotificationReviewLike::fromJson(const QJsonObject &jsonObject)
 {
     const QJsonObject reviewObject = jsonObject["review"].toObject();
@@ -85,9 +66,8 @@ void NotificationReviewLike::fromJson(const QJsonObject &jsonObject)
     const QJsonObject programObject = jsonObject["program"].toObject();
 
     _reviewId = reviewObject["id"].toString();
-    _actorId = actorObject["id"].toString();
-    _actorName = actorObject["name"].toString();
-    _avatarUrl = actorObject["avatarUrl"].toString();
     _programId = programObject["id"].toString();
     _programTitle = programObject["title"].toString();
+
+    _actor.reset(User::fromJson(actorObject));
 }

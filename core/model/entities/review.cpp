@@ -3,8 +3,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "user.h"
+
 Review::Review()
-    : _score{0.00}
+    : _author{nullptr}
+    , _score{0.00}
     , _likesCount{0}
     , _tpProgram{TypeProgram::TypeProgramEnum::UNKNOW}
     , _isLikedByMe{false}
@@ -23,8 +26,10 @@ Review::Review(double score,
                QString title,
                QString description,
                QString movieId,
-               QString programTitle)
-    : _score(score)
+               QString programTitle,
+               User *author)
+    : _author{author}
+    , _score(score)
     , _likesCount(likesCount)
     , _tpProgram(tpProgram)
     , _isLikedByMe(isLikedByMe)
@@ -127,6 +132,16 @@ void Review::setIsLikedByMe(bool newIsLikedByMe)
     _isLikedByMe = newIsLikedByMe;
 }
 
+User *Review::author() const
+{
+    return _author;
+}
+
+void Review::setAuthor(User *newAuthor)
+{
+    _author = newAuthor;
+}
+
 QJsonDocument Review::toJson() const
 {
     QJsonDocument jsonDocument;
@@ -156,17 +171,18 @@ Review *Review::fromJson(const QJsonObject &jsonObject)
         return nullptr;
     }
 
-    Review *review = new Review();
+    Review *review = new Review(jsonObject["score"].toDouble(),
+                                jsonObject["likesCount"].toInt(),
+                                TypeProgram::fromString(jsonObject["programType"].toString()),
+                                jsonObject["likedByMe"].toBool(),
+                                jsonObject["reviewId"].toString(),
+                                jsonObject["title"].toString(),
+                                jsonObject["description"].toString(),
+                                jsonObject["movieId"].toString(),
+                                jsonObject["programTitle"].toString(),
+                                User::fromJson(jsonObject["author"].toObject())
 
-    review->setTitle(jsonObject["title"].toString());
-    review->setDescription(jsonObject["description"].toString());
-    review->setScore(jsonObject["score"].toDouble());
-    review->setMovieId(jsonObject["movieId"].toString());
-    review->setReviewId(jsonObject["reviewId"].toString());
-    review->setTpProgram(TypeProgram::fromString(jsonObject["programType"].toString()));
-    review->setProgramTitle(jsonObject["programTitle"].toString());
-    review->setLikesCount(jsonObject["likesCount"].toInt());
-    review->setIsLikedByMe(jsonObject["likedByMe"].toBool());
+    );
 
     return review;
 }

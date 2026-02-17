@@ -24,6 +24,7 @@ set( SOURCES
     notificationscontrol.cpp
     programreviewcontrol.cpp
     profilescreencontrol.cpp
+    uicontrolmanager.cpp
 )
 
 set( HEADERS
@@ -44,6 +45,7 @@ set( HEADERS
     notificationscontrol.h
     programreviewcontrol.h
     profilescreencontrol.h
+    uicontrolmanager.h
 )
 
 add_library(
@@ -53,7 +55,6 @@ add_library(
 qt_add_qml_module( ${LIBRARY_NAME}
   URI ${MODULE_URI}
   VERSION 1.0
-  SOURCES
 )
 
 find_package( Qt6 REQUIRED COMPONENTS Core Qml Concurrent WebSockets )

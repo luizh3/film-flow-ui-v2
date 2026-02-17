@@ -12,6 +12,7 @@
 #include <core/model/result/paginationresult.h>
 
 #include "helper/cardsfetchhelper.h"
+#include "mapper/usermapper.h"
 
 namespace {
 constexpr int NR_REVIEWS_BY_PAGE = 5;
@@ -77,6 +78,8 @@ QVariant ReviewsListModel::data(const QModelIndex &index, int role) const
         return _reviewsCard.at(row)->isLikedByMe;
     case LikesCount:
         return _reviewsCard.at(row)->likesCount;
+    case Author:
+        return QVariant::fromValue(_reviewsCard.at(row)->author);
     default:
         return QVariant();
     }
@@ -142,7 +145,8 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
                                           {ProgramType, "programType"},
                                           {ProgramTitle, "programTitle"},
                                           {LikesCount, "likesCount"},
-                                          {IsLikedByMe, "isLikedByMe"}};
+                                          {IsLikedByMe, "isLikedByMe"},
+                                          {Author, "author"}};
 
     return mapping;
 }
@@ -201,10 +205,12 @@ void ReviewsListModel::updateCardReview(CardReview *cardReview, const Review *re
     cardReview->programType = review->tpProgram();
     cardReview->isLikedByMe = review->isLikedByMe();
     cardReview->likesCount = review->likesCount();
+    cardReview->author = UserMapper::toModel(review->author());
 }
 
 ReviewsListModel::CardReview::CardReview()
-    : programType{TypeProgram::TypeProgramEnum::UNKNOW}
+    : author{nullptr}
+    , programType{TypeProgram::TypeProgramEnum::UNKNOW}
     , programTitle{QStringLiteral("")}
     , title{QStringLiteral("")}
     , description{QStringLiteral("")}
@@ -215,6 +221,11 @@ ReviewsListModel::CardReview::CardReview()
     , likesCount{0}
     , isLikedByMe{false}
 {}
+
+ReviewsListModel::CardReview::~CardReview()
+{
+    delete author;
+}
 
 QFuture<ReviewsResult *> ReviewsListModel::onFetchStarted()
 {

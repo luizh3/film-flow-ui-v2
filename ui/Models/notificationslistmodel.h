@@ -20,7 +20,7 @@ public:
     ~NotificationsListModel();
     NotificationsListModel();
 
-    enum Roles { Description, Icon, IsLoading };
+    enum Roles { Description, Icon, IsLoading, ActorAvatarUrl };
 
     struct CardNotification
     {
@@ -28,6 +28,7 @@ public:
 
         QString description;
         QString icon;
+        QString actorAvatarUrl;
         bool isLoading;
     };
 

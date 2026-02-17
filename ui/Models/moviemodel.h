@@ -14,7 +14,7 @@ class MODELS_EXPORT MovieModel : public QObject
     Q_PROPERTY(ReviewModel *myReview READ myReview WRITE setMyReview NOTIFY myReviewChanged FINAL)
     Q_PROPERTY(double average READ average WRITE setAverage NOTIFY averageChanged FINAL)
     Q_PROPERTY(
-        TypeProgramEnum tpProgram READ tpProgram WRITE setTpProgram NOTIFY tpProgramChanged FINAL)
+        TypeProgramEnum programType READ tpProgram WRITE setTpProgram NOTIFY tpProgramChanged FINAL)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged FINAL)
     Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged FINAL)
     Q_PROPERTY(

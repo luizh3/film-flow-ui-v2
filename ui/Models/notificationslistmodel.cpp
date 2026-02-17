@@ -8,7 +8,9 @@
 
 #include <core/controller/notificationcontroller.h>
 #include <core/helper/taskrunhelper.h>
+#include <core/model/entities/user.h>
 #include <core/model/result/paginationresult.h>
+
 #include <network/request/paginationrequest.h>
 
 namespace {
@@ -55,6 +57,8 @@ QVariant NotificationsListModel::data(const QModelIndex &index, int role) const
         return _notificationsCard.at(row)->icon;
     case IsLoading:
         return _notificationsCard.at(row)->isLoading;
+    case ActorAvatarUrl:
+        return _notificationsCard.at(row)->actorAvatarUrl;
     default:
         return QVariant();
     }
@@ -98,7 +102,8 @@ QHash<int, QByteArray> NotificationsListModel::roleNames() const
 {
     static QHash<int, QByteArray> mapping{{Description, "description"},
                                           {Icon, "icon"},
-                                          {IsLoading, "isLoading"}};
+                                          {IsLoading, "isLoading"},
+                                          {ActorAvatarUrl, "actorAvatarUrl"}};
 
     return mapping;
 }
@@ -150,9 +155,13 @@ void NotificationsListModel::updateCardNotification(CardNotification *cardNotifi
         const NotificationReviewLike *notificationReviewLike = static_cast<NotificationReviewLike *>(
             notification);
         cardNotification->description = QString(tr("<b>%0</b> liked your review on the <b>%1</b>"))
-                                            .arg(notificationReviewLike->actorName(),
+                                            .arg(notificationReviewLike->actor()->name(),
                                                  notificationReviewLike->programTitle());
         cardNotification->icon = "qrc:/icons/favorite";
+        cardNotification->actorAvatarUrl = notificationReviewLike->actor()->avatarUrl().isEmpty()
+                                               ? "qrc:/imagens/no-user.png"
+                                               : notificationReviewLike->actor()->avatarUrl();
+
         break;
     }
     default: {
@@ -166,5 +175,6 @@ void NotificationsListModel::updateCardNotification(CardNotification *cardNotifi
 NotificationsListModel::CardNotification::CardNotification()
     : description{QStringLiteral("")}
     , icon{QStringLiteral("")}
+    , actorAvatarUrl{QStringLiteral("")}
     , isLoading{true}
 {}

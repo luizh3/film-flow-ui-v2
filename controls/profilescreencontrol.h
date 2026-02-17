@@ -6,9 +6,8 @@
 
 #include <controls_global.h>
 
-#include <core/model/entities/user.h>
+#include "usermodel.h"
 
-class User;
 class CONTROLS_EXPORT ProfileScreenControl : public QObject
 {
     Q_OBJECT
@@ -21,7 +20,7 @@ signals:
     void userChanged(QVariant user);
 
 private:
-    std::unique_ptr<User> _user;
+    std::unique_ptr<UserModel> _user;
 };
 
 #endif // PROFILESCREENCONTROL_H

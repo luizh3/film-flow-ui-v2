@@ -38,6 +38,7 @@
         <file alias="espanha-flag">resources/imagens/espanha-flag.png</file>
         <file alias="estados-unidos-flag">resources/imagens/estados-unidos-flag.png</file>
         <file alias="backdrop.png">resources/imagens/backdrop.png</file>
+        <file alias="no-user.png">resources/imagens/no-user.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
