@@ -1,18 +1,6 @@
 #include "reviewslistmodel.h"
 
-#include <core/network/request/paginationrequest.h>
-
-#include <core/controller/multicontroller.h>
-#include <core/controller/reviewcontroller.h>
-
-#include <core/model/entities/review.h>
-#include <core/model/result/reviewsresult.h>
-
-#include <core/helper/taskrunhelper.h>
-#include <core/model/result/paginationresult.h>
-
 #include "helper/cardsfetchhelper.h"
-#include "mapper/usermapper.h"
 
 namespace {
 constexpr int NR_REVIEWS_BY_PAGE = 5;
@@ -20,24 +8,11 @@ constexpr int NR_REVIEWS_BY_PAGE = 5;
 
 ReviewsListModel::~ReviewsListModel()
 {
-    _reviewController->cancel();
-    _multiController->cancel();
-
-    _reviewController->deleteLater();
-    _multiController->deleteLater();
-
-    delete _paginationRequest;
-
     qDeleteAll(_reviewsCard);
 }
 
 ReviewsListModel::ReviewsListModel()
-    : _paginationRequest{new PaginationRequest()}
-    , _reviewController{new ReviewController()}
-    , _multiController{new MultiController()}
-    , _movieId{0}
-    , _fetchModeType(ReviewsListModel::ReviewFetchModeType::ByUser)
-    , _isReviewsEnded{false}
+    : _isReviewsEnded{false}
     , _isFetching{false}
     , _isLoading{true}
     , _fetchingReviewsCard{}
@@ -91,8 +66,6 @@ void ReviewsListModel::resetReviews()
 
     _isReviewsEnded = false;
 
-    _paginationRequest->setPage(0);
-
     qDeleteAll(_reviewsCard);
 
     _reviewsCard.clear();
@@ -109,8 +82,6 @@ void ReviewsListModel::fetchMore(const QModelIndex &parent)
     setIsLoading(true);
     setIsFetching(true);
 
-    _paginationRequest->setPage(_paginationRequest->page() + 1);
-
     CardFetchHelper::appendFetchingCards<CardReview>(
         _reviewsCard,
         _fetchingReviewsCard,
@@ -122,7 +93,7 @@ void ReviewsListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new CardReview(); });
 
-    onFetchStarted().then([&](ReviewsResult *reviewsResult) { onFetchEnded(reviewsResult); });
+    emit fetchReviews();
 }
 
 bool ReviewsListModel::canFetchMore(const QModelIndex &parent) const
@@ -151,38 +122,25 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
     return mapping;
 }
 
-void ReviewsListModel::onFetchEnded(ReviewsResult *reviewsResult)
+void ReviewsListModel::onFetchEnded(
+    const int nrItensFetch,
+    std::function<void(ReviewsListModel::CardReview *, const int index)> bindCardCallback)
 {
-
-    if (!reviewsResult) {
-        setIsFetching(false);
-        setIsLoading(false);
-        return;
-    }
-
-    const bool isFirstPage = _paginationRequest->page() == 1;
-
-    if (isFirstPage) {
-        emit totalReviewsFound(reviewsResult->pagination()->totalResult());
-    }
-
-    _isReviewsEnded = reviewsResult->pagination()->totalPage() == _paginationRequest->page();
-
-    updateCardsReview(_fetchingReviewsCard, reviewsResult->reviews());
+    updateCardsReview(nrItensFetch, bindCardCallback);
 
     setIsLoading(false);
     setIsFetching(false);
 
-    delete reviewsResult;
 }
 
-void ReviewsListModel::updateCardsReview(const QList<CardReview *> &cardsReview,
-                                         const QList<Review *> &reviews)
+void ReviewsListModel::updateCardsReview(
+    const int nrItensFetch,
+    std::function<void(ReviewsListModel::CardReview *, const int index)> bindCardCallback)
 {
-    CardFetchHelper::updateCards<CardReview, Review>(
+    CardFetchHelper::updateCards<CardReview>(
         _reviewsCard,
         _fetchingReviewsCard,
-        reviews,
+        nrItensFetch,
 
         [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
 
@@ -190,22 +148,7 @@ void ReviewsListModel::updateCardsReview(const QList<CardReview *> &cardsReview,
 
         [this](int first, int last) { emit dataChanged(index(first), index(last)); },
 
-        &ReviewsListModel::updateCardReview);
-}
-
-void ReviewsListModel::updateCardReview(CardReview *cardReview, const Review *review)
-{
-    cardReview->description = review->description();
-    cardReview->title = review->title();
-    cardReview->score = review->score();
-    cardReview->id = review->reviewId();
-    cardReview->movieId = review->movieId();
-    cardReview->isLoading = false;
-    cardReview->programTitle = review->programTitle();
-    cardReview->programType = review->tpProgram();
-    cardReview->isLikedByMe = review->isLikedByMe();
-    cardReview->likesCount = review->likesCount();
-    cardReview->author = UserMapper::toModel(review->author());
+        bindCardCallback);
 }
 
 ReviewsListModel::CardReview::CardReview()
@@ -225,47 +168,6 @@ ReviewsListModel::CardReview::CardReview()
 ReviewsListModel::CardReview::~CardReview()
 {
     delete author;
-}
-
-QFuture<ReviewsResult *> ReviewsListModel::onFetchStarted()
-{
-    switch (_fetchModeType) {
-    case ReviewsListModel::ReviewFetchModeType::ByUser:
-        return _reviewController->findAll(_paginationRequest);
-    case ReviewsListModel::ReviewFetchModeType::ByProgram:
-        return _multiController->findAllReviewsByIdMovie(_movieId, _paginationRequest);
-    default:
-        return QFuture<ReviewsResult *>(nullptr);
-    }
-}
-
-int ReviewsListModel::movieId() const
-{
-    return _movieId;
-}
-
-void ReviewsListModel::setMovieId(int newMovieId)
-{
-    if (_movieId == newMovieId) {
-        return;
-    }
-    _movieId = newMovieId;
-    emit movieIdChanged();
-}
-
-ReviewsListModel::ReviewFetchModeType ReviewsListModel::fetchModeType() const
-{
-    return _fetchModeType;
-}
-
-void ReviewsListModel::setFetchModeType(ReviewFetchModeType newFetchModeType)
-{
-    if (_fetchModeType == newFetchModeType) {
-        return;
-    }
-
-    _fetchModeType = newFetchModeType;
-    emit fetchModeTypeChanged();
 }
 
 void ReviewsListModel::setIsFetching(const bool isFetching)
@@ -296,4 +198,9 @@ void ReviewsListModel::setIsLoading(bool newIsLoading)
     }
     _isLoading = newIsLoading;
     emit isLoadingChanged();
+}
+
+void ReviewsListModel::setIsReviewsEnded(const bool isReviewsEnded)
+{
+    _isReviewsEnded = isReviewsEnded;
 }

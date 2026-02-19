@@ -46,7 +46,6 @@ set( HEADERS
     mapper/usermapper.h
     sectionconfigmodel.h
     usermodel.h
-
 )
 
 qt_add_qml_module(${LIBRARY_NAME}

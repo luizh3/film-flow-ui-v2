@@ -2,6 +2,8 @@ import QtQuick
 
 import Ui.Theme
 
+import Controls 1.0
+
 SearchProgramResultPopupForm {
     id: root
 
@@ -12,7 +14,14 @@ SearchProgramResultPopupForm {
         root.selected(id, tpProgram)
     }
 
-    listView.delegate: SearchResultCard {
+    SearchProgramListControl {
+        id: searchProgramListControl
+        vDsQuery: root.vDsQuery
+    }
+
+    moviesList.model: searchProgramListControl.model
+
+    moviesList.delegate: SearchResultCard {
 
         required property string id
         required property string title

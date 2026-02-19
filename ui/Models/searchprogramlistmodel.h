@@ -10,16 +10,10 @@
 
 #include <core/model/enum/typeprogramenum.h>
 
-class MultiRequest;
-class MovieInformation;
-class MultiController;
-class SearchMoviesResult;
-
 class MODELS_EXPORT SearchProgramListModel : public QAbstractListModel
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QString vDsQuery READ vDsQuery WRITE setVDsQuery NOTIFY vDsQueryChanged FINAL)
 public:
     SearchProgramListModel();
     ~SearchProgramListModel();
@@ -35,17 +29,7 @@ public:
         Overview
     };
 
-    int rowCount(const QModelIndex &parent) const override;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    virtual void fetchMore(const QModelIndex &parent) override;
-
-    virtual bool canFetchMore(const QModelIndex &parent) const override;
-
-    QHash<int, QByteArray> roleNames() const override;
-
-    struct SearchProgramCard
+    struct MODELS_EXPORT SearchProgramCard
     {
         SearchProgramCard();
 
@@ -59,28 +43,34 @@ public:
         TypeProgramEnum tpProgram;
     };
 
-    QString vDsQuery() const;
-    void setVDsQuery(const QString &newVDsQuery);
+    int rowCount(const QModelIndex &parent) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    virtual void fetchMore(const QModelIndex &parent) override;
+
+    virtual bool canFetchMore(const QModelIndex &parent) const override;
+
+    QHash<int, QByteArray> roleNames() const override;
+
+    void resetPrograms();
+
+    void onFetchEnded(const int nrItensFetch,
+                      std::function<void(SearchProgramListModel::SearchProgramCard *,
+                                         const int index)> bindCardCallback);
+
+    void setIsCanFetch(const bool isCanFetch);
 
 signals:
-    void vDsQueryChanged();
-    void cancelRequest();
-    void totalProgramsFound(int totalReviews);
+    void fetchPrograms();
 
 private:
-    void onFetchEnded(SearchMoviesResult *searchMovies);
-
-    void updateCardsMovie(const QList<SearchProgramCard *> &searchProgramCards,
-                          const QList<MovieInformation *> &moviesInformation);
-
-    static void updateCardMovie(SearchProgramCard *searchProgramCard,
-                                const MovieInformation *movieInformation);
-
-    MultiRequest *_multiRequest;
-    MultiController *_multiController;
+    void updateCardsMovie(const int nrItensFetch,
+                          std::function<void(SearchProgramListModel::SearchProgramCard *,
+                                             const int index)> bindCardCallback);
 
     bool _isFetching;
-    QString _vDsQuery;
+    bool _isCanFetch;
 
     QList<SearchProgramCard *> _fechingSearchProgramCards;
     QList<SearchProgramCard *> _programCards;

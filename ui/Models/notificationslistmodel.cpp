@@ -2,37 +2,18 @@
 
 #include "helper/cardsfetchhelper.h"
 
-#include <core/model/entities/notification.h>
-#include <core/model/entities/notificationreviewlike.h>
-#include <core/model/result/notificationsresult.h>
-
-#include <core/controller/notificationcontroller.h>
-#include <core/helper/taskrunhelper.h>
-#include <core/model/entities/user.h>
-#include <core/model/result/paginationresult.h>
-
-#include <network/request/paginationrequest.h>
-
 namespace {
 constexpr int NR_REVIEWS_BY_PAGE = 10;
 }
 
 NotificationsListModel::~NotificationsListModel()
 {
-    _notificationController->cancel();
-
-    _notificationController->deleteLater();
-
-    delete _paginationRequest;
-
     qDeleteAll(_notificationsCard);
 }
 
 NotificationsListModel::NotificationsListModel()
     : _isReviewsEnded{false}
     , _isFetching{false}
-    , _paginationRequest{new PaginationRequest()}
-    , _notificationController{new NotificationController()}
     , _fetchingNotificatiosCard{}
     , _notificationsCard{}
 {}
@@ -72,8 +53,6 @@ void NotificationsListModel::fetchMore(const QModelIndex &parent)
 
     _isFetching = true;
 
-    _paginationRequest->setPage(_paginationRequest->page() + 1);
-
     CardFetchHelper::appendFetchingCards<CardNotification>(
         _notificationsCard,
         _fetchingNotificatiosCard,
@@ -85,8 +64,7 @@ void NotificationsListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new CardNotification(); });
 
-    onFetchStarted().then(
-        [&](NotificationsResult *notificationsResult) { onFetchEnded(notificationsResult); });
+    emit fetchNotifications();
 }
 
 bool NotificationsListModel::canFetchMore(const QModelIndex &parent) const
@@ -108,35 +86,23 @@ QHash<int, QByteArray> NotificationsListModel::roleNames() const
     return mapping;
 }
 
-QFuture<NotificationsResult *> NotificationsListModel::onFetchStarted()
+void NotificationsListModel::onFetchEnded(
+    const int nrItensFetch,
+    std::function<void(NotificationsListModel::CardNotification *, const int index)> bindCardCallback)
 {
-    return _notificationController->findAll(_paginationRequest);
-}
-
-void NotificationsListModel::onFetchEnded(NotificationsResult *notificationsResult)
-{
-
-    if (!notificationsResult) {
-        _isFetching = false;
-        return;
-    }
-
-    _isReviewsEnded = notificationsResult->pagination()->totalPage() == _paginationRequest->page();
-
-    updateCardsNotification(_fetchingNotificatiosCard, notificationsResult->notifications());
+    updateCardsNotification(nrItensFetch, bindCardCallback);
 
     _isFetching = false;
-
-    delete notificationsResult;
 }
 
 void NotificationsListModel::updateCardsNotification(
-    const QList<CardNotification *> &cardsNotification, const QList<Notification *> &notifications)
+    const int nrItensFetch,
+    std::function<void(NotificationsListModel::CardNotification *, const int index)> bindCardCallback)
 {
-    CardFetchHelper::updateCards<CardNotification, Notification>(
+    CardFetchHelper::updateCards<CardNotification>(
         _notificationsCard,
         _fetchingNotificatiosCard,
-        notifications,
+        nrItensFetch,
 
         [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
 
@@ -144,32 +110,7 @@ void NotificationsListModel::updateCardsNotification(
 
         [this](int first, int last) { emit dataChanged(index(first), index(last)); },
 
-        &NotificationsListModel::updateCardNotification);
-}
-
-void NotificationsListModel::updateCardNotification(CardNotification *cardNotification,
-                                                    Notification *notification)
-{
-    switch (notification->type()) {
-    case TypeNotificationEnum::REVIEW_LIKE: {
-        const NotificationReviewLike *notificationReviewLike = static_cast<NotificationReviewLike *>(
-            notification);
-        cardNotification->description = QString(tr("<b>%0</b> liked your review on the <b>%1</b>"))
-                                            .arg(notificationReviewLike->actor()->name(),
-                                                 notificationReviewLike->programTitle());
-        cardNotification->icon = "qrc:/icons/favorite";
-        cardNotification->actorAvatarUrl = notificationReviewLike->actor()->avatarUrl().isEmpty()
-                                               ? "qrc:/imagens/no-user.png"
-                                               : notificationReviewLike->actor()->avatarUrl();
-
-        break;
-    }
-    default: {
-        break;
-    }
-    }
-
-    cardNotification->isLoading = false;
+        bindCardCallback);
 }
 
 NotificationsListModel::CardNotification::CardNotification()
@@ -178,3 +119,8 @@ NotificationsListModel::CardNotification::CardNotification()
     , actorAvatarUrl{QStringLiteral("")}
     , isLoading{true}
 {}
+
+void NotificationsListModel::setIsReviewsEnded(const bool isReviewsEnded)
+{
+    _isReviewsEnded = isReviewsEnded;
+}

@@ -11,15 +11,10 @@
 
 #include <core/model/enum/typeprogramenum.h>
 
-class SectionRequest;
-class MovieInformation;
-class SectionController;
-class SearchMoviesResult;
-class MODELS_EXPORT MoviesListModel : public QAbstractListModel {
+class MODELS_EXPORT MoviesListModel : public QAbstractListModel
+{
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(TypeProgram::TypeProgramEnum tpProgram WRITE setTpProgram FINAL )
-    Q_PROPERTY(QString key WRITE setKey FINAL )
 public:
     ~MoviesListModel();
      MoviesListModel();
@@ -36,7 +31,7 @@ public:
 
      QHash<int, QByteArray> roleNames() const override;
 
-     struct CardMovie
+     struct MODELS_EXPORT CardMovie
      {
          CardMovie();
 
@@ -48,24 +43,22 @@ public:
          TypeProgramEnum tpProgram;
      };
 
-     void setTpProgram(TypeProgramEnum newTpProgram);
-     void setKey(const QString& newKey);
+     void onFetchEnded(
+         const int nrItensFetch,
+         std::function<void(MoviesListModel::CardMovie*, const int index)> bindCardCallback);
+
+ signals:
+     void fetchMovies();
 
  private:
-     void onFetchEnded(SearchMoviesResult* searchMovies);
-
-     void updateCardsMovie(const QList<CardMovie*>& cardsMovie,
-                           const QList<MovieInformation*>& moviesInformation);
-
-     static void updateCardMovie(CardMovie* movieCard, const MovieInformation* movieInformation);
-
-     SectionRequest* _sectionRequest;
-     SectionController* _sectionController;
-
      bool _isFetching;
 
      QList<CardMovie*> _fechingMoviesCard;
      QList<CardMovie*> _moviesCard;
+
+     void updateCardsMovie(
+         const int nrItensFetch,
+         std::function<void(MoviesListModel::CardMovie*, const int index)> bindCardCallback);
 };
 
 #endif // MOVIESLISTMODEL_H

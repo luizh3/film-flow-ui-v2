@@ -2,7 +2,6 @@ import QtQuick 2.15
 
 import Ui.Components
 import Ui.Theme
-import Ui.Models
 import Ui.Screens
 
 import Controls 1.0
@@ -53,13 +52,9 @@ MovieScreenForm {
 
     writeReviewButton.onClicked: root._handleWriteReview()
 
-    vIsLoadingReviews: reviewsListModel.isLoading
+    vIsLoadingReviews: reviewsListControl.model.isLoading
 
-    reviewsList.model: ReviewsListModel {
-        id: reviewsListModel
-        fetchModeType: ReviewsListModel.ByProgram
-        movieId: root.vMovieId
-    }
+    reviewsList.model: reviewsListControl.model
 
     scrollFlickable {
         Behavior on contentY {
@@ -113,5 +108,11 @@ MovieScreenForm {
         id: control
 
         onFinished: root._handleFinished()
+    }
+
+    ReviewsListControl {
+        id: reviewsListControl
+        fetchModeType: ReviewsListControl.ByProgram
+        movieId: root.vMovieId
     }
 }

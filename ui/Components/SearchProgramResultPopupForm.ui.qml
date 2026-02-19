@@ -3,16 +3,15 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import Ui.Theme
-import Ui.Models
 
 Popup {
-    id: popup
+    id: root
     width: 600
     height: 300
     modal: false
     focus: false
 
-    property alias listView: listView
+    property alias moviesList: moviesList
 
     property string vDsQuery: ""
 
@@ -29,9 +28,9 @@ Popup {
                 id: label
                 font: Fonts.caption270
                 color: Colors.grey50
-                text: "Results founded"
+                text: qsTr("Results founded")
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                visible: listView.visible
+                visible: moviesList.visible
             }
 
             Rectangle {
@@ -44,27 +43,23 @@ Popup {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignCenter
-                visible: !listView.visible
+                visible: !moviesList.visible
 
                 Label {
                     font: Fonts.body270
                     color: Colors.grey50
-                    text: "No results founded"
+                    text: qsTr("No results founded")
                     anchors.centerIn: parent
                 }
             }
             ListView {
-                id: listView
+                id: moviesList
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
                 spacing: 4
-                visible: listView.count !== 0
-                cacheBuffer: listView.height / 2
-
-                model: SearchProgramListModel {
-                    vDsQuery: popup.vDsQuery
-                }
+                visible: moviesList.count !== 0
+                cacheBuffer: moviesList.height / 2
 
                 ScrollBar.vertical: ScrollBar {}
             }

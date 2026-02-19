@@ -2,7 +2,7 @@
 
 #include <QVariantMap>
 
-#include <core/manager/applicationmanager.h>
+#include "uicontrolmanager.h"
 
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
@@ -28,7 +28,7 @@ void SettingsControl::doStart()
     for (const QVariant &languageVariant : _languages) {
         QVariantMap languageMap = languageVariant.toMap();
 
-        const bool isCurrentLanguage = ApplicationManager::instance().languageManager().dsLocale()
+        const bool isCurrentLanguage = UiControlManager::instance().languageManager().dsLocale()
                                        == languageMap["locale"].toString();
 
         langugesComboBoxDTO.append(QVariantMap{{"vText", languageMap["name"]},
@@ -48,7 +48,7 @@ void SettingsControl::doSave(const int indexLanguageSelect, ColorItemModel *colo
         ThemeColorManager::instance()->setTheme(ThemeColorFactory::byRole(colorItem->roleType()));
     }
 
-    ApplicationManager::instance().languageManager().switchLanguage(locale);
+    UiControlManager::instance().languageManager().switchLanguage(locale);
 
     languageChanged();
 

@@ -4,9 +4,10 @@
 #include <QCoreApplication>
 #include <QQmlEngine>
 #include <QTranslator>
-#include <core_global.h>
 
-class CORE_EXPORT LanguageManager
+#include <controls_global.h>
+
+class CONTROLS_EXPORT LanguageManager
 {
 public:
     LanguageManager();

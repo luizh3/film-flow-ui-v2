@@ -1,12 +1,13 @@
 import QtQuick
 
-import Ui.Models
 import Ui.Theme
+
+import Controls 1.0
 
 NotificationsPopupForm {
     id: root
 
-    notificationsList.model: NotificationsListModel {}
+    notificationsList.model: notificationListControl.model
 
     notificationsList.delegate: NotificationCard {
         id: notificationCard
@@ -28,5 +29,9 @@ NotificationsPopupForm {
         const elementInstance = element.mapToItem(parent, 0, element.height)
         root.x = elementInstance.x + element.width - width
         root.y = elementInstance.y + Spacings.md
+    }
+
+    NotificationsListControl {
+        id: notificationListControl
     }
 }

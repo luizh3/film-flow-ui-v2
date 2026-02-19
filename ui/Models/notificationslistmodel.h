@@ -3,15 +3,10 @@
 
 #include <QAbstractListModel>
 #include <QFutureWatcher>
-#include <QMap>
 #include <QQmlEngine>
 
 #include <models_global.h>
 
-class Notification;
-class NotificationsResult;
-class PaginationRequest;
-class NotificationController;
 class MODELS_EXPORT NotificationsListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -22,7 +17,7 @@ public:
 
     enum Roles { Description, Icon, IsLoading, ActorAvatarUrl };
 
-    struct CardNotification
+    struct MODELS_EXPORT CardNotification
     {
         CardNotification();
 
@@ -42,19 +37,22 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
+    void onFetchEnded(const int nrItensFetch,
+                      std::function<void(NotificationsListModel::CardNotification*, const int index)>
+                          bindCardCallback);
+
+    void setIsReviewsEnded(const bool isReviewsEnded);
+
+signals:
+    void fetchNotifications();
+
 private:
-    QFuture<NotificationsResult*> onFetchStarted();
-    void onFetchEnded(NotificationsResult* future);
-    void updateCardsNotification(const QList<CardNotification*>& cardsNotification,
-                                 const QList<Notification*>& notifications);
-    static void updateCardNotification(CardNotification* cardNotification,
-                                       Notification* notification);
+    void updateCardsNotification(const int nrItensFetch,
+                                 std::function<void(NotificationsListModel::CardNotification*,
+                                                    const int index)> bindCardCallback);
 
     bool _isReviewsEnded;
     bool _isFetching;
-
-    PaginationRequest* _paginationRequest;
-    NotificationController* _notificationController;
 
     QList<CardNotification*> _fetchingNotificatiosCard;
     QList<CardNotification*> _notificationsCard;

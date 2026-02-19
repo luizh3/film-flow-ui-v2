@@ -1,11 +1,5 @@
 #include "movieslistmodel.h"
 
-#include <core/controller/sectioncontroller.h>
-#include <core/helper/taskrunhelper.h>
-#include <core/model/entities/movieinformation.h>
-#include <core/model/result/searchmoviesresult.h>
-#include <core/network/request/sectionrequest.h>
-
 #include "helper/cardsfetchhelper.h"
 
 namespace {
@@ -14,19 +8,11 @@ constexpr int NR_MOVIES_BY_PAGE = 20;
 
 MoviesListModel::~MoviesListModel()
 {
-    _sectionController->cancel();
-
-    _sectionController->deleteLater();
-
-    delete _sectionRequest;
-
     qDeleteAll(_moviesCard);
 }
 
 MoviesListModel::MoviesListModel()
-    : _sectionRequest{new SectionRequest()}
-    , _sectionController{new SectionController()}
-    , _isFetching{false}
+    : _isFetching{false}
     , _fechingMoviesCard{}
     , _moviesCard{}
 {}
@@ -76,8 +62,6 @@ void MoviesListModel::fetchMore( const QModelIndex &parent ) {
 
     _isFetching = true;
 
-    _sectionRequest->setPage( _sectionRequest->page() + 1 );
-
     CardFetchHelper::appendFetchingCards<CardMovie>(
         _moviesCard,
         _fechingMoviesCard,
@@ -89,9 +73,7 @@ void MoviesListModel::fetchMore( const QModelIndex &parent ) {
 
         []() { return new CardMovie(); });
 
-    _sectionController->find(*_sectionRequest).then([&](SearchMoviesResult *searchMovies) {
-        onFetchEnded(searchMovies);
-    });
+    emit fetchMovies();
 }
 
 bool MoviesListModel::canFetchMore( const QModelIndex& parent) const {
@@ -115,13 +97,14 @@ QHash<int, QByteArray> MoviesListModel::roleNames() const {
 
 }
 
-void MoviesListModel::updateCardsMovie(const QList<CardMovie *> &cardsMovie,
-                                       const QList<MovieInformation *> &moviesInformation)
+void MoviesListModel::updateCardsMovie(
+    const int nrItensFetch,
+    std::function<void(MoviesListModel::CardMovie *, const int index)> bindCardCallback)
 {
-    CardFetchHelper::updateCards<CardMovie, MovieInformation>(
+    CardFetchHelper::updateCards<CardMovie>(
         _moviesCard,
         _fechingMoviesCard,
-        moviesInformation,
+        nrItensFetch,
 
         [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
 
@@ -129,54 +112,16 @@ void MoviesListModel::updateCardsMovie(const QList<CardMovie *> &cardsMovie,
 
         [this](int first, int last) { emit dataChanged(index(first), index(last)); },
 
-        &MoviesListModel::updateCardMovie);
+        bindCardCallback);
 }
 
-void MoviesListModel::updateCardMovie(CardMovie *movieCard, const MovieInformation *movieInformation)
+void MoviesListModel::onFetchEnded(
+    const int nrItensFetch,
+    std::function<void(MoviesListModel::CardMovie *, const int index)> bindCardCallback)
 {
-    movieCard->average = movieInformation->average();
-    movieCard->posterUrl = movieInformation->posterUrl();
-    movieCard->title = movieInformation->title();
-    movieCard->id = movieInformation->id();
-    movieCard->isLoading = false;
-    movieCard->tpProgram = movieInformation->tpProgram();
-}
-
-void MoviesListModel::setTpProgram(TypeProgramEnum newTpProgram)
-{
-
-    if( !_sectionRequest ){
-        return;
-    }
-
-    _sectionRequest->setTpProgram( newTpProgram );
-
-}
-
-void MoviesListModel::setKey(const QString &newKey)
-{
-
-    if( !_sectionRequest ){
-        return;
-    }
-
-    _sectionRequest->setKey( newKey );
-
-}
-
-void MoviesListModel::onFetchEnded(SearchMoviesResult *searchMovies)
-{
-
-    if (!searchMovies) {
-        _isFetching = false;
-        return;
-    }
-
-    updateCardsMovie(_fechingMoviesCard, searchMovies->movies());
+    updateCardsMovie(nrItensFetch, bindCardCallback);
 
     _isFetching = false;
-
-    delete searchMovies;
 }
 
 MoviesListModel::CardMovie::CardMovie()

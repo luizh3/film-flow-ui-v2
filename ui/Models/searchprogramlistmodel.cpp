@@ -1,13 +1,5 @@
 #include "searchprogramlistmodel.h"
 
-#include <core/controller/multicontroller.h>
-#include <core/helper/taskrunhelper.h>
-#include <core/manager/applicationmanager.h>
-#include <core/model/entities/movieinformation.h>
-#include <core/model/result/paginationresult.h>
-#include <core/model/result/searchmoviesresult.h>
-#include <core/network/request/multirequest.h>
-
 #include "helper/cardsfetchhelper.h"
 
 namespace {
@@ -15,24 +7,14 @@ constexpr int NR_MOVIES_BY_PAGE = 20;
 }
 
 SearchProgramListModel::SearchProgramListModel()
-    : _multiRequest{new MultiRequest()}
-    , _multiController{new MultiController()}
-    , _isFetching{false}
-    , _vDsQuery(QStringLiteral(""))
+    : _isFetching{false}
+    , _isCanFetch{false}
     , _fechingSearchProgramCards{}
     , _programCards{}
-{
-    _multiRequest->setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
-}
+{}
 
 SearchProgramListModel::~SearchProgramListModel()
 {
-    _multiController->cancel();
-
-    _multiController->deleteLater();
-
-    delete _multiRequest;
-
     qDeleteAll(_programCards);
 }
 
@@ -50,8 +32,9 @@ QVariant SearchProgramListModel::data(const QModelIndex &index, int role) const
     const int row = index.row();
 
     switch (role) {
-    case Title:
+    case Title: {
         return _programCards.at(row)->title;
+    }
     case PosterUrl: {
         return _programCards.at(row)->posterUrl;
     }
@@ -80,14 +63,11 @@ QVariant SearchProgramListModel::data(const QModelIndex &index, int role) const
 
 void SearchProgramListModel::fetchMore(const QModelIndex &parent)
 {
-    if (parent.isValid() || _isFetching || _vDsQuery.isEmpty()) {
+    if (parent.isValid() || _isFetching || !_isCanFetch) {
         return;
     }
 
     _isFetching = true;
-
-    _multiRequest->setDsQuery(_vDsQuery);
-    _multiRequest->setPage(_multiRequest->page() + 1);
 
     CardFetchHelper::appendFetchingCards<SearchProgramCard>(
         _programCards,
@@ -100,9 +80,7 @@ void SearchProgramListModel::fetchMore(const QModelIndex &parent)
 
         []() { return new SearchProgramCard(); });
 
-    _multiController->find(*_multiRequest).then([&](SearchMoviesResult *result) {
-        onFetchEnded(result);
-    });
+    emit fetchPrograms();
 }
 
 bool SearchProgramListModel::canFetchMore(const QModelIndex &parent) const
@@ -111,7 +89,7 @@ bool SearchProgramListModel::canFetchMore(const QModelIndex &parent) const
         return false;
     }
 
-    return !_isFetching;
+    return !_isFetching && _isCanFetch;
 }
 
 QHash<int, QByteArray> SearchProgramListModel::roleNames() const
@@ -128,50 +106,8 @@ QHash<int, QByteArray> SearchProgramListModel::roleNames() const
     return mapping;
 }
 
-void SearchProgramListModel::updateCardsMovie(const QList<SearchProgramCard *> &searchProgramCards,
-                                              const QList<MovieInformation *> &moviesInformation)
+void SearchProgramListModel::resetPrograms()
 {
-    CardFetchHelper::updateCards<SearchProgramCard, MovieInformation>(
-        _programCards,
-        _fechingSearchProgramCards,
-        moviesInformation,
-
-        [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
-
-        [this]() { endRemoveRows(); },
-
-        [this](int first, int last) { emit dataChanged(index(first), index(last)); },
-
-        &SearchProgramListModel::updateCardMovie);
-}
-
-void SearchProgramListModel::updateCardMovie(SearchProgramCard *searchProgramCard,
-                                             const MovieInformation *movieInformation)
-{
-    searchProgramCard->average = movieInformation->average();
-    searchProgramCard->posterUrl = movieInformation->posterUrl();
-    searchProgramCard->title = movieInformation->title();
-    searchProgramCard->id = movieInformation->id();
-    searchProgramCard->isLoading = false;
-    searchProgramCard->tpProgram = movieInformation->tpProgram();
-    searchProgramCard->overview = movieInformation->overview();
-}
-
-QString SearchProgramListModel::vDsQuery() const
-{
-    return _vDsQuery;
-}
-
-void SearchProgramListModel::setVDsQuery(const QString &newVDsQuery)
-{
-    if (_vDsQuery == newVDsQuery) {
-        return;
-    }
-
-    _vDsQuery = newVDsQuery;
-
-    _multiController->cancel();
-
     beginResetModel();
 
     qDeleteAll(_programCards);
@@ -180,32 +116,41 @@ void SearchProgramListModel::setVDsQuery(const QString &newVDsQuery)
 
     _fechingSearchProgramCards.clear();
 
-    _multiRequest->setPage(0);
-
     endResetModel();
-
-    emit vDsQueryChanged();
 }
 
-void SearchProgramListModel::onFetchEnded(SearchMoviesResult *searchMovies)
+void SearchProgramListModel::updateCardsMovie(
+    const int nrItensFetch,
+    std::function<void(SearchProgramListModel::SearchProgramCard *, const int index)>
+        bindCardCallback)
 {
+    CardFetchHelper::updateCards<SearchProgramCard>(
+        _programCards,
+        _fechingSearchProgramCards,
+        nrItensFetch,
 
-    if (!searchMovies) {
-        _isFetching = false;
-        return;
-    }
+        [this](int first, int last) { beginRemoveRows(QModelIndex(), first, last); },
 
-    const bool isFirstPage = _multiRequest->page() == 1;
+        [this]() { endRemoveRows(); },
 
-    if (isFirstPage) {
-        emit totalProgramsFound(searchMovies->pagination()->totalResult());
-    }
+        [this](int first, int last) { emit dataChanged(index(first), index(last)); },
 
-    updateCardsMovie(_fechingSearchProgramCards, searchMovies->movies());
+        bindCardCallback);
+}
+
+void SearchProgramListModel::onFetchEnded(
+    const int nrItensFetch,
+    std::function<void(SearchProgramListModel::SearchProgramCard *, const int index)>
+        bindCardCallback)
+{
+    updateCardsMovie(nrItensFetch, bindCardCallback);
 
     _isFetching = false;
+}
 
-    delete searchMovies;
+void SearchProgramListModel::setIsCanFetch(const bool isCanFetch)
+{
+    _isCanFetch = isCanFetch;
 }
 
 SearchProgramListModel::SearchProgramCard::SearchProgramCard()

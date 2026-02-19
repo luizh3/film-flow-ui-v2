@@ -5,8 +5,15 @@
 
 #include <ui/models/mapper/usermapper.h>
 
+UiControlManager &UiControlManager::instance()
+{
+    static UiControlManager uiControlManager;
+    return uiControlManager;
+}
+
 UiControlManager::UiControlManager()
     : _user{nullptr}
+    , _languageManager{}
 {}
 
 UserModel *UiControlManager::user()
@@ -16,4 +23,9 @@ UserModel *UiControlManager::user()
     }
 
     return _user.get();
+}
+
+LanguageManager &UiControlManager::languageManager()
+{
+    return _languageManager;
 }

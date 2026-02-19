@@ -73,11 +73,6 @@ ColumnLayout {
         reuseItems: true
         cacheBuffer: listView.width / 2
 
-        model: MoviesListModel {
-            tpProgram: root.vTypeProgram
-            key: root.vKey
-        }
-
         populate: Transition {
             NumberAnimation {
                 property: "opacity"

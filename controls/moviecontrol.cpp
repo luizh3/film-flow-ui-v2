@@ -49,7 +49,7 @@ void MovieControl::doStart(const int id, TypeProgramEnum tpProgram)
 
     MultiDetailsRequest request;
     request.setTpProgram(TypeProgram::toString(tpProgram));
-    request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
+    // request.setDsLanguage(ApplicationManager::instance().languageManager().dsLocaleBCP47());
 
     _multiController.findById(id, request).then([&](MovieInformation *movieInformation)
                                                 { onFetchEnded(movieInformation); });

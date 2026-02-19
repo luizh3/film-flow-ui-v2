@@ -3,11 +3,12 @@ pragma ComponentBehavior
 import QtQuick
 
 import Ui.Theme
-import Ui.Models
 import Ui.Components
 
 // TODO maybe create a Ui.Screens.Commons to move screenManager
 import Ui.Screens
+
+import Controls 1.0
 
 ReviewScreenForm {
     id: root
@@ -31,16 +32,18 @@ ReviewScreenForm {
                                          ScreenManager.Route.PROFILE)
 
     Connections {
-        target: reviewsListModel
+        target: reviewsListControl
 
         function onTotalReviewsFound(totalReviews) {
             root._handleTotalReviewsFound(totalReviews)
         }
     }
 
-    reviewsList.model: ReviewsListModel {
-        id: reviewsListModel
-        fetchModeType: ReviewsListModel.ByUser
+    reviewsList.model: reviewsListControl.model
+
+    ReviewsListControl {
+        id: reviewsListControl
+        fetchModeType: ReviewsListControl.ByUser
     }
 
     reviewsList.delegate: Item {

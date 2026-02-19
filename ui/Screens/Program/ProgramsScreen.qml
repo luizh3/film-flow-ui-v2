@@ -2,7 +2,8 @@ import QtQuick
 import Ui.Components
 
 import Ui.Screens
-import Ui.Models
+
+import Controls 1.0
 
 ProgramsScreenForm {
     id: root
@@ -25,11 +26,14 @@ ProgramsScreenForm {
                     totalPrograms)
     }
 
-    moviesGrid.model: SearchProgramListModel {
+    SearchProgramListControl {
+        id: searchProgramListControl
         onTotalProgramsFound: totalPrograms => root._handleTotalProgramsFound(
                                   totalPrograms)
         vDsQuery: root.vDsQuery
     }
+
+    moviesGrid.model: searchProgramListControl.model
 
     header.onSearch: text => root._handleSearch(text)
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(

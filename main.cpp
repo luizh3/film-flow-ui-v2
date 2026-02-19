@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    ApplicationManager::instance().languageManager().intialize(&app, &engine);
+    // ApplicationManager::instance().languageManager().intialize(&app, &engine);
 
     QQuickStyle::setStyle("Basic");
 

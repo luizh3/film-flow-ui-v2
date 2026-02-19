@@ -5,7 +5,7 @@ import Ui.Theme
 import Ui.Components
 import Ui.Components.Elements
 
-import Core 1.0
+import Controls 1.0
 
 GenericScreen {
     id: root

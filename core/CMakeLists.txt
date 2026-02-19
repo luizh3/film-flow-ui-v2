@@ -15,10 +15,6 @@ set( SOURCES
     network/response/response.cpp
     network/request/signuprequest.cpp
     network/request/signinrequest.cpp
-    validator/emailvalidator.cpp
-    validator/rangevalidator.cpp
-    validator/ffvalidator.cpp
-    validator/passwordvalidator.cpp
     network/endpoint/filmflowconfigendpoint.cpp
     network/endpoint/filmflowendpoint.cpp
     manager/applicationmanager.cpp
@@ -37,7 +33,6 @@ set( SOURCES
     network/request/multirequest.cpp
     controller/multicontroller.cpp
     network/request/multidetailsrequest.cpp
-    manager/languagemanager.cpp
     network/endpoint/filmflowreviewendpoint.cpp
     controller/reviewcontroller.cpp
     model/entities/review.cpp
@@ -66,10 +61,6 @@ set( HEADERS
     network/httpstatuscode.h
     network/request/signuprequest.h
     network/request/signinrequest.h
-    validator/emailvalidator.h
-    validator/rangevalidator.h
-    validator/ffvalidator.h
-    validator/passwordvalidator.h
     helper/regex/regexhelper.h
     network/endpoint/filmflowconfigendpoint.h
     network/endpoint/filmflowendpoint.h
@@ -90,7 +81,6 @@ set( HEADERS
     network/request/multirequest.h
     controller/multicontroller.h
     network/request/multidetailsrequest.h
-    manager/languagemanager.h
     model/entities/review.h
     network/endpoint/filmflowreviewendpoint.h
     controller/reviewcontroller.h
@@ -112,37 +102,22 @@ add_library(
     ${LIBRARY_NAME} SHARED
 )
 
-qt_add_qml_module( ${LIBRARY_NAME}
-  URI ${MODULE_URI}
-  VERSION 1.0
-)
-
 target_sources( ${LIBRARY_NAME}
     PRIVATE ${SOURCES}
     PUBLIC FILE_SET HEADERS FILES ${HEADERS}
 )
 
-find_package( Qt6 REQUIRED COMPONENTS Core Network Qml Gui Concurrent WebSockets)
+find_package( Qt6 REQUIRED COMPONENTS Core Network Concurrent WebSockets)
 
 target_link_libraries( ${LIBRARY_NAME} PUBLIC
     PRIVATE Qt6::Core
     PRIVATE Qt6::Network
-    PRIVATE Qt6::Qml
-    PRIVATE Qt6::Gui
     PRIVATE Qt6::Concurrent
     PRIVATE Qt6::WebSockets
 )
 
-#TODO Review this to use only CMAKE_CURRENT_SOURCE_DIR, as QML_ELEMENT cannot find it when used this way for now.
 target_include_directories(${LIBRARY_NAME} PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/model
-  ${CMAKE_CURRENT_SOURCE_DIR}/model/entities
-  ${CMAKE_CURRENT_SOURCE_DIR}/controller
-  ${CMAKE_CURRENT_SOURCE_DIR}/network
-  ${CMAKE_CURRENT_SOURCE_DIR}/manager
-  ${CMAKE_CURRENT_SOURCE_DIR}/singleton
-  ${CMAKE_CURRENT_SOURCE_DIR}/validator
-  ${CMAKE_CURRENT_SOURCE_DIR}/helper
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 set_target_properties( ${LIBRARY_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON )

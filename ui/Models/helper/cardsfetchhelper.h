@@ -6,33 +6,32 @@
 namespace CardFetchHelper {
 
 template<typename TCard,
-         typename TDomain,
          typename BeginRemoveFn,
          typename EndRemoveFn,
          typename DataChangedFn,
          typename ApplyFn>
 void updateCards(QList<TCard *> &allCards,
                  QList<TCard *> &fetchingCards,
-                 const QList<TDomain *> &domainItems,
+                 const qsizetype nrItensFetch,
                  BeginRemoveFn &&beginRemove,
                  EndRemoveFn &&endRemove,
                  DataChangedFn &&dataChanged,
                  ApplyFn &&applyData)
 {
-    const int updateCount = std::min(fetchingCards.size(), domainItems.size());
+    const int updateCount = std::min(fetchingCards.size(), nrItensFetch);
 
     for (int i = 0; i < updateCount; ++i) {
-        applyData(fetchingCards[i], domainItems[i]);
+        applyData(fetchingCards[i], i);
     }
 
-    const int excess = fetchingCards.size() - domainItems.size();
+    const int excess = fetchingCards.size() - nrItensFetch;
 
     if (excess > 0) {
         const int start = allCards.size() - excess;
 
         beginRemove(start, allCards.size() - 1);
 
-        for (int i = fetchingCards.size() - 1; i >= domainItems.size(); --i) {
+        for (int i = fetchingCards.size() - 1; i >= nrItensFetch; --i) {
             auto *card = fetchingCards[i];
             allCards.removeAll(card);
             fetchingCards.removeAll(card);

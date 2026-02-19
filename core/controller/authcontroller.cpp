@@ -6,7 +6,6 @@
 #include <network/endpoint/authendpoint.h>
 
 #include <network/request/signinrequest.h>
-#include <network/request/signup.h>
 
 void AuthController::signIn(const QString& password, const QString& email)
 {

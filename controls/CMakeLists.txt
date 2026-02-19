@@ -25,6 +25,11 @@ set( SOURCES
     programreviewcontrol.cpp
     profilescreencontrol.cpp
     uicontrolmanager.cpp
+    validator/emailvalidator.cpp
+    validator/rangevalidator.cpp
+    validator/ffvalidator.cpp
+    validator/passwordvalidator.cpp
+    manager/languagemanager.cpp
 )
 
 set( HEADERS
@@ -46,6 +51,11 @@ set( HEADERS
     programreviewcontrol.h
     profilescreencontrol.h
     uicontrolmanager.h
+    validator/emailvalidator.h
+    validator/rangevalidator.h
+    validator/ffvalidator.h
+    validator/passwordvalidator.h
+    manager/languagemanager.h
 )
 
 add_library(
@@ -55,9 +65,13 @@ add_library(
 qt_add_qml_module( ${LIBRARY_NAME}
   URI ${MODULE_URI}
   VERSION 1.0
+  SOURCES movieslistcontrol.h movieslistcontrol.cpp
+  SOURCES notificationslistcontrol.h notificationslistcontrol.cpp
+  SOURCES reviewslistcontrol.h reviewslistcontrol.cpp
+  SOURCES searchprogramlistcontrol.h searchprogramlistcontrol.cpp
 )
 
-find_package( Qt6 REQUIRED COMPONENTS Core Qml Concurrent WebSockets )
+find_package( Qt6 REQUIRED COMPONENTS Core Qml Concurrent WebSockets Gui )
 
 target_sources( ${LIBRARY_NAME}
     PRIVATE ${SOURCES}
@@ -72,6 +86,7 @@ add_dependencies(
 )
 
 target_link_libraries( ${LIBRARY_NAME}
+    PRIVATE Qt6::Gui
     PRIVATE Qt6::Core
     PRIVATE Qt6::Qml
     PRIVATE Qt6::Concurrent
@@ -84,6 +99,7 @@ target_link_libraries( ${LIBRARY_NAME}
 target_include_directories(${LIBRARY_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/validator
         ${CORE_INCLUDE_DIR}
 )
 

@@ -1,5 +1,7 @@
 import Ui.Components
 
+import Controls 1.0
+
 CardMovieListForm {
     id: root
 
@@ -18,6 +20,8 @@ CardMovieListForm {
     buttonNext.onClicked: root._handleSliderIncrement()
     buttonPrevius.onClicked: root._handleSliderDecresce()
 
+    listView.model: moviesListControl.model
+
     listView.delegate: CardMovie {
 
         required property string id
@@ -33,5 +37,11 @@ CardMovieListForm {
         vIsLoading: isLoading
 
         onSelected: root.selected(id, tpProgram)
+    }
+
+    MoviesListControl {
+        id: moviesListControl
+        tpProgram: root.vTypeProgram
+        key: root.vKey
     }
 }

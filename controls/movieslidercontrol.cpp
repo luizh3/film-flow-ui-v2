@@ -5,8 +5,6 @@
 #include <core/model/result/searchmoviesresult.h>
 #include <core/network/request/sectionrequest.h>
 
-#include <core/network/request/signup.h>
-
 #include "mapper/moviemapper.h"
 
 MovieSliderControl::MovieSliderControl()
