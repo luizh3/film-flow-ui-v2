@@ -1,6 +1,6 @@
-import Ui.Components
+pragma ComponentBehavior
 
-import Controls 1.0
+import Presenter.Controls
 
 CardMovieListForm {
     id: root

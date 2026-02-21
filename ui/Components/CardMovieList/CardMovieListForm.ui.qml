@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 import Ui.Theme
-import Ui.Models
 import Ui.Components.Elements
 
 ColumnLayout {
