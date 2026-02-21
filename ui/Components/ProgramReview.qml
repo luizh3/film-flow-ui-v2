@@ -2,7 +2,7 @@ import QtQuick
 
 import Ui.Components.Elements
 
-import Controls 1.0
+import Presenter.Controls
 
 ProgramReviewForm {
     id: root

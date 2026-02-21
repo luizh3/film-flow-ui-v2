@@ -6,7 +6,7 @@ import QtQuick.Controls.Basic
 
 import Ui.Screens
 
-import Controls 1.0
+import Presenter.Controls
 
 ApplicationWindow {
     id: application

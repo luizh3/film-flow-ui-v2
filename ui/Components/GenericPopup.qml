@@ -11,6 +11,6 @@ Popup {
 
     background: Rectangle {
         color: Colors.grey700
-        radius: 4
+        radius: Radius.xl
     }
 }

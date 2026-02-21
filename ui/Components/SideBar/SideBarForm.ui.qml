@@ -5,7 +5,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import Ui.Theme
-import Ui.Components
 import Ui.Components.Elements
 
 Rectangle {

@@ -9,7 +9,7 @@ Review::Review()
     : _author{nullptr}
     , _score{0.00}
     , _likesCount{0}
-    , _tpProgram{TypeProgram::TypeProgramEnum::UNKNOW}
+    , _tpProgram{TypeProgramEnum::UNKNOW}
     , _isLikedByMe{false}
     , _reviewId{QStringLiteral("")}
     , _title{QStringLiteral("")}
@@ -20,7 +20,7 @@ Review::Review()
 
 Review::Review(double score,
                int likesCount,
-               TypeProgram::TypeProgramEnum tpProgram,
+               TypeProgramEnum tpProgram,
                bool isLikedByMe,
                QString reviewId,
                QString title,

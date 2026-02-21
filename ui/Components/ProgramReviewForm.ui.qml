@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import Ui.Components.Elements
 import Ui.Theme
+import Ui.Components.Elements
 
 Rectangle {
     id: root

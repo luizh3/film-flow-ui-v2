@@ -1,8 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Layouts
-import Ui.Components.Elements
+
 import Ui.Theme
+import Ui.Components.Elements
 
 Item {
     id: root
@@ -38,8 +39,9 @@ Item {
             FFSkeletonLoading {
                 anchors.fill: parent
                 color: Colors.grey600
-                radius: 4
-                visible: root.vIsLoading
+                radius: Radius.xl
+                vIsVisible: root.vIsLoading
+                vOpacityDuration: Durations.fast
             }
 
             FontMetrics {

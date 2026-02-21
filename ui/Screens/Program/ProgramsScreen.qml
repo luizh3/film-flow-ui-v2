@@ -1,9 +1,10 @@
+pragma ComponentBehavior: Bound
 import QtQuick
-import Ui.Components
 
 import Ui.Screens
+import Ui.Components
 
-import Controls 1.0
+import Presenter.Controls
 
 ProgramsScreenForm {
     id: root

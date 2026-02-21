@@ -1,6 +1,6 @@
 import Ui.Components.Elements
 
-import Controls 1.0
+import Presenter.Controls
 
 LoginScreenForm {
     id: root

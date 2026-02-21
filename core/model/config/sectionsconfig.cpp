@@ -45,9 +45,7 @@ void SectionsConfig::setTpProgram(TypeProgramEnum newTpProgram)
 
 SectionsConfig *SectionsConfig::fromJson(const QJsonObject& jsonObject)
 {
-    return new SectionsConfig(
-        TypeProgram::fromString( jsonObject["type"].toString() ),
-        jsonObject["name"].toString(),
-        jsonObject["key"].toString()
-    );
+    return new SectionsConfig(TypeProgram::fromString(jsonObject["type"].toString()),
+                              jsonObject["name"].toString(),
+                              jsonObject["key"].toString());
 }

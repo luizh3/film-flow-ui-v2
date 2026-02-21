@@ -2,7 +2,7 @@ import QtQuick
 
 import Ui.Theme
 
-import Controls 1.0
+import Presenter.Controls
 
 NotificationsPopupForm {
     id: root

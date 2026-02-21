@@ -8,8 +8,8 @@
 #include <QQuickStyle>
 #include <QTranslator>
 
-#include <core/manager/applicationmanager.h>
-#include <core/model/enum/typeprogramenum.h>
+#include <presenter/controls/uicontrolmanager.h>
+#include <presenter/models/enum/presentertypeprogramenum.h>
 
 #include <ui/theme/factory/themecolorfactory.h>
 #include <ui/theme/manager/themecolormanager.h>
@@ -20,19 +20,12 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    // ApplicationManager::instance().languageManager().intialize(&app, &engine);
+    UiControlManager::instance().languageManager().intialize(&app, &engine);
 
     QQuickStyle::setStyle("Basic");
 
-    // qRegisterMetaType<MovieModel *>("MovieModel*");
-    // qmlRegisterUncreatableType<MovieModel *>("MovieModel",
-    //                                          1,
-    //                                          0,
-    //                                          "MovieModel",
-    //                                          "MovieModel não pode ser criado no QML");
-
-    qRegisterMetaType<TypeProgram::TypeProgramEnum>("TypeProgramEnum");
-    qmlRegisterUncreatableMetaObject(TypeProgram::staticMetaObject,
+    qRegisterMetaType<PresenterTypeProgram::PresenterTypeProgramEnum>("PresenterTypeProgramEnum");
+    qmlRegisterUncreatableMetaObject(PresenterTypeProgram::staticMetaObject,
                                      "TypeProgramEnum",
                                      1,
                                      0,

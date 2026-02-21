@@ -1,8 +1,8 @@
 import QtQuick
 
-import Controls 1.0
+import Presenter.Models
+import Presenter.Controls
 
-import Ui.Models
 import Ui.Components.Elements
 
 ReviewProgramModalForm {

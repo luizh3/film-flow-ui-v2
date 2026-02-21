@@ -8,45 +8,24 @@ set( CMAKE_AUTOMOC True )
 set( CMAKE_AUTOUIC True )
 set( CMAKE_AUTORCC True )
 
-set(ENV{QMLLS_BUILD_DIRS} ${CMAKE_BINARY_DIR})
-
 set( QT_QML_GENERATE_QMLLS_INI ON )
-
-set( CORE_LIBRARY_NAME core )
-set( CORE_INCLUDE_DIR ${CMAKE_SOURCE_DIR} )
-
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick QuickControls2 Qml LinguistTools)
 
 set( APP_NAME main )
 
-LIST( APPEND QML_SOURCE_PATHS "${CMAKE_SOURCE_DIR}")
-
-# set( QML_IMPORT_PATH ${QML_SOURCE_PATHS} CACHE STRING "" FORCE)
-
-# set(QML_IMPORT_PATH
-#     ${CMAKE_SOURCE_DIR}
-#     ${CMAKE_SOURCE_DIR}/controls
-#     ${CMAKE_SOURCE_DIR}/ui
-#     ${CMAKE_SOURCE_DIR}/ui/Components
-#     ${CMAKE_SOURCE_DIR}/ui/Screens
-#     ${CMAKE_SOURCE_DIR}/ui/Theme
-#     CACHE STRING "" FORCE
-# )
-
 qt_standard_project_setup(REQUIRES 6.5)
 qt_policy(SET QTP0001 NEW)
-#qt_policy(SET QTP0004 NEW)
+qt_policy(SET QTP0004 NEW)
 
 set(QT_QML_GENERATE_QMLLS_INI ON)
 
 qt_add_executable( ${APP_NAME}
     main.cpp
-    ${CORE_INCLUDE_DIR}
     translations.qrc
     fonts.qrc
 )
+
 qt_add_qml_module( ${APP_NAME}
     URI film-flow-ui
     VERSION 1.0
@@ -66,7 +45,6 @@ qt_add_qml_module( ${APP_NAME}
 # explicit, fixed bundle identifier manually though.
 set_target_properties( ${APP_NAME} PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appfilm-flow-ui
-    # QMLLS_BUILD_DIRS ${CMAKE_BINARY_DIR}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
@@ -84,31 +62,29 @@ set_target_properties( ${APP_NAME} PROPERTIES
 #         ui/Theme/resources.qrc
 # )
 
-target_include_directories( ${APP_NAME}
-    PUBLIC
-        ${CORE_INCLUDE_DIR}
-)
-
 add_subdirectory( core )
-add_subdirectory( controls )
 
-add_subdirectory( ui/models )
+add_subdirectory( presenter/models )
+add_subdirectory( presenter/controls )
+
 add_subdirectory( ui/components )
 add_subdirectory( ui/theme )
 add_subdirectory( ui/screens )
 
 target_link_libraries( ${APP_NAME}
-    PRIVATE Qt6::Qml
-    PRIVATE Qt6::Quick
-    PRIVATE Qt6::Core
-    PRIVATE Qt6::QuickControls2
-    PRIVATE FF::Core
-    PRIVATE FF::Theme
-    PRIVATE FF::Controls
-    PRIVATE FF::Models
+    PRIVATE
+        Qt6::Qml
+        Qt6::Quick
+        Qt6::Core
+        Qt6::QuickControls2
+        FF::Core
+        FF::Theme
+        FF::Controls
+        FF::Models
 )
 
 include(GNUInstallDirs)
+
 install(TARGETS ${APP_NAME}
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

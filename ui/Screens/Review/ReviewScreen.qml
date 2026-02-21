@@ -8,7 +8,7 @@ import Ui.Components
 // TODO maybe create a Ui.Screens.Commons to move screenManager
 import Ui.Screens
 
-import Controls 1.0
+import Presenter.Controls
 
 ReviewScreenForm {
     id: root

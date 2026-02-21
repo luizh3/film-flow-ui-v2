@@ -1,7 +1,7 @@
 import QtQuick
 
 import Ui.Components
-import Controls 1.0
+import Presenter.Controls
 
 SettingsScreenForm {
     id: root

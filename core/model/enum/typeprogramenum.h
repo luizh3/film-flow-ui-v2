@@ -3,17 +3,12 @@
 
 #include <core_global.h>
 
-#include <QtGlobal>
 #include <QMap>
 
 namespace TypeProgram {
-Q_NAMESPACE_EXPORT( CORE_EXPORT )
-enum class TypeProgramEnum : qint8 {
-    UNKNOW = -1,
-    MOVIE = 1,
-    TV = 2
-};
-Q_ENUM_NS( TypeProgramEnum )
+Q_NAMESPACE_EXPORT(CORE_EXPORT)
+
+enum class TypeProgramEnum : qint8 { UNKNOW = -1, MOVIE = 1, TV = 2 };
 
 inline const TypeProgramEnum fromString( const QString& value ) {
 
@@ -34,7 +29,7 @@ inline const QString toString( const TypeProgramEnum tpProgram ) {
 
     return mapToString.value( tpProgram, QStringLiteral("") );
 }
-}
+} // namespace TypeProgram
 
 using TypeProgramEnum = TypeProgram::TypeProgramEnum;
 

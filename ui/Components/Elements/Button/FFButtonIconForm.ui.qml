@@ -3,8 +3,6 @@ import QtQuick.Controls
 
 import Ui.Theme 1.0
 
-import "../"
-
 Button {
     id: root
     implicitWidth: 42

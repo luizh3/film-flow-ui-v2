@@ -4,7 +4,7 @@ import Ui.Components
 import Ui.Theme
 import Ui.Screens
 
-import Controls 1.0
+import Presenter.Controls
 
 MovieScreenForm {
     id: root

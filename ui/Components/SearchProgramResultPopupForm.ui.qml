@@ -17,12 +17,12 @@ Popup {
 
     background: Rectangle {
         color: Colors.grey700
-        radius: 4
+        radius: Radius.xl
 
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: Spacings.md2
-            spacing: 6
+            spacing: Spacings.sm
 
             Label {
                 id: label
@@ -57,7 +57,7 @@ Popup {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                spacing: 4
+                spacing: Spacings.xs
                 visible: moviesList.count !== 0
                 cacheBuffer: moviesList.height / 2
 

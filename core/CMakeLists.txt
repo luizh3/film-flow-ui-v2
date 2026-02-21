@@ -99,7 +99,7 @@ set( HEADERS
 )
 
 add_library(
-    ${LIBRARY_NAME} SHARED
+    ${LIBRARY_NAME} STATIC
 )
 
 target_sources( ${LIBRARY_NAME}
@@ -109,20 +109,23 @@ target_sources( ${LIBRARY_NAME}
 
 find_package( Qt6 REQUIRED COMPONENTS Core Network Concurrent WebSockets)
 
-target_link_libraries( ${LIBRARY_NAME} PUBLIC
-    PRIVATE Qt6::Core
-    PRIVATE Qt6::Network
-    PRIVATE Qt6::Concurrent
-    PRIVATE Qt6::WebSockets
+target_link_libraries(${LIBRARY_NAME}
+    PUBLIC
+        Qt6::Core
+        Qt6::Network
+        Qt6::Concurrent
+        Qt6::WebSockets
 )
 
-target_include_directories(${LIBRARY_NAME} PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}
+target_include_directories(${LIBRARY_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include>
 )
 
 set_target_properties( ${LIBRARY_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON )
 
-target_compile_definitions( ${LIBRARY_NAME} PRIVATE CORE_LIBRARY )
+target_compile_definitions( ${LIBRARY_NAME} PUBLIC CORE_STATIC )
 
 add_library(FF::Core ALIAS ${LIBRARY_NAME})
 

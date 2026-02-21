@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import Ui.Components
 import Ui.Theme
+import Ui.Components
 
 Item {
     implicitWidth: 1280

@@ -39,8 +39,10 @@ qt_add_qml_module( ${MODULE_NAME}
     QML_FILES
         ${QML_FILES}
         ${QML_SINGLETONS}
+    IMPORTS
+        Presenter.Controls
 )
 
 target_link_libraries( ${MODULE_NAME}
-    PRIVATE FF::Models
+    PRIVATE FF::Controls
 )

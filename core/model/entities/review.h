@@ -16,7 +16,7 @@ public:
 
     Review(double score,
            int likesCount,
-           TypeProgram::TypeProgramEnum tpProgram,
+           TypeProgramEnum tpProgram,
            bool isLikedByMe,
            QString reviewId,
            QString title,
@@ -48,8 +48,8 @@ public:
     QString programTitle() const;
     void setProgramTitle(const QString &newProgramTitle);
 
-    TypeProgram::TypeProgramEnum tpProgram() const;
-    void setTpProgram(TypeProgram::TypeProgramEnum newTpProgram);
+    TypeProgramEnum tpProgram() const;
+    void setTpProgram(TypeProgramEnum newTpProgram);
 
     int likesCount() const;
     void setLikesCount(int newLikesCount);
@@ -64,7 +64,7 @@ private:
     User *_author;
     double _score;
     int _likesCount;
-    TypeProgram::TypeProgramEnum _tpProgram;
+    TypeProgramEnum _tpProgram;
     bool _isLikedByMe;
     QString _reviewId;
     QString _title;

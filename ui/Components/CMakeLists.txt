@@ -40,16 +40,20 @@ set( QML_FILES
     BadgetProvider.qml
 )
 
+add_library(${MODULE_NAME})
+
 qt_add_qml_module( ${MODULE_NAME}
     URI ${LIBRARY_URI}
     VERSION 1.0
     QML_FILES
         ${QML_FILES}
+    IMPORTS
+        Presenter.Controls
+
+)
+
+target_link_libraries( ${MODULE_NAME}
+    PUBLIC FF::Controls
 )
 
 add_subdirectory( elements )
-
-target_link_libraries( ${MODULE_NAME}
-    PRIVATE FF::Controls
-)
-

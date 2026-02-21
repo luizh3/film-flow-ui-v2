@@ -1,8 +1,7 @@
-import Controls 1.0
-
-import Ui.Models
-
 import Ui.Components.Elements
+
+import Presenter.Controls
+import Presenter.Models
 
 RegisterScreenForm {
     id: root
