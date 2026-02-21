@@ -5,6 +5,7 @@ import QtQuick
 import ThemeColorManager 1.0
 
 QtObject {
+    id: root
 
     readonly property string secundary: grey800
     readonly property string error: red400
@@ -23,6 +24,8 @@ QtObject {
     readonly property string primary400: ThemeColorManager.primary400
     readonly property string primary500: ThemeColorManager.primary500
     readonly property string primary600: ThemeColorManager.primary600
+
+    readonly property string focus: root.primary500
 
     readonly property string orange300: "#f8a754"
     readonly property string orange400: "#f79633"

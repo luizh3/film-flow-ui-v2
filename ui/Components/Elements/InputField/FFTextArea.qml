@@ -24,7 +24,7 @@ FFTextAreaForm {
     }
 
     function _toSecundaryType() {
-        background.color = "transparent"
+        background.color = Colors.transparent
     }
 
     function _changeType() {
@@ -83,7 +83,7 @@ FFTextAreaForm {
 
                 root {
                     background {
-                        border.color: Colors.primary500
+                        border.color: Colors.focus
                     }
 
                     label {

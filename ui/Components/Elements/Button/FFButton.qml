@@ -17,6 +17,8 @@ FFButtonForm {
         Disabled
     }
 
+    Keys.onReturnPressed: root.clicked()
+
     onVTypeChanged: root._setType()
 
     property int vType: FFButton.Type.Primary
@@ -30,7 +32,7 @@ FFButtonForm {
     }
 
     function _changeType(color, icon) {
-        root.background.color = color
+        root.vColorBackground = color
         root._changeIcon(icon)
     }
 

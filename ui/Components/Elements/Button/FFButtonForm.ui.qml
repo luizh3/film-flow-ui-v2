@@ -18,16 +18,37 @@ Button {
 
     property alias loading: loading
 
-    background: Rectangle {
-        opacity: root.hovered && root.enabled ? 0.8 : 1
-        radius: Radius.md
+    property string vColorBackground: ""
+    property bool vHasFocus: root.activeFocus
 
-        // TODO move this for .qml
-        Behavior on opacity {
-            NumberAnimation {
-                duration: Durations.normal
-                easing.type: Easing.InOutQuad
+    background: Item {
+
+        Rectangle {
+            id: backgroundRectangle
+            width: root.width
+            height: root.height
+            opacity: root.hovered && root.enabled ? 0.8 : 1
+            radius: Radius.md
+            color: root.vColorBackground
+
+            // TODO move this for .qml
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: Durations.normal
+                    easing.type: Easing.InOutQuad
+                }
             }
+        }
+
+        Rectangle {
+            color: Colors.transparent
+            border.width: 1
+            border.color: Colors.focus
+            radius: Radius.md
+            width: backgroundRectangle.width + Spacings.sm
+            height: backgroundRectangle.height + Spacings.sm
+            anchors.centerIn: parent
+            visible: root.vHasFocus
         }
     }
 

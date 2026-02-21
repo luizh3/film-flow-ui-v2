@@ -50,7 +50,7 @@ Rectangle {
         icon.source: "qrc:/icons/close"
         icon.color: Colors.neutral100
         background: Rectangle {
-            color: "transparent"
+            color: Colors.transparent
         }
     }
 }

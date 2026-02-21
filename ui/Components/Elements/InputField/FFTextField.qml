@@ -66,7 +66,7 @@ FFTextFieldForm {
     }
 
     function _toSecundaryType() {
-        background.color = "transparent"
+        background.color = Colors.transparent
     }
 
     function _changeType() {
@@ -125,7 +125,7 @@ FFTextFieldForm {
 
                 root {
                     background {
-                        border.color: Colors.primary500
+                        border.color: Colors.focus
                     }
 
                     label {

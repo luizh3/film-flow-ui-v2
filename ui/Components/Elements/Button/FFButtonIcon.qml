@@ -49,7 +49,7 @@ FFButtonIconForm {
     }
 
     function toFlatSecundary() {
-        root._color = "transparent"
+        root._color = Colors.transparent
         root._hoverColor = Colors.grey300
         root._colorIconHover = Colors.neutral100
         root._colorIcon = Colors.grey400
@@ -57,7 +57,7 @@ FFButtonIconForm {
     }
 
     function toFlatPrimary() {
-        root._color = "transparent"
+        root._color = Colors.transparent
         root._hoverColor = Colors.grey300
         root._colorIconHover = Colors.neutral100
         root._colorIcon = Colors.neutral100
@@ -79,4 +79,6 @@ FFButtonIconForm {
     }
 
     Component.onCompleted: root._setType()
+
+    Keys.onReturnPressed: root.clicked()
 }

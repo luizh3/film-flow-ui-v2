@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import Ui.Theme 1.0
+import Ui.Theme
+import Ui.Components.Elements
 
 Button {
     id: root
@@ -31,6 +32,8 @@ Button {
         opacity: root.hovered && root.enabled ? 0.8 : 1
         radius: root._radius
         color: root.hovered && root.enabled ? root._hoverColor : root._color
+        border.width: 1
+        border.color: root.activeFocus ? Colors.focus : Colors.transparent
 
         // TODO move this for .qml
         Behavior on opacity {
