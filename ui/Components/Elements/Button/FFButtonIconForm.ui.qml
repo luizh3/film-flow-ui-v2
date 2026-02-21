@@ -19,6 +19,8 @@ Button {
     property bool vHasNotification: false
     property int vNotificationCount
 
+    property bool _hasTabFocus: false
+
     property int _radius: Radius.sm
 
     property string _color: "transparent"
@@ -33,7 +35,7 @@ Button {
         radius: root._radius
         color: root.hovered && root.enabled ? root._hoverColor : root._color
         border.width: 1
-        border.color: root.activeFocus ? Colors.focus : Colors.transparent
+        border.color: root._hasTabFocus ? Colors.focus : Colors.transparent
 
         // TODO move this for .qml
         Behavior on opacity {

@@ -17,6 +17,9 @@ FFButtonForm {
         Disabled
     }
 
+    _hasTabFocus: (root.focusReason === Qt.TabFocusReason
+                   || focusReason === Qt.BacktabFocusReason) && root.activeFocus
+
     Keys.onReturnPressed: root.clicked()
 
     onVTypeChanged: root._setType()

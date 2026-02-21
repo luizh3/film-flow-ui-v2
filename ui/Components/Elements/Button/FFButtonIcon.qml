@@ -11,6 +11,10 @@ FFButtonIconForm {
         FlatSecundary
     }
 
+    _hasTabFocus: (root.focusReason === Qt.TabFocusReason
+                   || root.focusReason === Qt.BacktabFocusReason)
+                  && root.activeFocus
+
     property int vType: FFButtonIcon.Type.Secundary
 
     // TODO migrate all of this routine to a button that inherit of FFButtonIcon, something as FFButtonNotification

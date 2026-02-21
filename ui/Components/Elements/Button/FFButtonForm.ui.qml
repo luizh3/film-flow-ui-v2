@@ -19,7 +19,7 @@ Button {
     property alias loading: loading
 
     property string vColorBackground: ""
-    property bool vHasFocus: root.activeFocus
+    property bool _hasTabFocus: root.activeFocus
 
     background: Item {
 
@@ -48,7 +48,7 @@ Button {
             width: backgroundRectangle.width + Spacings.sm
             height: backgroundRectangle.height + Spacings.sm
             anchors.centerIn: parent
-            visible: root.vHasFocus
+            visible: root._hasTabFocus
         }
     }
 
