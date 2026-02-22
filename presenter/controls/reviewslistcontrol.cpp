@@ -145,4 +145,5 @@ void ReviewsListControl::applyToCard(ReviewsListModel::CardReview *cardReview, c
     cardReview->isLikedByMe = review->isLikedByMe();
     cardReview->likesCount = review->likesCount();
     cardReview->author = UserMapper::toModel(review->author());
+    cardReview->createdDate = review->createdDate().toString("dd/MM/yyyy");
 }

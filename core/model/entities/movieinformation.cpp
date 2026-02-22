@@ -15,7 +15,7 @@ MovieInformation::MovieInformation()
     , _backdropUrl{QStringLiteral("")}
     , _posterUrl{QStringLiteral("")}
     , _overview{QStringLiteral("")}
-    , _release{QStringLiteral("")}
+    , _releaseDate{}
     , _genres{}
 {}
 
@@ -33,7 +33,7 @@ MovieInformation::MovieInformation(Review *myReview,
                                    const QString &backdropUrl,
                                    const QString &posterUrl,
                                    const QString &overview,
-                                   const QString &release,
+                                   const QDate &releaseDate,
                                    const QList<Genre *> &genres)
     : _myReview{myReview}
     , _average{average}
@@ -43,7 +43,7 @@ MovieInformation::MovieInformation(Review *myReview,
     , _backdropUrl{backdropUrl}
     , _posterUrl{posterUrl}
     , _overview{overview}
-    , _release{release}
+    , _releaseDate{releaseDate}
     , _genres{genres}
 {}
 
@@ -107,14 +107,14 @@ void MovieInformation::setOverview(const QString &newOverview)
     _overview = newOverview;
 }
 
-QString MovieInformation::release() const
+QDate MovieInformation::releaseDate() const
 {
-    return _release;
+    return _releaseDate;
 }
 
-void MovieInformation::setRelease(const QString &newRelease)
+void MovieInformation::setReleaseDate(const QDate &newReleaseDate)
 {
-    _release = newRelease;
+    _releaseDate = newReleaseDate;
 }
 
 MovieInformation *MovieInformation::fromJson(const QJsonDocument &jsonDocument)
@@ -168,7 +168,7 @@ MovieInformation *MovieInformation::fromJson(const QJsonObject &jsonObject)
                                 jsonObject["backdropUrl"].toString(),
                                 jsonObject["posterUrl"].toString(),
                                 jsonObject["overview"].toString(),
-                                jsonObject["release"].toString(),
+                                QDate::fromString(jsonObject["releaseDate"].toString(), Qt::ISODate),
                                 genres
 
     );

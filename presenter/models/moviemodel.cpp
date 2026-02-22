@@ -9,7 +9,7 @@ MovieModel::MovieModel()
     , _backdropUrl{QStringLiteral("")}
     , _posterUrl{QStringLiteral("")}
     , _overview{QStringLiteral("")}
-    , _release{QStringLiteral("")}
+    , _releaseDate{QStringLiteral("")}
     , _genres{}
 {}
 
@@ -21,7 +21,7 @@ MovieModel::MovieModel(ReviewModel *myReview,
                        const QString &backdropUrl,
                        const QString &posterUrl,
                        const QString &overview,
-                       const QString &release,
+                       const QString &releaseDate,
                        const QList<GenreModel *> &genres)
     : _myReview(myReview)
     , _average(average)
@@ -31,7 +31,7 @@ MovieModel::MovieModel(ReviewModel *myReview,
     , _backdropUrl(backdropUrl)
     , _posterUrl(posterUrl)
     , _overview(overview)
-    , _release(release)
+    , _releaseDate(releaseDate)
     , _genres(genres)
 {}
 
@@ -161,19 +161,19 @@ void MovieModel::setOverview(const QString &newOverview)
     emit overviewChanged();
 }
 
-QString MovieModel::release() const
+QString MovieModel::releaseDate() const
 {
-    return _release;
+    return _releaseDate;
 }
 
-void MovieModel::setRelease(const QString &newRelease)
+void MovieModel::setReleaseDate(const QString &newReleaseDate)
 {
-    if (_release == newRelease) {
+    if (_releaseDate == newReleaseDate) {
         return;
     }
 
-    _release = newRelease;
-    emit releaseChanged();
+    _releaseDate = newReleaseDate;
+    emit releaseDateChanged();
 }
 
 QList<GenreModel *> MovieModel::genres() const

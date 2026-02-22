@@ -26,6 +26,7 @@ GenericScreen {
     property alias scrollFlickable: scrollFlickable
     property alias reviewsList: reviewsList
 
+    property var vMovieReleaseDate: root.vMovie?.releaseDate ?? qsTr("Unknown")
     property var vMovieGenres: root.vMovie?.genres ?? []
     property double vMovieAverage: root.vMovie?.average ?? ""
     property string vMovieOverview: root.vMovie?.overview ?? ""
@@ -186,7 +187,7 @@ GenericScreen {
 
                                 Label {
                                     font: Fonts.caption170
-                                    text: "24/10/2015"
+                                    text: root.vMovieReleaseDate
                                     color: Colors.grey50
                                     anchors.verticalCenter: parent.verticalCenter
                                 }

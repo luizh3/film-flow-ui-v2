@@ -32,7 +32,8 @@ public:
         ProgramType,
         IsLikedByMe,
         LikesCount,
-        Author
+        Author,
+        CreatedDate
     };
 
     struct MODELS_EXPORT CardReview
@@ -47,6 +48,7 @@ public:
         QString description;
         QString id;
         QString movieId;
+        QString createdDate;
         double score;
         bool isLoading;
         int likesCount;

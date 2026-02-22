@@ -55,6 +55,8 @@ QVariant ReviewsListModel::data(const QModelIndex &index, int role) const
         return _reviewsCard.at(row)->likesCount;
     case Author:
         return QVariant::fromValue(_reviewsCard.at(row)->author);
+    case CreatedDate:
+        return _reviewsCard.at(row)->createdDate;
     default:
         return QVariant();
     }
@@ -117,7 +119,8 @@ QHash<int, QByteArray> ReviewsListModel::roleNames() const
                                           {ProgramTitle, "programTitle"},
                                           {LikesCount, "likesCount"},
                                           {IsLikedByMe, "isLikedByMe"},
-                                          {Author, "author"}};
+                                          {Author, "author"},
+                                          {CreatedDate, "createdDate"}};
 
     return mapping;
 }
@@ -159,6 +162,7 @@ ReviewsListModel::CardReview::CardReview()
     , description{QStringLiteral("")}
     , id{QStringLiteral("")}
     , movieId{QStringLiteral("")}
+    , createdDate{QStringLiteral("")}
     , score(0.00)
     , isLoading{true}
     , likesCount{0}

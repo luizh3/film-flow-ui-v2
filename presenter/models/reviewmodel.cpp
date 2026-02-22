@@ -11,6 +11,7 @@ ReviewModel::ReviewModel()
     , _description{QStringLiteral("")}
     , _movieId{QStringLiteral("")}
     , _programTitle(QStringLiteral(""))
+    , _createdDate{QStringLiteral("")}
 {}
 
 ReviewModel::ReviewModel(double score,
@@ -22,6 +23,7 @@ ReviewModel::ReviewModel(double score,
                          QString description,
                          QString movieId,
                          QString programTitle,
+                         QString createdDate,
                          UserModel *author)
     : _author{author}
     , _score(score)
@@ -33,6 +35,7 @@ ReviewModel::ReviewModel(double score,
     , _description(std::move(description))
     , _movieId(std::move(movieId))
     , _programTitle(std::move(programTitle))
+    , _createdDate(createdDate)
 {}
 
 double ReviewModel::score() const
@@ -183,4 +186,19 @@ void ReviewModel::setAuthor(UserModel *newAuthor)
 
     _author = newAuthor;
     emit authorChanged();
+}
+
+QString ReviewModel::createdDate() const
+{
+    return _createdDate;
+}
+
+void ReviewModel::setCreatedDate(const QString &newCreatedDate)
+{
+    if (_createdDate == newCreatedDate) {
+        return;
+    }
+
+    _createdDate = newCreatedDate;
+    emit createdDateChanged();
 }

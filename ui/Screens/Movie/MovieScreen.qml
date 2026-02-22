@@ -79,6 +79,7 @@ MovieScreenForm {
         required property bool isLikedByMe
         required property int likesCount
         required property var author
+        required property string createdDate
 
         vReviewId: programReview.id
         vProgramTitle: programReview.programTitle
@@ -86,7 +87,7 @@ MovieScreenForm {
         vLoadingColor: Colors.grey500
         vIsLoading: programReview.isLoading
         vScore: programReview.score
-        vDateCreated: "24/10/2025"
+        vDateCreated: programReview.createdDate
         vUserImage: programReview.author?.avatarUrl
                     || "qrc:/imagens/no-user.png"
         vTitle: programReview.title

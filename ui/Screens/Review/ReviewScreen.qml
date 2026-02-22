@@ -68,6 +68,7 @@ ReviewScreenForm {
         required property bool isLikedByMe
         required property int likesCount
         required property var author
+        required property string createdDate
 
         ProgramReview {
             vReviewId: currentDelegate.id
@@ -78,7 +79,7 @@ ReviewScreenForm {
             vScore: currentDelegate.score
             width: parent.width - (2 * Spacings.xl3)
             anchors.horizontalCenter: parent.horizontalCenter
-            vDateCreated: "24/10/2025"
+            vDateCreated: currentDelegate.createdDate
             vUserImage: currentDelegate.author?.avatarUrl
                         || "qrc:/imagens/no-user.png"
             vTitle: currentDelegate.title

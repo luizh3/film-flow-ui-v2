@@ -16,6 +16,7 @@ Review::Review()
     , _description{QStringLiteral("")}
     , _movieId{QStringLiteral("")}
     , _programTitle(QStringLiteral(""))
+    , _createdDate{}
 {}
 
 Review::Review(double score,
@@ -27,6 +28,7 @@ Review::Review(double score,
                QString description,
                QString movieId,
                QString programTitle,
+               QDate createdDate,
                User *author)
     : _author{author}
     , _score(score)
@@ -38,6 +40,7 @@ Review::Review(double score,
     , _description(std::move(description))
     , _movieId(std::move(movieId))
     , _programTitle(std::move(programTitle))
+    , _createdDate{createdDate}
 {}
 
 double Review::score() const
@@ -142,6 +145,16 @@ void Review::setAuthor(User *newAuthor)
     _author = newAuthor;
 }
 
+QDate Review::createdDate() const
+{
+    return _createdDate;
+}
+
+void Review::setCreatedDate(const QDate &newCreatedDate)
+{
+    _createdDate = newCreatedDate;
+}
+
 QJsonDocument Review::toJson() const
 {
     QJsonDocument jsonDocument;
@@ -180,6 +193,7 @@ Review *Review::fromJson(const QJsonObject &jsonObject)
                                 jsonObject["description"].toString(),
                                 jsonObject["movieId"].toString(),
                                 jsonObject["programTitle"].toString(),
+                                QDate::fromString(jsonObject["createdDate"].toString(), Qt::ISODate),
                                 User::fromJson(jsonObject["author"].toObject())
 
     );

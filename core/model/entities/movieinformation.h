@@ -24,7 +24,7 @@ public:
                               const QString &backdropUrl,
                               const QString &posterUrl,
                               const QString &overview,
-                              const QString &release,
+                              const QDate &releaseDate,
                               const QList<Genre *> &genres);
 
     double average() const;
@@ -45,8 +45,8 @@ public:
     QString overview() const;
     void setOverview(const QString &newOverview);
 
-    QString release() const;
-    void setRelease(const QString &newRelease);
+    QDate releaseDate() const;
+    void setReleaseDate(const QDate &newReleaseDate);
 
     static MovieInformation *fromJson(const QJsonDocument &jsonDocument);
     static MovieInformation *fromJson(const QJsonObject &jsonObject);
@@ -69,7 +69,7 @@ private:
     QString _backdropUrl;
     QString _posterUrl;
     QString _overview;
-    QString _release;
+    QDate _releaseDate;
     QList<Genre *> _genres;
 };
 

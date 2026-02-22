@@ -17,7 +17,7 @@ MovieModel *MovieMapper::toModel(const MovieInformation *movieInformation)
                           movieInformation->backdropUrl(),
                           movieInformation->posterUrl(),
                           movieInformation->overview(),
-                          movieInformation->release(),
+                          movieInformation->releaseDate().toString("dd/MM/yyyy"),
                           GenreMapper::toModels(movieInformation->genres()));
 }
 

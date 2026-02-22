@@ -39,5 +39,6 @@ ReviewModel *ReviewMapper::toModel(const Review *review)
                            review->description(),
                            review->movieId(),
                            review->programTitle(),
+                           review->createdDate().toString("dd/MM/yyyy"),
                            UserMapper::toModel(review->author()));
 }

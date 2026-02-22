@@ -23,6 +23,7 @@ public:
            QString description,
            QString movieId,
            QString programTitle,
+           QDate createdDate = QDate(),
            User *author = nullptr);
 
     double score() const;
@@ -60,6 +61,9 @@ public:
     User *author() const;
     void setAuthor(User *newAuthor);
 
+    QDate createdDate() const;
+    void setCreatedDate(const QDate &newCreatedDate);
+
 private:
     User *_author;
     double _score;
@@ -71,6 +75,7 @@ private:
     QString _description;
     QString _movieId;
     QString _programTitle;
+    QDate _createdDate;
 };
 
 #endif // REVIEW_H

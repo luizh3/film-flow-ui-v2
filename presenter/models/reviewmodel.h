@@ -27,6 +27,8 @@ class MODELS_EXPORT ReviewModel : public QObject
     Q_PROPERTY(QString programTitle READ programTitle WRITE setProgramTitle NOTIFY
                    programTitleChanged FINAL)
     Q_PROPERTY(UserModel *author READ author WRITE setAuthor NOTIFY authorChanged FINAL)
+    Q_PROPERTY(
+        QString createdDate READ createdDate WRITE setCreatedDate NOTIFY createdDateChanged FINAL)
 public:
     ReviewModel();
 
@@ -39,6 +41,7 @@ public:
                 QString description,
                 QString movieId,
                 QString programTitle,
+                QString createdDate,
                 UserModel *_author = nullptr);
 
     double score() const;
@@ -71,6 +74,9 @@ public:
     UserModel *author() const;
     void setAuthor(UserModel *newAuthor);
 
+    QString createdDate() const;
+    void setCreatedDate(const QString &newCreatedDate);
+
 signals:
     void scoreChanged();
     void likesCountChanged();
@@ -83,6 +89,8 @@ signals:
     void programTitleChanged();
     void authorChanged();
 
+    void createdDateChanged();
+
 private:
     UserModel *_author;
     double _score;
@@ -94,6 +102,7 @@ private:
     QString _description;
     QString _movieId;
     QString _programTitle;
+    QString _createdDate;
 };
 
 #endif // REVIEWMODEL_H

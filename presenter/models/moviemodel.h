@@ -23,7 +23,8 @@ class MODELS_EXPORT MovieModel : public QObject
         QString backdropUrl READ backdropUrl WRITE setBackdropUrl NOTIFY backdropUrlChanged FINAL)
     Q_PROPERTY(QString posterUrl READ posterUrl WRITE setPosterUrl NOTIFY posterUrlChanged FINAL)
     Q_PROPERTY(QString overview READ overview WRITE setOverview NOTIFY overviewChanged FINAL)
-    Q_PROPERTY(QString release READ release WRITE setRelease NOTIFY releaseChanged FINAL)
+    Q_PROPERTY(
+        QString releaseDate READ releaseDate WRITE setReleaseDate NOTIFY releaseDateChanged FINAL)
     Q_PROPERTY(QList<GenreModel *> genres READ genres WRITE setGenres NOTIFY genresChanged FINAL)
 public:
     MovieModel();
@@ -35,7 +36,7 @@ public:
                const QString &backdropUrl,
                const QString &posterUrl,
                const QString &overview,
-               const QString &release,
+               const QString &releaseDate,
                const QList<GenreModel *> &genres);
 
     ~MovieModel();
@@ -64,8 +65,8 @@ public:
     QString overview() const;
     void setOverview(const QString &newOverview);
 
-    QString release() const;
-    void setRelease(const QString &newRelease);
+    QString releaseDate() const;
+    void setReleaseDate(const QString &newReleaseDate);
 
     QList<GenreModel *> genres() const;
     void setGenres(const QList<GenreModel *> &newGenres);
@@ -87,7 +88,7 @@ signals:
 
     void overviewChanged();
 
-    void releaseChanged();
+    void releaseDateChanged();
 
     void genresChanged();
 
@@ -100,7 +101,7 @@ private:
     QString _backdropUrl;
     QString _posterUrl;
     QString _overview;
-    QString _release;
+    QString _releaseDate;
     QList<GenreModel *> _genres;
 };
 
