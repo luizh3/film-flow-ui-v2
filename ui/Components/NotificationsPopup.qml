@@ -9,6 +9,16 @@ NotificationsPopupForm {
 
     notificationsList.model: notificationListControl.model
 
+    notificationsList {
+        remove: Transition {
+            NumberAnimation {
+                property: "opacity"
+                duration: Durations.fast
+                to: 0.5
+            }
+        }
+    }
+
     notificationsList.delegate: NotificationCard {
         id: notificationCard
 

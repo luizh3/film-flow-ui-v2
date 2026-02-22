@@ -30,7 +30,7 @@ Item {
 
         FFSkeletonLoading {
             anchors.fill: parent
-            color: Colors.grey500
+            color: Colors.grey600
             radius: Radius.xl
         }
     }

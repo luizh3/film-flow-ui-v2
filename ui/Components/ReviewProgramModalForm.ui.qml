@@ -38,7 +38,6 @@ GenericModal {
                     id: reviewTitleLabel
                     font: Fonts.title370
                     color: Colors.neutral100
-                    text: "Review by Luiz"
                     Layout.fillWidth: true
                 }
 
@@ -46,7 +45,6 @@ GenericModal {
                     id: programTitleLabel
                     font: Fonts.label140
                     color: Colors.neutral100
-                    text: "Review by Luiz"
                     Layout.fillWidth: true
                 }
             }

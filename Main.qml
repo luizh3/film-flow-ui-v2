@@ -60,14 +60,19 @@ ApplicationWindow {
         // sourceComponent: applicationScreenComponent
     }
 
-    PopupManager {
-        id: popupManager
+    ModalManager {
+        id: modalManager
         width: parent.width
         height: parent.height
         anchors.bottom: parent.bottom
     }
 
+    PopupManager {
+        id: popupManager
+    }
+
     Component.onCompleted: {
+        NavigateManager.vModalManager = modalManager
         NavigateManager.vPopupManager = popupManager
     }
 

@@ -22,7 +22,7 @@ MovieScreenForm {
     }
 
     function _handleWriteReview() {
-        const reviewModal = NavigateManager.navigatePopup(
+        const reviewModal = NavigateManager.navigateModal(
                               reviewProgramModalComponent, {
                                   "vProgramType": vMovie.programType,
                                   "vProgramTitle": vMovie.title,

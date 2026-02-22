@@ -27,7 +27,7 @@ Item {
             color: Colors.grey500
             vIsVisible: movieSlider.vIsLoading
                         || imageGradient.sourceItem.status !== Image.Ready
-            vOpacityDuration: Durations.normal
+            vOpacityDuration: Durations.slow
         }
 
         // ParticleSystem {

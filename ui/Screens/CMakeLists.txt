@@ -21,6 +21,7 @@ set( QML_FILES
     register/RegisterScreenForm.ui.qml
     register/RegisterScreen.qml
     ScreenManager.qml
+    ModalManager.qml
     PopupManager.qml
 )
 

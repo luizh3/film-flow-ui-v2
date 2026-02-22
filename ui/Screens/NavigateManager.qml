@@ -6,6 +6,7 @@ QtObject {
     id: root
 
     property ScreenManager vScreenManager
+    property ModalManager vModalManager
     property PopupManager vPopupManager
 
     function navigateScreen(tpRoute, props = {}) {
@@ -15,10 +16,17 @@ QtObject {
         return root.vScreenManager.navigate(tpRoute, props)
     }
 
-    function navigatePopup(popup, props = {}) {
-        if (!vPopupManager) {
+    function navigateModal(modal, props = {}) {
+        if (!root.vModalManager) {
             return
         }
-        return vPopupManager.push(popup, props)
+        return root.vModalManager.push(modal, props)
+    }
+
+    function openPopup(type, positionerElement, setupCallback) {
+        if (!root.vPopupManager) {
+            return
+        }
+        return root.vPopupManager.open(type, positionerElement, setupCallback)
     }
 }

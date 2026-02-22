@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Ui.Theme
 import Ui.Screens
 import Ui.Components
+import Ui.Components.Elements
 
 import Presenter.Controls
 
@@ -20,19 +21,19 @@ Item {
         screenManager.clear()
         switch (vType) {
         case SideBar.TypeMenuItem.Home:
-            loaderMainScreen.sourceComponent = homeComponent
+            loaderMainScreen.changeSource(homeComponent, Durations.instant)
             break
         case SideBar.TypeMenuItem.Favorites:
-            loaderMainScreen.sourceComponent = favoritesComponent
+            loaderMainScreen.changeSource(favoritesComponent, Durations.slow)
             break
         case SideBar.TypeMenuItem.Reviews:
-            loaderMainScreen.sourceComponent = reviewsComponent
+            loaderMainScreen.changeSource(reviewsComponent, Durations.slow)
             break
         case SideBar.TypeMenuItem.Movies:
-            loaderMainScreen.sourceComponent = programsComponent
+            loaderMainScreen.changeSource(programsComponent, Durations.slow)
             break
         case SideBar.TypeMenuItem.Settings:
-            loaderMainScreen.sourceComponent = settingsComponent
+            loaderMainScreen.changeSource(settingsComponent, Durations.slow)
             break
         }
     }
@@ -62,10 +63,15 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            Loader {
-                id: loaderMainScreen
+            Rectangle {
+                color: Colors.grey500
                 anchors.fill: parent
-                visible: true
+
+                FFLoader {
+                    id: loaderMainScreen
+                    anchors.fill: parent
+                    visible: true
+                }
             }
 
             // TODO change this to has a singleton connections.

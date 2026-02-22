@@ -35,10 +35,31 @@ HomeScreenForm {
         scrolView.contentY = 0
     }
 
-    Component.onCompleted: root._doStart()
+    function _handleProgramSelected(id, tpProgram) {
+        root.header.clearSearch()
+        root._handleMovieSelected(id, tpProgram)
+    }
 
-    header.onProgramSelected: (id, tpProgram) => _handleMovieSelected(id,
-                                                                      tpProgram)
+    function _handleOpenNotificationPopup() {
+        NavigateManager.openPopup(PopupManager.Popup.Notification,
+                                  root.header.notificationButton)
+    }
+
+    function _handleOpenProgramSearchPopup(dsQuery) {
+
+        const onOpen = popup => {
+            popup.selected.connect(root._handleProgramSelected)
+            popup.vDsQuery = dsQuery
+        }
+
+        NavigateManager.openPopup(PopupManager.Popup.SearchProgramResult,
+                                  header.searchTextField, onOpen)
+    }
+
+    header.onNotifications: () => root._handleOpenNotificationPopup()
+    header.onSearch: dsQuery => root._handleOpenProgramSearchPopup(dsQuery)
+
+    Component.onCompleted: root._doStart()
 
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(
                                          ScreenManager.Route.PROFILE)

@@ -10,9 +10,8 @@ Control {
     width: parent.width
 
     property int vOpacity: 1.0
-    property bool vIsUsingSearchPopup: true
 
-    property alias searchProgramTextField: searchProgramTextField
+    property alias searchTextField: searchTextField
     property alias notificationButton: notificationButton
     property alias profileOption: profileOption
 
@@ -38,7 +37,7 @@ Control {
         spacing: 0
 
         FFTextField {
-            id: searchProgramTextField
+            id: searchTextField
             Layout.fillWidth: true
             Layout.minimumWidth: 172
             Layout.maximumWidth: 424

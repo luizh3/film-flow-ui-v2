@@ -1,102 +1,63 @@
 import QtQuick
-import QtQuick.Controls
 
-import Ui.Theme
+import Ui.Components
 
-// TODO maybe create a Ui.Screens.Commons to move PopupManager
 Item {
     id: root
 
-    function pop() {
-        if (stack.depth === 1) {
-            clear()
-            return
-        }
-
-        stack.pop()
+    enum Popup {
+        Notification,
+        SearchProgramResult
     }
 
-    function push(popup, props) {
-        const popupCreated = stack.push(popup, props)
+    property var activePopups: []
 
-        popupCreated.close.connect(function onRemove() {
-            popupCreated.close.disconnect(onRemove)
-            root.pop()
-        })
+    function open(type, positionerElement, setupCallback) {
 
-        return popupCreated
+        if (activePopups[type]) {
+            activePopups[type].close()
+            activePopups[type].destroy()
+            activePopups[type] = null
+        }
+
+        var popup = root._getByEnum(type).createObject(root)
+        popup.positionerByElement(positionerElement)
+
+        if (setupCallback) {
+            setupCallback(popup)
+        }
+
+        popup.closed.connect(() => {
+                                 popup.destroy()
+                                 activePopups[type] = null
+                             })
+
+        activePopups[type] = popup
+        popup.open()
     }
 
-    function clear() {
-        stack.clear()
+    function _getByEnum(type) {
+        switch (type) {
+        case PopupManager.Popup.Notification:
+            return notificationsPopupComponent
+        case PopupManager.Popup.SearchProgramResult:
+            return searchProgramResultPopupComponent
+        }
     }
 
-    StackView {
-        id: stack
-        anchors.fill: parent
+    Component {
+        id: notificationsPopupComponent
 
-        property int _duration: Durations.normal
-
-        visible: stack.depth > 0
-        opacity: stack.visible ? 1 : 0
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: stack._duration
-            }
+        NotificationsPopup {
+            id: notificationsPopup
         }
+    }
 
-        background: Rectangle {
-            color: "#000000"
-            opacity: stack.depth > 0 ? 0.5 : 0
+    Component {
+        id: searchProgramResultPopupComponent
 
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: stack._duration
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                enabled: stack.depth > 0
-                hoverEnabled: false
-            }
-        }
-
-        pushEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: stack._duration
-            }
-        }
-
-        pushExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: stack._duration
-            }
-        }
-
-        popEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: stack._duration
-            }
-        }
-
-        popExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: stack._duration
-            }
+        SearchProgramResultPopup {
+            id: searchProgramResultPopup
         }
     }
 }

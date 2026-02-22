@@ -26,8 +26,14 @@ ReviewScreenForm {
         foundResultsLabel.text = qsTr("Found %0 results").arg(totalReviews)
     }
 
-    header.searchProgramTextField.enabled: false
-    header.searchProgramTextField.vPlaceHolderText: qsTr("Search for a review")
+    function _handleOpenNotificationPopup() {
+        NavigateManager.openPopup(PopupManager.Popup.Notification,
+                                  root.header.notificationButton)
+    }
+
+    header.onNotifications: () => root._handleOpenNotificationPopup()
+    header.searchTextField.enabled: false
+    header.searchTextField.vPlaceHolderText: qsTr("Search for a review")
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(
                                          ScreenManager.Route.PROFILE)
 

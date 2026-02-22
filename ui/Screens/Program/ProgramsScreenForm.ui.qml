@@ -79,7 +79,6 @@ Rectangle {
             bottomPadding: Spacings.xl2
             topPadding: Spacings.xl2
             vOpacity: 0.0
-            vIsUsingSearchPopup: false
         }
 
         ColumnLayout {

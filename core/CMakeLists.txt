@@ -6,7 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set( SOURCES
     controller/applicationcontroller.cpp
     network/httpclient.cpp
-    singleton/integrationmanager.cpp
+    manager/integrationmanager.cpp
     model/entities/integration.cpp
     network/endpoint/authendpoint.cpp
     model/entities/user.cpp
@@ -51,7 +51,7 @@ set( SOURCES
 set( HEADERS
     controller/applicationcontroller.h
     network/httpclient.h
-    singleton/integrationmanager.h
+    manager/integrationmanager.h
     model/entities/integration.h
     network/endpoint/authendpoint.h
     model/entities/user.h

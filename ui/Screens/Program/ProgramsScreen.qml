@@ -1,4 +1,5 @@
-pragma ComponentBehavior: Bound
+pragma ComponentBehavior
+
 import QtQuick
 
 import Ui.Screens
@@ -27,6 +28,11 @@ ProgramsScreenForm {
                     totalPrograms)
     }
 
+    function _handleOpenNotificationPopup() {
+        NavigateManager.openPopup(PopupManager.Popup.Notification,
+                                  root.header.notificationButton)
+    }
+
     SearchProgramListControl {
         id: searchProgramListControl
         onTotalProgramsFound: totalPrograms => root._handleTotalProgramsFound(
@@ -36,6 +42,7 @@ ProgramsScreenForm {
 
     moviesGrid.model: searchProgramListControl.model
 
+    header.onNotifications: () => root._handleOpenNotificationPopup()
     header.onSearch: text => root._handleSearch(text)
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(
                                          ScreenManager.Route.PROFILE)

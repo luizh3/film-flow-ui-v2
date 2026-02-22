@@ -37,7 +37,7 @@ SearchProgramResultPopupForm {
         vAverage: average
         vGenres: genres
         vTitle: title
-        vOverview: overview
+        vOverview: overview || ""
 
         width: ListView.view.width
 

@@ -15,16 +15,6 @@ ReviewProgramModalForm {
     required property string vMovieId
     required property var vProgramType
 
-    property ReviewModel review: ReviewModel {
-        title: root.titleField.vText
-        description: root.descriptionField.vText
-        score: root.ratingStars.vCurrentValue
-        movieId: root.vMovieId
-        programTitle: root.vProgramTitle
-        // TODO Because the enum is in the core, qmlls is unable to understand where its definition is located.
-        programType: root.vProgramType
-    }
-
     function setReview(reviewBind) {
 
         if (!reviewBind) {
@@ -37,10 +27,6 @@ ReviewProgramModalForm {
         root.vMovieId = reviewBind.movieId
         root.review.reviewId = reviewBind.reviewId
     }
-
-    closeButton.onClicked: root.close()
-    cancelButton.onClicked: root.close()
-    confirmButton.onClicked: root._handleConfirm()
 
     function _handleOnError(message) {
         root.setEnabledFields(true)
@@ -63,7 +49,22 @@ ReviewProgramModalForm {
         root.enabled = isEnabled
     }
 
+    property ReviewModel review: ReviewModel {
+        title: root.titleField.vText
+        description: root.descriptionField.vText
+        score: root.ratingStars.vCurrentValue
+        movieId: root.vMovieId
+        programTitle: root.vProgramTitle
+        // TODO Because the enum is in the core, qmlls is unable to understand where its definition is located.
+        programType: root.vProgramType
+    }
+
+    closeButton.onClicked: root.close()
+    cancelButton.onClicked: root.close()
+    confirmButton.onClicked: root._handleConfirm()
+
     programTitleLabel.text: root.vProgramTitle
+    reviewTitleLabel.text: qsTr("Review by %0").arg(UiControlManager.user?.name)
 
     ReviewProgramModalControl {
         id: control

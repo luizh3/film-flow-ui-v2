@@ -39,6 +39,7 @@ set( QML_FILES
     FFComboBoxForm.ui.qml
     FFColorItem.qml
     FFColorItemForm.ui.qml
+    FFLoader.qml
 )
 
 qt_add_qml_module( ${MODULE_NAME}
