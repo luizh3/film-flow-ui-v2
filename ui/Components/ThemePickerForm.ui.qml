@@ -1,6 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 
 import Ui.Theme
 
@@ -18,6 +16,5 @@ Item {
         clip: true
         cellWidth: 36 + Spacings.sm2
         cellHeight: 36 + Spacings.sm2
-        model: colors
     }
 }
