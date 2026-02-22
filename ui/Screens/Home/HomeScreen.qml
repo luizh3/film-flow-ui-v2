@@ -20,7 +20,7 @@ HomeScreenForm {
 
     function _handleMovieSelected(id, tpProgram) {
         const element = NavigateManager.navigateScreen(
-                          ScreenManager.Route.MOVIE, {
+                          ScreenManager.Route.Movie, {
                               "vMovieId": id,
                               "vProgramType": tpProgram
                           })
@@ -62,7 +62,7 @@ HomeScreenForm {
     Component.onCompleted: root._doStart()
 
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(
-                                         ScreenManager.Route.PROFILE)
+                                         ScreenManager.Route.Profile)
 
     header.vOpacity: root.isContentOverlay() ? 1.0 : 0.0
 

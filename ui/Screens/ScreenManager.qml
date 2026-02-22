@@ -6,15 +6,15 @@ Item {
     id: root
 
     enum Route {
-        MOVIE,
-        PROFILE
+        Movie,
+        Profile
     }
 
     function navigate(tpRoute, props = {}) {
         switch (tpRoute) {
-        case ScreenManager.Route.MOVIE:
+        case ScreenManager.Route.Movie:
             return root.push(movieScreenComponente, props)
-        case ScreenManager.Route.PROFILE:
+        case ScreenManager.Route.Profile:
             return root.push(profileComponent, props)
         }
     }

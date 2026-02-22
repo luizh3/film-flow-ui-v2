@@ -15,9 +15,10 @@ Item {
     function open(type, positionerElement, setupCallback) {
 
         if (activePopups[type]) {
-            activePopups[type].close()
-            activePopups[type].destroy()
+            var popup = activePopups[type]
             activePopups[type] = null
+            popup.close()
+            popup.destroy()
         }
 
         var popup = root._getByEnum(type).createObject(root)

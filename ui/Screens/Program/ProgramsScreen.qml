@@ -12,7 +12,7 @@ ProgramsScreenForm {
 
     function _handleMovieSelected(id, tpProgram) {
         const element = NavigateManager.navigateScreen(
-                          ScreenManager.Route.MOVIE, {
+                          ScreenManager.Route.Movie, {
                               "vMovieId": id,
                               "vProgramType": tpProgram
                           })
@@ -45,7 +45,7 @@ ProgramsScreenForm {
     header.onNotifications: () => root._handleOpenNotificationPopup()
     header.onSearch: text => root._handleSearch(text)
     header.profileOption.onSelected: () => NavigateManager.navigateScreen(
-                                         ScreenManager.Route.PROFILE)
+                                         ScreenManager.Route.Profile)
 
     moviesGrid.delegate: CardMovie {
 
