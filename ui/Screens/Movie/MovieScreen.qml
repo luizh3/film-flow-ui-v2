@@ -30,7 +30,7 @@ MovieScreenForm {
                               })
 
         reviewModal.success.connect(function doSuccess(newReview) {
-            reviewsListModel.resetReviews()
+            reviewsListControl.resetReviews()
             control.doRefresh(root.vMovieId, root.vProgramType)
         })
 

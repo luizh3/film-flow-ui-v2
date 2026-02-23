@@ -54,7 +54,6 @@ Button {
 
     FFLoadingCircle {
         id: loading
-        anchors.fill: parent
         anchors.centerIn: parent
         visible: false
         size: 30

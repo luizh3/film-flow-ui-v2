@@ -15,7 +15,7 @@ public:
     void signUp(const SignUpRequest* signUp);
 signals:
     void success();
-    void error( const QString& message );
+    void error(const QString& message);
 };
 
 #endif // AUTHCONTROLLER_H

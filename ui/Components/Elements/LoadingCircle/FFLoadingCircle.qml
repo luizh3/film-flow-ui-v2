@@ -9,6 +9,9 @@ FFLoadingCircleForm {
 
     property int size: 75
 
+    height: 100
+    width: 100
+
     canvas.onPaint: function (mouse) {
         var ctx = canvas.getContext("2d")
 

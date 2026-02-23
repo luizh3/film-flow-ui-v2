@@ -15,7 +15,14 @@ void ApplicationControl::doStart()
 
 void ApplicationControl::notificationsWsConnect()
 {
-    const QString& dsUrl = "ws://127.0.0.1:3333/ws/notifications";
+    const QString dsWebsocketUrl = qEnvironmentVariable("FILM_FLOW_WEBSOCKET_HOST");
+
+    if (dsWebsocketUrl.isEmpty()) {
+        qCritical() << "ApplicationControl::notificationsWsConnect host of websocket not founded!";
+        return;
+    }
+
+    const QString& dsUrl = QString("ws://%0/ws/notifications").arg(dsWebsocketUrl);
 
     NotificationWs* notificationWs
         = new NotificationWs(dsUrl, ApplicationManager::instance().session()->token());

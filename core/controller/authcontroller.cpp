@@ -2,8 +2,8 @@
 
 #include <manager/applicationmanager.h>
 
-#include <network/response/response.h>
 #include <network/endpoint/authendpoint.h>
+#include <network/response/response.h>
 
 #include <network/request/signinrequest.h>
 
