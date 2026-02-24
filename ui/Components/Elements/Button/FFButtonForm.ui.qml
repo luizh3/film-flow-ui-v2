@@ -21,6 +21,10 @@ Button {
     property string vColorBackground: ""
     property bool _hasTabFocus: root.activeFocus
 
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+    }
+
     background: Item {
 
         Rectangle {

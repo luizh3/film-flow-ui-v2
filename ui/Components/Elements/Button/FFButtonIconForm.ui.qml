@@ -30,6 +30,10 @@ Button {
 
     property alias notificationCountLabel: notificationCountLabel
 
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+    }
+
     background: Rectangle {
         opacity: root.hovered && root.enabled ? 0.8 : 1
         radius: root._radius

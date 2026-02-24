@@ -51,6 +51,7 @@ FFRatingStarsForm {
             anchors.fill: parent
             onClicked: currentStar._onSelected(currentStar.index)
             hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
         }
     }
 }

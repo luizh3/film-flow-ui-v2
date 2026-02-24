@@ -85,6 +85,7 @@ Rectangle {
                         id: mouseAreaSignUp
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
                     }
                 }
             }

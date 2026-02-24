@@ -118,6 +118,7 @@ Item {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
         }
     }
 
@@ -158,6 +159,7 @@ Item {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
         }
     }
 

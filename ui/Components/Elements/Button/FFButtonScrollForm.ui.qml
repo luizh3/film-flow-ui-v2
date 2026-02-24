@@ -36,5 +36,6 @@ Rectangle {
         id: handlerMouse
         anchors.fill: parent
         hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
     }
 }

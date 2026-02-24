@@ -26,6 +26,7 @@ Rectangle {
         hoverEnabled: true
         anchors.fill: parent
         onClicked: root.selected()
+        cursorShape: Qt.PointingHandCursor
     }
 
     FFImageRounded {

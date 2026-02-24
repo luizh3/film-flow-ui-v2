@@ -19,6 +19,11 @@ Button {
     required property string vText
     required property int vType
 
+    HoverHandler {
+        id: control
+        cursorShape: Qt.PointingHandCursor
+    }
+
     background: Rectangle {
         color: root.vSelected || root.hovered ? Colors.grey500 : Colors.grey600
         radius: Radius.sm
