@@ -22,8 +22,14 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 
 qt_add_executable( ${APP_NAME}
     main.cpp
-    translations.qrc
     fonts.qrc
+)
+
+qt_add_translations(${APP_NAME}
+    TS_FILES
+        i18n/film_flow_en_US.ts
+        i18n/film_flow_es_ES.ts
+        i18n/film_flow_pt_BR.ts
 )
 
 qt_add_qml_module( ${APP_NAME}
