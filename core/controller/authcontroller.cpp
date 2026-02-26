@@ -13,23 +13,23 @@ void AuthController::signIn(const QString& password, const QString& email)
     signIn.setPassword( password );
     signIn.setEmail( email );
 
-    std::unique_ptr<Response> response( AuthEndpoint().signIn( signIn ) );
+    std::unique_ptr<Response> response(AuthEndpoint().signIn(signIn));
 
-    if( !response || !response->isStatusValid() ) {
+    if (!response || !response->isStatusValid()) {
         emit error("Fail on loggin!");
         return;
     }
 
-    ApplicationManager::instance().setSession( Session::fromJson( response->data() ) );
+    ApplicationManager::instance().setSession(Session::fromJson(response->data()));
 
     emit success();
 }
 
 void AuthController::signUp(const SignUpRequest* signUp)
 {
-    std::unique_ptr<Response> response( AuthEndpoint().signUp( signUp ) );
+    std::unique_ptr<Response> response(AuthEndpoint().signUp(signUp));
 
-    if( !response || !response->isStatusValid() ) {
+    if (!response || !response->isStatusValid()) {
         emit error("Fail on register!");
         return;
     }
