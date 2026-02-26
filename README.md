@@ -19,7 +19,7 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
 
 ## Tecnologias
 
-- **Qt 6.8.3+**: Framework multiplataforma
+- **Qt 6.5+**: Framework multiplataforma
 - **QML/Qt Quick**: Interface declarativa e moderna
 - **C++17**: Lógica de negócio e performance
 - **CMake**: Sistema de build
@@ -28,7 +28,7 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
 ## Requisitos
 
 - CMake 3.16 ou superior
-- Qt 6.8.3 ou superior
+- Qt 6.5 ou superior
 - Compilador C++17 compatível
 - Componentes Qt necessários:
   - Qt6::Quick
@@ -159,12 +159,11 @@ A aplicação suporta múltiplos idiomas:
 
 Atualizar linguist
 
-lupdate . -ts i18n/*.ts
-
 - Traduzir manualmente
 
-lrelease i18n/*.ts
+  - lupdate . -ts i18n/*.ts
 
+  - lrelease i18n/*.ts
 
 **Desenvolvido usando Qt/QML**
 
