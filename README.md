@@ -36,6 +36,15 @@ Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, pr
   - Qt6::Qml
   - Qt6::LinguistTools
 
+#### Env variables
+
+- Projects > Build & Run > Run > Environment
+
+| Variável                   | Descrição         | Exemplo                              |
+|----------------------------|-------------------|--------------------------------------|
+| `FILM_FLOW_API_HOST`       | Host of API       | `http://localhost:3333/api/v1`       |
+| `FILM_FLOW_WEBSOCKET_HOST` | Host of Websocket | `127.0.0.1:3333`                     |
+
 ## Padrão de Arquitetura
 
 A aplicação segue um padrão **MVP (Model-View-Presenter)** com características de **MVVM**.
