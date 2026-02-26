@@ -6,6 +6,10 @@ Uma aplicação desktop moderna e elegante para gerenciamento e descoberta de fi
 
 Film Flow UI é uma aplicação multiplataforma construída com Qt 6.5 e QML, proporcionando uma experiência de usuário fluida e responsiva. A aplicação apresenta uma arquitetura modular com separação clara entre lógica de negócio (C++), controles e interface (QML).
 
+## Dependências
+
+### https://github.com/luizh3/film-flow-api
+
 ## Funcionalidades
 
 - **Tela Inicial**: Visualize filmes em destaque e recomendações personalizadas
@@ -165,5 +169,8 @@ Atualizar linguist
 
   - lrelease i18n/*.ts
 
-**Desenvolvido usando Qt/QML**
+## Flow
 
+![Flow](documentation/flow.png)
+
+**Desenvolvido usando Qt/QML**
